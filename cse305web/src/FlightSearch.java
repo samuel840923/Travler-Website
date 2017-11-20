@@ -31,7 +31,6 @@ public class FlightSearch extends HttpServlet {
     	subresult.add(nop);
     	subresult.add(type);
     	result.add(subresult);
-    	System.out.println("asd");
    request.setAttribute("searchlist",result); 
     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/FlightSearchResult.jsp");
    dispatcher.forward(request, response); 

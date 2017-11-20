@@ -10,7 +10,7 @@
 </head>
 <body>
 <form action = "FlightSearch" method = "post">
-<div class="container">
+<div class="container" id = "con">
   <h2>Flight Info</h2>
   <p>Search for your flight</p>
     <div class="form-group row">
@@ -46,13 +46,34 @@
       </div>
         <div class="col-xs-4">
         <label for="ftype">Flight Type</label>
-       <select class="selectpicker form-control" name = "type">
+       <select class="selectpicker form-control" id = "sp" name = "type" onchange = "func1()">
         <option value = "Round">Round trip</option>
         <option value = "One">One Way </option>
-        <option value = "Multi">Multi-City value</option>
+        <option value = "Multi">Multi-City</option>
       </select>
       </div>
+      </div>
            
+    
+    <div class="form-group row" id = "two" style="display: none;">
+      <div class="col-xs-4" >
+        <label for="ex1" >Flying From</label>
+        <input class="form-control" name="from2" type="text">
+      </div>
+      <div class="col-xs-4">
+        <label for="ex2">Flying To</label>
+        <input class="form-control" name="flyto2" type="text">
+      </div>
+    </div>
+    <div class="form-group row" id = "2r" style= "display: none;">
+      <div class="col-xs-4">
+        <label for="start_date">Depart Date</label>
+    <input type="date" class="form-control" name="start_date2" id="start_date" placeholder="mm/dd/yyyy">
+      </div>
+        <div class="col-xs-4">
+        <label for="arrive_date">Arrive Date</label>
+    <input type="date" class="form-control" name="arrive_date2" id="arrive_date" placeholder="mm/dd/yyyy">
+      </div>
     </div>
     
       <div class="form-group row">
@@ -60,7 +81,16 @@
           <button type="submit" class="btn btn-primary">Search</button>
           </div>
       </div>
- 
+  <script>
+ function func1() {
+     var x = document.getElementById("sp");
+
+     if(x.value=="Multi"){
+     document.getElementById("two").style.display = "block";
+     document.getElementById("2r").style.display = "block";
+        }
+       }
+  </script>
 </div> 
  </form>
 </body>
