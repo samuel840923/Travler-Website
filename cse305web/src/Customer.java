@@ -1,4 +1,4 @@
-public class Person{
+public class Customer extends Person{
     int Id;
     int AccountNo;
     String CreditCardNo;
@@ -6,7 +6,7 @@ public class Person{
     String CreationDate;
     int Rating;
 
-    public Fare(int Id, String CreditCardNo, String Email, String CreationDate, int AccountNo, int Rating) {
+    public Customer(int Id, String CreditCardNo, String Email, String CreationDate, int AccountNo, int Rating) {
         this.Id = Id;
         this.CreditCardNo = CreditCardNo;
         this.Email = Email;

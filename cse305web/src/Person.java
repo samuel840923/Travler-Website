@@ -7,7 +7,7 @@ public class Person{
     String State;
     int ZipCode;
 
-    public Fare(int Id, String FirstName, String LastName, String Address, String City, String State, int ZipCode) {
+    public Person(int Id, String FirstName, String LastName, String Address, String City, String State, int ZipCode) {
         this.Id = Id;
         this.FirstName = FirstName;
         this.LastName = LastName;
