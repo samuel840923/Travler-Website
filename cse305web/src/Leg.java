@@ -6,7 +6,7 @@ public class Leg{
     String ArrTime;
     String DepTime;
 
-    public Fare(String AirlineID, int FlightNo, String DepAirportID, String ArrAirportID, String ArrTime, String DepTime) {
+    public Leg(String AirlineID, int FlightNo, String DepAirportID, String ArrAirportID, String ArrTime, String DepTime) {
         this.AirlineID = AirlineID;
         this.FlightNo = FlightNo;
         this.DepAirportID = DepAirportID;

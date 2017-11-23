@@ -34,9 +34,9 @@
         <label for="start_date">Depart Date</label>
     <input type="date" class="form-control" name="start_date" id="start_date" placeholder="mm/dd/yyyy">
       </div>
-        <div class="col-xs-4">
-        <label for="arrive_date">Arrive Date</label>
-    <input type="date" class="form-control" name="arrive_date" id="arrive_date" placeholder="mm/dd/yyyy">
+        <div class="col-xs-4" id ="return" style="display: none;">
+        <label for="arrive_date">Return Date</label>
+    <input type="date" class="form-control" name="return_date" id="arrive_date" placeholder="mm/dd/yyyy">
       </div>
     </div>
        <div class="form-group row">
@@ -47,8 +47,8 @@
         <div class="col-xs-4">
         <label for="ftype">Flight Type</label>
        <select class="selectpicker form-control" id = "sp" name = "type" onchange = "func1()">
-        <option value = "Round">Round trip</option>
         <option value = "One">One Way </option>
+         <option value = "Round">Round trip</option>
         <option value = "Multi">Multi-City</option>
       </select>
       </div>
@@ -70,10 +70,6 @@
         <label for="start_date">Depart Date</label>
     <input type="date" class="form-control" name="start_date2" id="start_date" placeholder="mm/dd/yyyy">
       </div>
-        <div class="col-xs-4">
-        <label for="arrive_date">Arrive Date</label>
-    <input type="date" class="form-control" name="arrive_date2" id="arrive_date" placeholder="mm/dd/yyyy">
-      </div>
     </div>
     
       <div class="form-group row">
@@ -88,7 +84,18 @@
      if(x.value=="Multi"){
      document.getElementById("two").style.display = "block";
      document.getElementById("2r").style.display = "block";
+     }
+     else {
+      document.getElementById("two").style.display = "none";
+     document.getElementById("2r").style.display = "none";
+     }
+      if(x.value=="Round"){
+     document.getElementById("return").style.display = "block";
         }
+      else {
+        document.getElementById("return").style.display = "none";
+      }
+
        }
   </script>
 </div> 

@@ -1,9 +1,9 @@
-public class Person{
+public class CustomerPreferences{
     int AccountNo;
     String Preference;
 
 
-    public Fare(int AccountNo, String Preference) {
+    public CustomerPreferences(int AccountNo, String Preference) {
         this.AccountNo = AccountNo;
         this.Preference = Preference;
 

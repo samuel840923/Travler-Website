@@ -5,7 +5,7 @@ public class Employee{
     String StartDate;
     double HourlyRate;
 
-    public Fare(int Id, int SSN, boolean IsManager, String StartDate, double HourlyRate) {
+    public Employee(int Id, int SSN, boolean IsManager, String StartDate, double HourlyRate) {
         this.Id = Id;
         this.SSN = SSN;
         this.IsManager = IsManager;
