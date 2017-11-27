@@ -8,8 +8,20 @@
     <servlet-name>search</servlet-name>
     <servlet-class>FlightSearch</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>search</servlet-name>
     <url-pattern>/FlightSearch</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>test</servlet-name>
+    <servlet-class>TEST</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>test</servlet-name>
+    <url-pattern>/TEST</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
