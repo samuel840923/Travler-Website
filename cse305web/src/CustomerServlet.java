@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CustomerServlet extends HttpServlet{
 	public static Customer cust; 
-	public static Person person;
 	public static final String PERSON_INFO = "SELECT * From person where Id = ?";
 	public static final String CUSTOMER_INFO = "SELECT Id, CreditCardNo, Email, CreationDate, Rating FROM customer Where AccountNo = ?";
 	public static final String CURRENT_BID = "SELECT NYOP FROM Auctions WHERE AccountNo = ?";
@@ -82,19 +81,17 @@ public class CustomerServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(person!=null) {
-		request.setAttribute("fname",person.getFirstName()); 
-		request.setAttribute("lname",person.getLastName()); 
-		request.setAttribute("address",person.getAddress()); 
-		request.setAttribute("city",person.getCity());
-		request.setAttribute("state",person.getState()); 
-		request.setAttribute("zip", person.getZipCode());
-		}
-		if(cust!= null) {
-			request.setAttribute("credit",cust.getCreditCardNo()); 
-			request.setAttribute("email",cust.getEmail()); 
-			request.setAttribute("create",cust.getCreationDate()); 
-			request.setAttribute("rating",cust.getRating());
+		if(cust!=null) {
+		request.setAttribute("fname",cust.getFirstName()); 
+		request.setAttribute("lname",cust.getLastName()); 
+		request.setAttribute("address",cust.getAddress()); 
+		request.setAttribute("city",cust.getCity());
+		request.setAttribute("state",cust.getState()); 
+		request.setAttribute("zip", cust.getZipCode());
+		request.setAttribute("credit",cust.getCreditCardNo()); 
+		request.setAttribute("email",cust.getEmail()); 
+		request.setAttribute("create",cust.getCreationDate()); 
+		request.setAttribute("rating",cust.getRating());
 		}
 		request.setAttribute("currentbid",current_bid); 
 		request.setAttribute("bid",bid); 
@@ -110,16 +107,20 @@ public class CustomerServlet extends HttpServlet{
 			connection = JDBC.getConnection();
 			PreparedStatement stmt=connection.prepareStatement(CUSTOMER_INFO);  
 			stmt.setInt(1, AccountNumber);
+			int personid = 0;
+			String creditcard = null;
+			String email = null;
+			Timestamp create = new Timestamp(0);
+			int rating = 0;
 			ResultSet customer = stmt.executeQuery();
 			if(customer!=null && customer.next()) {
-				int personid = customer.getInt("Id");
-				String creditcard = customer.getString("CreditCardNo");
-				String email = customer.getString("Email");
-				Timestamp create = customer.getTimestamp("CreationDate");
-				int rating = customer.getInt("Rating");
-				cust = new Customer(personid,creditcard,email,create,AccountNumber,rating);			
+				personid = customer.getInt("Id");
+				creditcard = customer.getString("CreditCardNo");
+				email = customer.getString("Email");
+				 create = customer.getTimestamp("CreationDate");
+				rating = customer.getInt("Rating");
+							
 			}
-			int personid = cust.getId();
 			PreparedStatement stmt1=connection.prepareStatement(PERSON_INFO); 
 			stmt1.setInt(1, personid);
 			ResultSet persons = stmt1.executeQuery();
@@ -130,7 +131,7 @@ public class CustomerServlet extends HttpServlet{
 				String city = persons.getString("City");
 				String state = persons.getString("State");
 				int zip = persons.getInt("ZipCode");
-				person = new Person(personid, fname, lname, address, city, state, zip);
+				cust = new Customer(personid, fname, lname, address, city, state, zip,creditcard,email,create,AccountNumber,rating);
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
