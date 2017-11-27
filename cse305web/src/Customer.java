@@ -1,12 +1,14 @@
+import java.sql.Timestamp;
+
 public class Customer extends Person{
     int Id;
     int AccountNo;
     String CreditCardNo;
     String Email;
-    String CreationDate;
+    Timestamp CreationDate;
     int Rating;
 
-    public Customer(int Id, String CreditCardNo, String Email, String CreationDate, int AccountNo, int Rating) {
+    public Customer(int Id, String CreditCardNo, String Email, Timestamp CreationDate, int AccountNo, int Rating) {
         this.Id = Id;
         this.CreditCardNo = CreditCardNo;
         this.Email = Email;
@@ -29,7 +31,7 @@ public class Customer extends Person{
     public String getEmail() {
         return this.Email;
     }
-    public String getCreationDate() {
+    public Timestamp getCreationDate() {
         return this.CreationDate;
     }
 
@@ -39,7 +41,7 @@ public class Customer extends Person{
     public void setEmail(String s) {
         this.Email = s;
     }
-    public void setCreationDate(String s) {
+    public void setCreationDate(Timestamp s) {
         this.CreationDate = s;
     }
     public void setId(int i) {

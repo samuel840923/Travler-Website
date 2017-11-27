@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
+<%@page import="java.sql.Timestamp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -15,47 +16,56 @@
 
 <div class="container">
  <h2>Profile</h2>
+<%
+String fname = (String)request.getAttribute("fname"); 
+String lname = (String)request.getAttribute("lname"); 
+String address = (String)request.getAttribute("address"); 
+String city = (String)request.getAttribute("city");
+String state = (String)request.getAttribute("state"); 
+int zip = (int)request.getAttribute("zip");
+String credit= (String)request.getAttribute("credit"); 
+String email = (String)request.getAttribute("email"); 
+Timestamp create = (Timestamp)request.getAttribute("create"); 
+int rate = (int)request.getAttribute("rating");
 
+
+
+%>
    <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Name: </label>
-          <label for="ex1">Bob Smith </label>
+          <label for="ex1"><%= fname + " " + lname%>  </label>
           </div>
   </div>
   <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Address:</label>
-          <label for="ex1">123 beach st, Stony Brook, NY 11790 </label>
+          <label for="ex1"><%=address+" "+city+" "+state+" "+zip  %> </label>
           </div>
   </div>
-  <div class="form-group row">
-           <div class="col-xs-4">
-          <label for="ex1">Phone Number:</label>
-          <label for="ex1">1234567890</label>
-          </div>
-  </div>
+  
    <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Email:</label>
-          <label for="ex1">sbcs@stonybrook.edu</label>
+          <label for="ex1"><%=email %></label>
           </div>
   </div>
   <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Creation Date</label>
-          <label for="ex1">01/01/2017:10:12</label>
+          <label for="ex1"><%= create %></label>
           </div>
   </div>
   <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Credit Card:</label>
-          <label for="ex1">0000000000000001</label>
+          <label for="ex1"><%= credit %></label>
           </div>
   </div>
   <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Rating:</label>
-          <label for="ex1">1</label>
+          <label for="ex1"><%= rate %></label>
           </div>
   </div>
   <div class="form-group row">

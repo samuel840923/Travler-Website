@@ -24,4 +24,15 @@
     <url-pattern>/TEST</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>customer</servlet-name>
+    <servlet-class>CustomerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>customer</servlet-name>
+    <url-pattern>/CustomerServlet</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
