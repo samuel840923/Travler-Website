@@ -19,9 +19,9 @@ public class CustomerServlet extends HttpServlet{
 	public static final String PERSON_INFO = "SELECT * From person where Id = ?";
 	public static final String CUSTOMER_INFO = "SELECT Id, CreditCardNo, Email, CreationDate, Rating FROM customer Where AccountNo = ?";
 	public static final String CURRENT_BID = "SELECT NYOP FROM Auctions WHERE AccountNo = ?";
-	public static final String BID_HISTORY = "Select A.NYOP, R.ResrNo, ResrDate, R.BookingFee, R.TotalFare" + " R.AccountNo " + 
-			"From reservation R, Customer C, Auctions A " + 
-			"Where C.AccountNo = R.AccountNo AND R.ResrNo=? AND A.AccountNo = C.AccountNo";
+	public static final String BID_HISTORY = "Select A.NYOP, R.ResrNo, ResrDate, R.BookingFee, R.TotalFare, R.AccountNo " + 
+			" From reservation R, Customer C, Auctions A " + 
+			" Where C.AccountNo = R.AccountNo AND R.ResrNo=? AND A.AccountNo = C.AccountNo";
 	public static final String CUSTOMER_BID = "SELECT * FROM Reservation WHERE AccountNo = ?";
 	public static final String BEST_SELL = "SELECT F.*, T.total " + 
 			"FROM flight F, " + 
@@ -34,18 +34,18 @@ public class CustomerServlet extends HttpServlet{
 			"order by T.total DESC";
 	public static final String FLIGHT_SUGGESTION = "SELECT L.*, F.NoOfSeats, F.DaysOperating, F.MinLengthOfStay, F.MaxLengthOfStay " + 
 			"FROM Flight F, Leg L " + 
-			"WHERE F.FlightNo=L.FlightNo AND F.AirlineID=L.AirlineID AND L.CurrArrTime>NOW() AND L.CurrDepTime>NOW() " + 
+			"WHERE F.FlightNo=L.FlightNo AND F.AirlineID=L.AirlineID  " + 
 			"AND F.AirlineID IN ( " + 
 			"	Select Ic.AirlineID " + 
 			"FROM Reservation R, Includes Ic " + 
 			"WHERE R.AccountNo=( " + 
-			"SELECT C.AccountNo FROM Customer C WHERE C.Id=? " + 
+			"SELECT C.AccountNo FROM Customer C WHERE C.Id = ? " + 
 			") " + 
 			"AND R.ResrNo=Ic.ResrNo " + 
 			"AND NOW() > ( " + 
 			"SELECT MAX(L.DepTime) " + 
 			"  	FROM Leg L, Includes I " + 
-			"  	WHERE I.ResrNo=R.ResrNo AND I.AirlineID=L.AirlineID AND " + 
+			" WHERE I.ResrNo=R.ResrNo AND I.AirlineID=L.AirlineID AND " + 
 			"I.FlightNo=L.FlightNo " + 
 			")" + 
 			")";
@@ -60,10 +60,10 @@ public class CustomerServlet extends HttpServlet{
 		List customer_bid = new ArrayList();
 		List best_sell = new ArrayList();
 		List flight_suggest = new ArrayList();
+		String resrno = request.getParameter("resrno");
 		
 		try {
 			connection = JDBC.getConnection();
-			
 			ResultSet currentbid = null;
 			PreparedStatement stmt=connection.prepareStatement(CURRENT_BID);  
 			stmt.setInt(1, Account);
@@ -73,8 +73,58 @@ public class CustomerServlet extends HttpServlet{
 				subresult.add(currentbid.getLong("NYOP"));
 				current_bid.add(subresult);
 			}
-			
-			
+			if(resrno!=null) {
+				PreparedStatement stmt1=connection.prepareStatement(BID_HISTORY);  
+				int rno = Integer.parseInt(resrno);
+				stmt1.setInt(1,rno);
+				ResultSet reserve = stmt1.executeQuery();
+				while(reserve!=null && reserve.next()) {
+					List subresult = new ArrayList();
+					subresult.add(reserve.getLong("NYOP"));
+					subresult.add(reserve.getLong("ResrNo"));
+					subresult.add(reserve.getTimestamp("ResrDate"));
+					subresult.add(reserve.getLong("BookingFee"));
+					subresult.add(reserve.getLong("TotalFare"));
+				bid.add(subresult);
+				}
+			}
+			PreparedStatement stmt2=connection.prepareStatement(CUSTOMER_BID);  
+			stmt2.setInt(1, Account);
+			ResultSet cust_bid = stmt2.executeQuery();
+			while(cust_bid!= null && cust_bid.next()) {
+				List subresult = new ArrayList();
+				subresult.add(cust_bid.getLong("ResrNo"));
+				subresult.add(cust_bid.getTimestamp("ResrDate"));
+				subresult.add(cust_bid.getLong("BookingFee"));
+				subresult.add(cust_bid.getLong("TotalFare"));
+				
+			customer_bid.add(subresult);
+			}
+			Statement stmt3 = connection.createStatement();
+			ResultSet best = stmt3.executeQuery(BEST_SELL);
+			while(best!= null && best.next()) {
+				List subresult = new ArrayList();
+				subresult.add(best.getString("AirlineID"));
+				subresult.add(best.getInt("FlightNo"));
+				subresult.add(best.getInt("NoOfSeats"));
+				subresult.add(best.getString("DaysOperating"));
+				subresult.add(best.getInt("total"));
+			best_sell.add(subresult);
+			}
+			PreparedStatement stmt4=connection.prepareStatement(FLIGHT_SUGGESTION);  
+			stmt4.setInt(1, cust.getId());
+			ResultSet suggest = stmt4.executeQuery();
+			while(suggest!= null && suggest.next()) {
+				List subresult = new ArrayList();
+				subresult.add(suggest.getString("AirlineID"));
+				subresult.add(suggest.getInt("FlightNo"));
+				subresult.add(suggest.getString("DepAirportID"));
+				subresult.add(suggest.getString("ArrAirportID"));
+				subresult.add(suggest.getInt("NoOfSeats"));
+				subresult.add(suggest.getString("DaysOperating"));
+				
+			flight_suggest.add(subresult);
+			}
 			
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -118,8 +168,7 @@ public class CustomerServlet extends HttpServlet{
 				creditcard = customer.getString("CreditCardNo");
 				email = customer.getString("Email");
 				 create = customer.getTimestamp("CreationDate");
-				rating = customer.getInt("Rating");
-							
+				rating = customer.getInt("Rating");				
 			}
 			PreparedStatement stmt1=connection.prepareStatement(PERSON_INFO); 
 			stmt1.setInt(1, personid);

@@ -122,6 +122,7 @@ No Search Found
 List bid=new ArrayList();
  bid=(ArrayList)request.getAttribute("bid");
 if(bid!=null && bid.size()>0 ){
+	
 %>
 <thead>
       <tr>
@@ -134,20 +135,34 @@ if(bid!=null && bid.size()>0 ){
   </thead>    
   <tbody> 
   
-  	<%for(int i=0;i<bid.size();i++){ %>
+  	<%for(int i=0;i<bid.size();i++){
+  		List sub = (ArrayList)bid.get(i);%>
+  	
   	<tr>
-      <td> <%= bid.get(1) %> </td>
-      <td> <%= bid.get(2) %> </td>
-      <td> <%= bid.get(3) %> </td>
-      <td> <%= bid.get(4) %> </td>
-      <td> <%= bid.get(5) %></td>
+      <td> <%= sub.get(0) %> </td>
+      <td> <%= sub.get(1) %> </td>
+      <td> <%= sub.get(2) %> </td>
+      <td> <%= sub.get(3) %> </td>
+      <td> <%= sub.get(4) %></td>
        </tr>
       <%} %>
       
   </tbody>     
-<%} else{%>
-No Result
 <%} %>
+<form action = "CustomerServlet" >
+<div class="form-group row">
+      <div class="col-xs-4">
+        <label for="ex1">Search For BID with id</label>
+        <input class="form-control" name="resrno" type="text">
+      </div>  
+</div>
+<div class="form-group row">
+ <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary">Search</button>
+     </div>
+</div>
+</form>
+
 </table>
 </div>
 <div class="container">
@@ -155,7 +170,7 @@ No Result
 <table class="table">
 <%
 List customerbid=new ArrayList();
-customerbid=(ArrayList)request.getAttribute("customebid");
+customerbid=(ArrayList)request.getAttribute("customerbid");
 if(customerbid!=null && customerbid.size()>0 ){
 %>
 <thead>
@@ -168,12 +183,13 @@ if(customerbid!=null && customerbid.size()>0 ){
   </thead>    
   <tbody> 
 
-  	<%for(int i=0;i<customerbid.size();i++){ %>
+  	<%for(int i=0;i<customerbid.size();i++){
+  		List sub = (ArrayList)customerbid.get(i);%>
   	<tr>
-      <td> <%= customerbid.get(0) %> </td>
-      <td> <%= customerbid.get(1) %>  </td>
-      <td> <%= customerbid.get(2) %> </td>
-      <td> <%= customerbid.get(3) %>  </td>
+      <td> <%= sub.get(0) %> </td>
+      <td> <%= sub.get(1) %>  </td>
+      <td> <%= sub.get(2) %> </td>
+      <td> <%= sub.get(3) %>  </td>
        </tr>
    <%} %>
   </tbody>  
@@ -196,15 +212,18 @@ if(bestsell!=null && bestsell.size()>0 ){
         <th>Flight Number</th>
         <th>Number Of Seats</th>
         <th>Days Operating</th>
+        <th>Total sell</th>
       </tr>
   </thead>    
   <tbody> 
-  <%for(int i=0;i<bestsell.size();i++){ %>
+  <%for(int i=0;i<bestsell.size();i++){ 
+  List sub = (ArrayList)bestsell.get(i);%>
   <tr>
-      <td><%= bestsell.get(0) %> </td>
-      <td> <%= bestsell.get(1) %></td>
-      <td> <%= bestsell.get(2) %> </td>
-      <td> <%= bestsell.get(3) %> </td>
+      <td><%= sub.get(0) %> </td>
+      <td> <%= sub.get(1) %></td>
+      <td> <%= sub.get(2) %> </td>
+      <td> <%= sub.get(3) %> </td>
+       <td> <%= sub.get(4) %> </td>
   </tr>
   <%} %>
   </tbody> 
@@ -232,14 +251,15 @@ if(fs!=null && fs.size()>0 ){
       </tr>
   </thead>    
   <tbody> 
-   <%for(int i=0;i<fs.size();i++){ %>
+   <%for(int i=0;i<fs.size();i++){
+	   List sub = (ArrayList)fs.get(i);%>
   <tr>
-      <td> <%= fs.get(0) %> </td>
-      <td> <%= fs.get(1) %> </td>
-      <td> <%= fs.get(2) %> </td>
-      <td> <%= fs.get(3) %> </td>
-      <td> <%= fs.get(4) %></td>
-      <td> <%= fs.get(5) %> </td>
+      <td> <%= sub.get(0) %> </td>
+      <td> <%= sub.get(1) %> </td>
+      <td> <%= sub.get(2) %> </td>
+      <td> <%= sub.get(3) %> </td>
+      <td> <%= sub.get(4) %></td>
+      <td> <%= sub.get(5) %> </td>
        </tr>
   </tbody>  
   <%} %>
