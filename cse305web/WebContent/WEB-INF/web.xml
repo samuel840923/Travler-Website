@@ -44,5 +44,15 @@
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>auction</servlet-name>
+    <servlet-class>AuctionServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>auction</servlet-name>
+    <url-pattern>/auction</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
