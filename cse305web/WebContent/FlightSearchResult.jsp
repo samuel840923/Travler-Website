@@ -16,12 +16,13 @@
   <h2>Search Result</h2>         
 <table class="table">
 <%
+
 List resultlist=new ArrayList();
 List round=new ArrayList();
 resultlist=(ArrayList)request.getAttribute("searchlist");
 round=(ArrayList)request.getAttribute("searchlist2");
 int type=(int)request.getAttribute("type");
-
+String nop=(String)request.getAttribute("nop");
 %>
  <thead>
       <tr>
@@ -31,6 +32,10 @@ int type=(int)request.getAttribute("type");
         <th>ArrAirportID</th>
         <th>DepTime</th>
         <th>ArrTime </th>
+        <%if(type == 1){ %>
+         <th>DepTime2</th>
+        <th>ArrTime2 </th>
+        <%} %>
         <th>Fare Type</th>
         <th>Class</th>
         <th>Fare </th>
@@ -40,7 +45,7 @@ int type=(int)request.getAttribute("type");
 <%if(type == 0){
 for(int i=0;i<resultlist.size();i++){
 List sub=(List)resultlist.get(i);%>
-<form action = "TEST" method = "post">
+<form action = "MoreInfoServlet" method = "post">
  <tr>
         <td><label for="ex1" name = "air"  value = "<%= sub.get(0) %>"> <%= sub.get(0) %> </label></td>
         <td><label for="ex1" name = "flight" value = "<%= sub.get(1) %>"> <%= sub.get(1) %> </label></td>
@@ -60,16 +65,20 @@ List sub=(List)resultlist.get(i);%>
         <input type="hidden" name = "faret" value= "<%= sub.get(6) %>"/>
          <input type="hidden" name = "class" value= "<%= sub.get(7) %>"/>
         <input type="hidden" name = "fare" value= "<%= sub.get(8) %>"/>
-         <td> <button type="submit" class="btn btn-primary">Reserve</button></td>
+        <input type="hidden" name = "type" value= "<%= type %>"/>
+        <input type="hidden" name = "nop" value= "<%= nop %>"/>
+         <td> <button type="submit" class="btn btn-primary">More Info</button></td>
   </tr>
   </form>
 
 <%}}
 if(type == 1){
+	List roundtime=(ArrayList)request.getAttribute("round");
 for(int i=0;i<round.size();i++){
 List sub=(List)round.get(i);
+List sub1=(List)roundtime.get(i);
 %>
-<form action = "TEST" method = "post">
+<form action = "MoreInfoServlet" method = "post">
       <tr>
        <td><label for="ex1" name = "air"  value = "<%= sub.get(0) %>"> <%= sub.get(0) %> </label></td>
         <td><label for="ex1" name = "flight" value = "<%= sub.get(1) %>"> <%= sub.get(1) %> </label></td>
@@ -77,9 +86,14 @@ List sub=(List)round.get(i);
         <td><label for="ex1" name = "arrair" value = "<%= sub.get(3) %>"> <%= sub.get(3) %> </label></td>
         <td><label for="ex1" name = "deptime" value = "<%= sub.get(4) %>"> <%= sub.get(4) %> </label></td>
         <td><label for="ex1" name = "arrtime" value = "<%= sub.get(5) %>"> <%= sub.get(5) %> </label></td>
+         <td><label for="ex1" name = "ft" value = "<%= sub1.get(0) %>"> <%= sub1.get(0) %> </label></td>
+        <td><label for="ex1" name = "cl" value = "<%= sub1.get(1) %>"> <%= sub1.get(1) %> </label></td>
         <td><label for="ex1" name = "ft" value = "<%= sub.get(6) %>"> <%= sub.get(6) %> </label></td>
         <td><label for="ex1" name = "cl" value = "<%= sub.get(7) %>"> <%= sub.get(7) %> </label></td>
         <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> <%= sub.get(8) %> </label></td>
+       
+        
+        
         <input type="hidden" name = "air" value= "<%= sub.get(0) %>"/>
         <input type="hidden" name = "flight" value= "<%= sub.get(1) %>"/>
          <input type="hidden" name = "depair" value= "<%= sub.get(2) %>"/>
@@ -89,10 +103,12 @@ List sub=(List)round.get(i);
         <input type="hidden" name = "faret" value= "<%= sub.get(6) %>"/>
          <input type="hidden" name = "class" value= "<%= sub.get(7) %>"/>
         <input type="hidden" name = "fare" value= "<%= sub.get(8) %>"/>
-        
-       
+         <input type="hidden" name = "dtime2" value= "<%= sub1.get(0) %>"/>
+        <input type="hidden" name = "atime2" value= "<%= sub1.get(1) %>"/>
+        <input type="hidden" name = "type" value= "<%= type %>"/>
+ 		 <input type="hidden" name = "nop" value= "<%= nop %>"/>
 
-        <td> <button type="submit" class="btn btn-primary">Reserve</button></td>
+        <td> <button type="submit" class="btn btn-primary">More Info</button></td>
       </tr>
  </form>
 
@@ -107,7 +123,7 @@ if(type == 2){
 			List sub1=(ArrayList)round.get(j);
 		
 %>
-	<form action = "TEST" method = "post">
+	<form action = "MoreInfoServlet" method = "post">
       <tr>
        <td><label for="ex1" name = "air"  value = "<%= sub.get(0) %>"> <%= sub.get(0) %> </label></td>
         <td><label for="ex1" name = "flight" value = "<%= sub.get(1) %>"> <%= sub.get(1) %> </label></td>
@@ -147,7 +163,9 @@ if(type == 2){
         <input type="hidden" name = "faret1" value= "<%= sub1.get(6) %>"/>
          <input type="hidden" name = "class1" value= "<%= sub1.get(7) %>"/>
         <input type="hidden" name = "fare1" value= "<%= sub1.get(8) %>"/>
-        <td> <button type="submit" class="btn btn-primary">Reserve</button></td>
+        <input type="hidden" name = "type" value= "<%= type %>"/>
+         <input type="hidden" name = "nop" value= "<%= nop %>"/>
+        <td> <button type="submit" class="btn btn-primary">More Info</button></td>
       </tr>
  </form>
 <%}}}} %>
