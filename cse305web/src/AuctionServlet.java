@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AuctionServlet extends HttpServlet{
-	public static final String getHiddenFare = "SELECT F.HiddenFare FROM Fare F, Leg L "
-			+ "WHERE F.AirlineID=? AND F.FlightNo=? AND L.AirlineID=F.AirlineID AND L.FlightNo=F.FlightNo AND F.Class=?"
-			+ "AND L.DepTime > NOW() AND F.NoOfSeats > 0;";
+	public static final String getHiddenFare = "SELECT F.HiddenFare FROM Fare F, Leg L, Flight Fl "
+			+ "WHERE F.AirlineID=? AND F.FlightNo=? AND L.AirlineID=F.AirlineID AND L.FlightNo=F.FlightNo AND F.Class=? "
+			//+ "AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
+			+ "AND L.DepTime > NOW() AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
 	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?);";
 	
 	@Override
@@ -37,11 +38,12 @@ public class AuctionServlet extends HttpServlet{
 			stmt.setString(1, airlineId);
 			stmt.setInt(2, flightNumber);
 			stmt.setString(3, rank);
+			System.out.println(stmt.toString());
 			data = stmt.executeQuery();
 			while(data !=null && data.next()) {
 				List fare = new ArrayList();
-				if (data.getDouble("F.Fare") >= nyop) {
-					fare.add(data.getDouble("F.HiddenFare"));
+				if (data.getDouble("HiddenFare") >= nyop) {
+					fare.add(data.getDouble("HiddenFare"));
 					fares.add(fare);
 					tooLow = false;
 				}
@@ -70,7 +72,7 @@ public class AuctionServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/auction.html");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
 	    dispatcher.forward(request, response); 
 	}
 }
