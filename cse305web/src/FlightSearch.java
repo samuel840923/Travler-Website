@@ -23,10 +23,12 @@ public class FlightSearch extends HttpServlet {
   public static final String ROUND = "Round";
   public static final String MULTI = "Multi";
   public static final String addzero = " 00:00:00";
-  public static final String SQL_SINGLE = "Select l1.AirlineID, l1.FlightNo, l1.DepAirportID, l2.ArrAirportID, l1.DepTime, l2.ArrTime " + 
-	 		" from leg l1, leg l2 where l1.FlightNo = l2.FlightNo and l1.DepAirportID = ? "
-	 		+ " and l1.DepTime >= ? and l2.ArrAirportID = ?";
-
+  public static final String SQL_SINGLE = "Select l1.AirlineID, l1.FlightNo, l1.DepAirportID, l2.ArrAirportID, l1.DepTime, l2.ArrTime, f.FareType,f.Fare, f.Class\n" + 
+  		"  			 		from leg l1, leg l2 , fare f where l1.DepAirportID = ? and  l1.DepTime >= ?  and l2.ArrAirportID = ? and l2.FlightNo = l1.FlightNo\n" + 
+  		"                    and f.FlightNo = l1.FlightNo and f.FareType = 'One Way'";
+  public static final String SQL_ROUND = "Select l1.AirlineID, l1.FlightNo, l1.DepAirportID, l2.ArrAirportID, l1.DepTime, l2.ArrTime, l2.DepTime as DepTime2,  f.FareType,f.Fare, f.Class\n" + 
+  		"  			 		from leg l1, leg l2 , fare f where l1.DepAirportID = ? and  l1.DepTime >= ?   and l2.ArrAirportID = ? and l2.FlightNo = l1.FlightNo and  l2.DepTime >= ?\n" + 
+  		"                    and f.FlightNo = l1.FlightNo and f.FareType = 'Round'";
   protected void doPost(HttpServletRequest request, 
       HttpServletResponse response) throws ServletException, IOException 
   {
@@ -43,43 +45,51 @@ public class FlightSearch extends HttpServlet {
     String return_date=request.getParameter("return_date");
     String nop=request.getParameter("nop");
     String type=request.getParameter("type");
-    start  = start + addzero;
     int types = 0;
-    Timestamp sd = Timestamp.valueOf(start);
+   
     try {
     	
 		Connection connection = JDBC.getConnection();
 		Statement state = connection.createStatement();
 		ResultSet re = null;
 		ResultSet re2 = null;
+		if(type.equals(ONE)) {
+		 start  = start + addzero;
+		 Timestamp sd = Timestamp.valueOf(start);
 		 PreparedStatement stmt=connection.prepareStatement(SQL_SINGLE);  
 		 stmt.setString(1, flyfrom);
 		 stmt.setTimestamp(2, sd);
 		 stmt.setString(3, flyto);
 		 re =  stmt.executeQuery();
-		 if (type.equals(ROUND)) {
-			 types = 2;
-		  PreparedStatement stmt1=connection.prepareStatement(SQL_SINGLE);
+		}
+		else if (type.equals(ROUND)) {
+			 types = 1;
+		  
+		  PreparedStatement stmt1=connection.prepareStatement(SQL_ROUND);
 		  Timestamp rd = Timestamp.valueOf(return_date+addzero);
-		  System.out.println(flyto);
-		  System.out.println(rd);
-		  System.out.println(flyfrom);
-		  stmt1.setString(1, flyto);
-		  stmt1.setTimestamp(2, rd);
-		  stmt1.setString(3, flyfrom);
+		  start  = start + addzero;
+		  Timestamp sd = Timestamp.valueOf(start);
+		  stmt1.setString(1, flyfrom);
+		  stmt1.setTimestamp(2, sd);
+		  stmt1.setString(3, flyto);
+		  stmt1.setTimestamp(4, rd);
 		  re2 =  stmt1.executeQuery();
 		}
 		else if (type.equals(MULTI)) {
+			start  = start + addzero;
+			Timestamp sd = Timestamp.valueOf(start);
 			types = 2;
 			PreparedStatement stmt1=connection.prepareStatement(SQL_SINGLE);
+			stmt1.setString(1, flyfrom);
+		    stmt1.setTimestamp(2, sd);
+			stmt1.setString(3, flyto);
+			re =  stmt1.executeQuery();
+			PreparedStatement stmt2=connection.prepareStatement(SQL_SINGLE);
 			Timestamp sd2 = Timestamp.valueOf(start2+addzero);
-			System.out.println(flyto2);
-			System.out.println(sd2);
-			System.out.println(flyfrom2);
-			  stmt1.setString(1, flyfrom2);
-			  stmt1.setTimestamp(2, sd2);
-			  stmt1.setString(3, flyto2);
-			  re2 =  stmt1.executeQuery();
+			stmt2.setString(1, flyfrom2);
+		    stmt2.setTimestamp(2, sd2);
+			stmt2.setString(3, flyto2);
+			re2 =  stmt2.executeQuery();
 		}
 		while(re!=null && re.next()) {
 			List subresult = new ArrayList();
@@ -89,6 +99,9 @@ public class FlightSearch extends HttpServlet {
 			subresult.add(re.getString("ArrAirportID"));
 			subresult.add(re.getString("DepTime"));
 			subresult.add(re.getString("ArrTime"));
+			subresult.add(re.getString("FareType"));
+			subresult.add(re.getString("Class"));
+			subresult.add(re.getDouble("Fare"));
 		result.add(subresult);
 		}
 		while(re2!=null && re2.next()) {
@@ -99,6 +112,9 @@ public class FlightSearch extends HttpServlet {
 			subresult.add(re2.getString("ArrAirportID"));
 			subresult.add(re2.getString("DepTime"));
 			subresult.add(re2.getString("ArrTime"));
+			subresult.add(re2.getString("FareType"));
+			subresult.add(re2.getString("Class"));
+			subresult.add(re2.getDouble("Fare"));
 		result2.add(subresult);
 		}
 	} catch (ClassNotFoundException e) {
