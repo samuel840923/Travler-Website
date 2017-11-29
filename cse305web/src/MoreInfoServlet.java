@@ -62,15 +62,12 @@ public class MoreInfoServlet extends HttpServlet{
 			 ResultSet dis = stmt.executeQuery();
 			 ResultSet book = stmt1.executeQuery();
 			 if(dis!= null && dis.next()) {
-				 List sub = new ArrayList();
-				 sub.add(dis.getInt("Days"));
-				 sub.add(dis.getDouble("DiscountRate"));
-				 discount.add(sub);
+				 discount.add(dis.getInt("Days"));
+				 discount.add(dis.getDouble("DiscountRate"));
 			 }
 			 if(book!=null && book.next()) {
-				 List sub = new ArrayList();
-				 sub.add(book.getInt("HiddenFare"));
-				 bookfare.add(sub);
+				
+				 bookfare.add(book.getDouble("HiddenFare"));
 			 }
 			 request.setAttribute("dtime2",dtime2);
 			 request.setAttribute("atime2",atime2);
@@ -101,26 +98,26 @@ public class MoreInfoServlet extends HttpServlet{
 				 ResultSet dis2 = stmt2.executeQuery();
 				 ResultSet book2 = stmt3.executeQuery();
 				 if(dis!= null && dis.next()) {
-					 List sub = new ArrayList();
-					 sub.add(dis.getInt("Days"));
-					 sub.add(dis.getDouble("DiscountRate"));
-					 discount.add(sub);
+					
+					 discount.add(dis.getInt("Days"));
+					 discount.add(dis.getDouble("DiscountRate"));
+					
 				 }
 				 if(book!=null && book.next()) {
-					 List sub = new ArrayList();
-					 sub.add(book.getInt("HiddenFare"));
-					 bookfare.add(sub);
+					
+					 bookfare.add(book.getDouble("HiddenFare"));
+					 
 				 }
 				 if(dis2!= null && dis2.next()) {
-					 List sub = new ArrayList();
-					 sub.add(dis2.getInt("Days"));
-					 sub.add(dis2.getDouble("DiscountRate"));
-					 discount2.add(sub);
+					
+					 discount2.add(dis2.getInt("Days"));
+					 discount2.add(dis2.getDouble("DiscountRate"));
+					 
 				 }
 				 if(book2!=null && book2.next()) {
-					 List sub = new ArrayList();
-					 sub.add(book2.getInt("HiddenFare"));
-					 bookfare2.add(sub);
+					
+					 bookfare2.add(book2.getDouble("HiddenFare"));
+					
 				 }
 				 request.setAttribute("flight2",flight2); 
 				   request.setAttribute("air2",air2);
@@ -144,19 +141,18 @@ public class MoreInfoServlet extends HttpServlet{
 			 ResultSet dis = stmt.executeQuery();
 			 ResultSet book = stmt1.executeQuery();
 			 if(dis!= null && dis.next()) {
-				 List sub = new ArrayList();
-				 sub.add(dis.getInt("Days"));
-				 sub.add(dis.getDouble("DiscountRate"));
-				 discount.add(sub);
+				
+				 discount.add(dis.getInt("Days"));
+				 discount.add(dis.getDouble("DiscountRate"));
+				 
 			 }
 			 if(book!=null && book.next()) {
-				 List sub = new ArrayList();
-				 sub.add(book.getInt("HiddenFare"));
-				 bookfare.add(sub);
+				
+				 bookfare.add(book.getDouble("HiddenFare"));
 			 }
 			 
 		 }
-		 request.setAttribute("bookfare",bookfare); 
+		    request.setAttribute("bookfare",bookfare); 
 		   
 		   request.setAttribute("discount",discount); 
 		   
@@ -172,7 +168,7 @@ public class MoreInfoServlet extends HttpServlet{
 		   request.setAttribute("type",type);
 		   request.setAttribute("class",classtype);
 		   
-		   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("");
+		   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/FlightDetailInfo.jsp");
 		   dispatcher.forward(request, response); 
 		 
 		 }catch (ClassNotFoundException | SQLException e) {
