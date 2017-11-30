@@ -22,7 +22,7 @@ public class RegisterServlet extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
-		Random rand = new Random(System.currentTimeMillis());
+		Random rand = new Random(System.nanoTime());
 		int id = rand.nextInt(Integer.MAX_VALUE);
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
