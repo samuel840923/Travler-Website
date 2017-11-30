@@ -125,7 +125,7 @@ public class CustomerServlet extends HttpServlet{
 				
 			flight_suggest.add(subresult);
 			}
-			
+			connection.close();
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -150,6 +150,7 @@ public class CustomerServlet extends HttpServlet{
 		request.setAttribute("flightsuggest",flight_suggest); 
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerInfo.jsp");
 	    dispatcher.forward(request, response); 
+	    
 		  }
 	public static void SetCustomer(int AccountNumber) {
 		Connection connection;
@@ -182,6 +183,7 @@ public class CustomerServlet extends HttpServlet{
 				int zip = persons.getInt("ZipCode");
 				cust = new Customer(personid, fname, lname, address, city, state, zip,creditcard,email,create,AccountNumber,rating);
 			}
+			connection.close();
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@page import="java.util.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <head>
@@ -31,26 +35,55 @@
 					<label><u>Ar. Time</u></label>
 				</div>
 				
+<%
+List bookfare = (ArrayList)request.getAttribute("bookfare"); 
+
+List discount = (ArrayList)request.getAttribute("discount"); 
+
+String nop = (String)request.getAttribute("nop"); 
+String flight = (String)request.getAttribute("flight");
+String air  = (String)request.getAttribute("air");
+String depname = (String)request.getAttribute("depair");
+String arrname= (String)request.getAttribute("arrair");
+String deptime = (String)request.getAttribute("deptime");
+String arrtime = (String)request.getAttribute("arrtime");
+String faretype = (String)request.getAttribute("faret");
+String fare=  (String)request.getAttribute("fare");
+String type  = (String) request.getAttribute("type");
+String classtype = (String)request.getAttribute("class");
+double fares = Double.parseDouble(fare);
+int nop1 = Integer.parseInt(nop);
+double bookfee = 0;
+if(bookfare.size()!=0)
+bookfee = (double)bookfare.get(0);
+int day = 0;
+double rate = 0;
+if (discount.size()!= 0){
+	 day = (int)discount.get(0);
+	 rate = (double)discount.get(1);
+}
+double total = fares*(1-rate)*nop1 + bookfee;
+%>
 				
 			</div>
 			<div class="row">
 				<div class="col-xs-2 form-group">
-					<label>AA</label>
+					<label><%=air %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>777.</label>
+					<label><%=flight %>.</label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>JFK (New York)</label>
+					<label><%=depname %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>LAX (Los Angeles)</label>
+					<label><%=arrname %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>5:00 01/15/2017</label>
+					<label><%=deptime %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>23:00 01/15/2017</label>
+					<label><%=arrtime %></label>
 				</div>				
 			</div>
 
@@ -77,22 +110,22 @@
 			</div>
 			 <div class="row">
 				<div class="col-xs-2 form-group">
-					<label>100.0</label>
+					<label><%=fares %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>10.0</label>
+					<label><%=bookfee %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>2</label>
+					<label><%=nop1 %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>50%</label>
+					<label><%=rate %></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>5</label>
+					<label><%=day + " Days"%></label>
 				</div>
 				<div class="col-xs-2 form-group">
-					<label>190.0</label>
+					<label><%=total %></label>
 				</div>
 
 			</div>
