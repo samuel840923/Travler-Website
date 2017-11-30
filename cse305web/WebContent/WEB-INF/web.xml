@@ -64,4 +64,14 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>empReserve</servlet-name>
+    <servlet-class>EmployeeReservationServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>empReserve</servlet-name>
+    <url-pattern>/empReserve</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
