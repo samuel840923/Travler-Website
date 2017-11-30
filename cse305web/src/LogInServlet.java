@@ -19,7 +19,7 @@ public class LogInServlet extends HttpServlet{
 	public static final String employeeLogIn = "SELECT IsManager, Id FROM Employee WHERE Email=? AND Password=?;";
 	
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");

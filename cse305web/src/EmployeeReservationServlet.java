@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,9 +23,35 @@ public class EmployeeReservationServlet extends HttpServlet{
 	public static final String insertPerson = "INSERT INTO Person values(?, ?, ?, ?, ?, ?, ?);";
 	public static final String insertPassenger = "INSERT INTO Passenger values(?, ?);";
 	public static final String insertReservationPassenger = "INSERT INTO ReservationPassenger values(?, ?, ?, ?, ?, ?);";
+	public static final String getCustomers = "SELECT C.AccountNo, P.FirstName, P.LastName FROM Customer C, Person P "
+			+ "WHERE C.Id=P.Id";
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection;
+		List customers = new ArrayList();
+		try {
+			connection = JDBC.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(getCustomers);
+			ResultSet data = stmt.executeQuery();
+			while(data!=null && data.next()) {
+				List customer = new ArrayList();
+				customer.add(data.getInt("AccountNo") + "");
+				customer.add(data.getString("FirstName") + " " + data.getString("LastName"));
+			    customers.add(customer);
+			}
+			connection.close();
+		}
+		catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("customers", customers);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
+		dispatcher.forward(request, response); 
+	}
 	
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
 		Random rand = new Random(System.nanoTime());
 		int reservationNumber = rand.nextInt(Integer.MAX_VALUE);
@@ -80,7 +105,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt1.setInt(3, Integer.parseInt(l));
 				data = stmt1.executeQuery();
 				if (data != null && data.next()) {
-					date = data.getString("DepTime");
+					date = data.getString("DepTime").split(" ")[0];
 				}
 				else {
 					//Error, invalid leg number
@@ -126,8 +151,8 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setInt(2,  id);
 				stmt.setInt(3, accountNo);
 				stmt.setString(4, seatNumber[i]);
-				stmt.setString(4, rank[i]);
-				stmt.setString(4, meal[i]);
+				stmt.setString(5, rank[i]);
+				stmt.setString(6, meal[i]);
 				error = stmt.executeUpdate();
 				if (error == 0) {
 					//handle error by loading error
@@ -139,7 +164,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
 	    dispatcher.forward(request, response); 
 	}
 }

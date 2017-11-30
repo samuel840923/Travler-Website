@@ -20,7 +20,7 @@ public class RegisterServlet extends HttpServlet{
 	public static final String insertCustomer = "INSERT INTO CUSTOMER values(?, ?, null, ?, NOW(), 0, ?);";
 	
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
 		Random rand = new Random(System.nanoTime());
 		int id = rand.nextInt(Integer.MAX_VALUE);
