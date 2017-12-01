@@ -21,8 +21,6 @@ public class AddPassengerServlet extends HttpServlet{
 	public static final String insertPassenger = "INSERT INTO Passenger values(?, ?);";
 	public static final String insertReservationPassenger = "INSERT INTO ReservationPassenger values(?, ?, ?, ?, ?, ?);";
 	
-	
-	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;

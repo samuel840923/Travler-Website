@@ -74,4 +74,53 @@
     <url-pattern>/empReserve</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>empAddPassenger</servlet-name>
+    <servlet-class>AddPassengerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>empAddPassenger</servlet-name>
+    <url-pattern>/empAddPassenger</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>empEditPassenger</servlet-name>
+    <servlet-class>EditPassengerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>empEditPassenger</servlet-name>
+    <url-pattern>/empEditPassenger</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>empDeletePassenger</servlet-name>
+    <servlet-class>AddPassengerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>empDeletePassenger</servlet-name>
+    <url-pattern>/empDeletePassenger</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>customerMailingList</servlet-name>
+    <servlet-class>CustomerMailingListServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>customerMailingList</servlet-name>
+    <url-pattern>/customerMailingList</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>flightSuggestions</servlet-name>
+    <servlet-class>flightSuggestionsServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>flightSuggestions</servlet-name>
+    <url-pattern>/empFlightSuggestions</url-pattern>
+  </servlet-mapping>
 </web-app>
