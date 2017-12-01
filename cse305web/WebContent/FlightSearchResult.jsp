@@ -39,12 +39,17 @@ String nop=(String)request.getAttribute("nop");
         <th>Fare Type</th>
         <th>Class</th>
         <th>Fare </th>
+        <th>Transfer </th>
       </tr>
     </thead>
  <tbody>
 <%if(type == 0){
 for(int i=0;i<resultlist.size();i++){
-List sub=(List)resultlist.get(i);%>
+List sub=(List)resultlist.get(i);
+int legno1 = (int)sub.get(9);
+int legno2 = (int)sub.get(10);
+String transfer = (String)sub.get(11);%>
+
 <form action = "MoreInfoServlet" method = "post">
  <tr>
         <td><label for="ex1" name = "air"  value = "<%= sub.get(0) %>"> <%= sub.get(0) %> </label></td>
@@ -56,6 +61,11 @@ List sub=(List)resultlist.get(i);%>
         <td><label for="ex1" name = "ft" value = "<%= sub.get(6) %>"> <%= sub.get(6) %> </label></td>
         <td><label for="ex1" name = "cl" value = "<%= sub.get(7) %>"> <%= sub.get(7) %> </label></td>
         <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> <%= sub.get(8) %> </label></td>
+        <%if(legno1 != legno2) {%>
+        <td><label for="ex1" name = "fa" value = "<%= transfer %>"> <%= transfer %> </label></td>
+        <%}else{ %>
+        <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> None </label></td>
+        <%} %>
         <input type="hidden" name = "air" value= "<%= sub.get(0) %>"/>
         <input type="hidden" name = "flight" value= "<%= sub.get(1) %>"/>
          <input type="hidden" name = "depair" value= "<%= sub.get(2) %>"/>
@@ -67,6 +77,8 @@ List sub=(List)resultlist.get(i);%>
         <input type="hidden" name = "fare" value= "<%= sub.get(8) %>"/>
         <input type="hidden" name = "type" value= "<%= type %>"/>
         <input type="hidden" name = "nop" value= "<%= nop %>"/>
+         <input type="hidden" name = "leg1" value= "<%= legno1 %>"/>
+        <input type="hidden" name = "leg2" value= "<%= legno2 %>"/>
          <td> <button type="submit" class="btn btn-primary">More Info</button></td>
   </tr>
   </form>
@@ -77,6 +89,9 @@ if(type == 1){
 for(int i=0;i<round.size();i++){
 List sub=(List)round.get(i);
 List sub1=(List)roundtime.get(i);
+int legno1 = (int)sub.get(9);
+int legno2 = (int)sub.get(10);
+String transfer = (String)sub.get(11);
 %>
 <form action = "MoreInfoServlet" method = "post">
       <tr>
@@ -92,7 +107,11 @@ List sub1=(List)roundtime.get(i);
         <td><label for="ex1" name = "cl" value = "<%= sub.get(7) %>"> <%= sub.get(7) %> </label></td>
         <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> <%= sub.get(8) %> </label></td>
        
-        
+         <%if(legno1 != legno2) {%>
+        <td><label for="ex1" name = "fa" value = "<%= transfer %>"> <%= transfer %> </label></td>
+        <%}else{ %>
+        <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> None </label></td>
+        <%} %>
         
         <input type="hidden" name = "air" value= "<%= sub.get(0) %>"/>
         <input type="hidden" name = "flight" value= "<%= sub.get(1) %>"/>
@@ -107,6 +126,8 @@ List sub1=(List)roundtime.get(i);
         <input type="hidden" name = "atime2" value= "<%= sub1.get(1) %>"/>
         <input type="hidden" name = "type" value= "<%= type %>"/>
  		 <input type="hidden" name = "nop" value= "<%= nop %>"/>
+ 		   <input type="hidden" name = "leg1" value= "<%= legno1 %>"/>
+        <input type="hidden" name = "leg2" value= "<%= legno2 %>"/>
 
         <td> <button type="submit" class="btn btn-primary">More Info</button></td>
       </tr>
@@ -119,8 +140,14 @@ if(type == 2){
 	if(round.size()!=0){
 	for(int i=0;i<resultlist.size();i++){
 		List sub=(ArrayList)resultlist.get(i);
+		int legno1 = (int)sub.get(9);
+		int legno2 = (int)sub.get(10);
+		String transfer = (String)sub.get(11);
 		for(int j = 0;j<round.size();j++){
 			List sub1=(ArrayList)round.get(j);
+			int legno11 = (int)sub1.get(9);
+			int legno22 = (int)sub1.get(10);
+			String transfer2 = (String)sub1.get(11);
 		
 %>
 	<form action = "MoreInfoServlet" method = "post">
@@ -134,6 +161,13 @@ if(type == 2){
         <td><label for="ex1" name = "ft" value = "<%= sub.get(6) %>"> <%= sub.get(6) %> </label></td>
         <td><label for="ex1" name = "cl" value = "<%= sub.get(7) %>"> <%= sub.get(7) %> </label></td>
         <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> <%= sub.get(8) %> </label></td>
+        
+         <%if(legno1 != legno2) {%>
+        <td><label for="ex1" name = "fa" value = "<%= transfer %>"> <%= transfer %> </label></td>
+        <%}else{ %>
+        <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> None </label></td>
+        <%} %>
+        
         <input type="hidden" name = "air" value= "<%= sub.get(0) %>"/>
         <input type="hidden" name = "flight" value= "<%= sub.get(1) %>"/>
          <input type="hidden" name = "depair" value= "<%= sub.get(2) %>"/>
@@ -143,6 +177,9 @@ if(type == 2){
         <input type="hidden" name = "faret" value= "<%= sub.get(6) %>"/>
          <input type="hidden" name = "class" value= "<%= sub.get(7) %>"/>
         <input type="hidden" name = "fare" value= "<%= sub.get(8) %>"/>
+        
+         <input type="hidden" name = "leg1" value= "<%= legno1 %>"/>
+        <input type="hidden" name = "leg2"value= "<%= legno2 %>"/>
       </tr>
       <tr>
        <td><label for="ex1" name = "air1"  value = "<%= sub1.get(0) %>"> <%= sub1.get(0) %> </label></td>
@@ -155,6 +192,11 @@ if(type == 2){
         <td><label for="ex1" name = "cl1" value = "<%= sub1.get(7) %>"> <%= sub1.get(7) %> </label></td>
         <td><label for="ex1" name = "fa1" value = "<%= sub1.get(8) %>"> <%= sub1.get(8) %> </label></td>
         <input type="hidden" name = "air1" value= "<%= sub1.get(0) %>"/>
+         <%if(legno11 != legno22) {%>
+        <td><label for="ex1" name = "fa" value = "<%= transfer2 %>"> <%= transfer2 %> </label></td>
+        <%}else{ %>
+        <td><label for="ex1" name = "fa" value = "none"> None </label></td>
+        <%} %>
         <input type="hidden" name = "flight1" value= "<%= sub1.get(1) %>"/>
          <input type="hidden" name = "depair1" value= "<%= sub1.get(2) %>"/>
         <input type="hidden" name = "arrair1" value= "<%= sub1.get(3) %>"/>
@@ -165,6 +207,9 @@ if(type == 2){
         <input type="hidden" name = "fare1" value= "<%= sub1.get(8) %>"/>
         <input type="hidden" name = "type" value= "<%= type %>"/>
          <input type="hidden" name = "nop" value= "<%= nop %>"/>
+         
+          <input type="hidden" name = "leg11" value= "<%= legno11 %>"/>
+        <input type="hidden" name = "leg22"value= "<%= legno22 %>"/>
         <td> <button type="submit" class="btn btn-primary">More Info</button></td>
       </tr>
  </form>

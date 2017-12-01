@@ -9,6 +9,7 @@
  <center> <h1>Flight Info</h1></center>
 </div>
 </head>
+<form  action = "CustomerReserve.jsp" method = "post">
 <body>
 <div class="container">
     <div class='row'>
@@ -35,8 +36,8 @@
 					<label><u>Ar. Time</u></label>
 				</div>
 				
+				
 <%
-List bookfare = (ArrayList)request.getAttribute("bookfare"); 
 
 List discount = (ArrayList)request.getAttribute("discount"); 
 
@@ -51,20 +52,23 @@ String faretype = (String)request.getAttribute("faret");
 String fare=  (String)request.getAttribute("fare");
 String type  = (String) request.getAttribute("type");
 String classtype = (String)request.getAttribute("class");
+int leg1  = (int) request.getAttribute("leg1");
+int leg2 = (int)request.getAttribute("leg2");
 double fares = Double.parseDouble(fare);
 int nop1 = Integer.parseInt(nop);
-double bookfee = 0;
-if(bookfare.size()!=0)
-bookfee = (double)bookfare.get(0);
+double bookfee = 0.1;
 int day = 0;
 double rate = 0;
 if (discount.size()!= 0){
 	 day = (int)discount.get(0);
 	 rate = (double)discount.get(1);
 }
+bookfee = fares*(1-rate)*nop1 * bookfee;
 double total = fares*(1-rate)*nop1 + bookfee;
+
 %>
-				
+		<input type="hidden" name = "nop" value= "<%=nop1 %>"/>	
+		<input type="hidden" name = "type" value= "<%=type %>"/>		
 			</div>
 			<div class="row">
 				<div class="col-xs-2 form-group">
@@ -86,7 +90,8 @@ double total = fares*(1-rate)*nop1 + bookfee;
 					<label><%=arrtime %></label>
 				</div>				
 			</div>
-
+				<input type="hidden" name = "leg1" value= "<%=leg1 %>"/>
+				<input type="hidden" name = "leg2" value= "<%=leg2 %>"/>
 		  <div class="row">
 				<div class="col-xs-2 form-group">
 					<label><u>Price</u></label>
@@ -94,6 +99,7 @@ double total = fares*(1-rate)*nop1 + bookfee;
 				<div class="col-xs-2 form-group">
 					<label><u>Booking Fee</u></label>
 				</div>
+				
 				<div class="col-xs-2 form-group">
 					<label><u>Number of People</u></label>
 				</div>
@@ -115,6 +121,7 @@ double total = fares*(1-rate)*nop1 + bookfee;
 				<div class="col-xs-2 form-group">
 					<label><%=bookfee %></label>
 				</div>
+				<input type="hidden" name = "bookfee" value= "<%=bookfee %>"/>
 				<div class="col-xs-2 form-group">
 					<label><%=nop1 %></label>
 				</div>
@@ -126,9 +133,121 @@ double total = fares*(1-rate)*nop1 + bookfee;
 				</div>
 				<div class="col-xs-2 form-group">
 					<label><%=total %></label>
+					<input type="hidden" name = "total" value= "<%=total %>"/>
 				</div>
-
 			</div>
+			<%if(type.equals("2")){ 
+				List discount2 = (ArrayList)request.getAttribute("discount2"); 
+			String flight1 = (String)request.getAttribute("flight2");
+String air1  = (String)request.getAttribute("air2");
+String depname1 = (String)request.getAttribute("depair2");
+String arrname1= (String)request.getAttribute("arrair2");
+String deptime1 = (String)request.getAttribute("deptime2");
+String arrtime1 = (String)request.getAttribute("arrtime2");
+String faretype1 = (String)request.getAttribute("faret2");
+String fare1 =  (String)request.getAttribute("fare2");
+String classtype1 = (String)request.getAttribute("class2");
+int leg11  = (int) request.getAttribute("leg11");
+int leg22 = (int)request.getAttribute("leg22");
+double fares1 = Double.parseDouble(fare1); 
+bookfee = 0.1;
+rate = 0;
+day =0;
+if (discount2.size()!= 0){
+	 day = (int)discount2.get(0);
+	 rate = (double)discount2.get(1);
+}
+bookfee = fares1*(1-rate)*nop1 * bookfee;
+total = fares1*(1-rate)*nop1 + bookfee;
+%>
+
+
+			<div class="row">
+				<div class="col-xs-2 form-group">
+					<label><u>Airline 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>FlightNo. 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Dept. Airport 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Ar. Airport 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Dept. Time 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Ar. Time 2</u></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 form-group">
+					<label><%=air1 %></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=flight1 %>.</label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=depname1 %></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=arrname1 %></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=deptime1 %></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=arrtime1 %></label>
+				</div>				
+			</div>
+			<div class="row">
+				<div class="col-xs-2 form-group">
+					<label><u>Price 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Booking Fee 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Number of People 2</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Early Bird Rate</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Time Left For Discount!</u></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><u>Total Price 2</u></label>
+				</div>
+			<div class="row">
+				<div class="col-xs-2 form-group">
+					<label><%=fares1 %></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=bookfee %></label>
+				</div>
+				<input type="hidden" name = "bookfee2" value= "<%=bookfee %>"/>
+				<div class="col-xs-2 form-group">
+					<label><%=nop1 %></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=rate %></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=day + " Days"%></label>
+				</div>
+				<div class="col-xs-2 form-group">
+					<label><%=total %></label>
+					<input type="hidden" name = "total2" value= "<%=total %>"/>
+				</div>
+				<input type="hidden" name = "leg11" value= "<%=leg11 %>"/>
+				<input type="hidden" name = "leg22" value= "<%=leg22 %>"/>
+				
+			</div>
+			</div>
+			<%} %>
 			 <div class='form-row'>
               <div class='col-md-6 form-group'>
                 <button class='form-control btn btn-info submit-button' type='submit'>Back To Flight List</button>
@@ -143,3 +262,4 @@ double total = fares*(1-rate)*nop1 + bookfee;
     </div>
 </div>
 </body>
+</form>

@@ -74,4 +74,16 @@
     <url-pattern>/empReserve</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>cusReserve</servlet-name>
+    <servlet-class>AddReservationPassenger</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>cusReserve</servlet-name>
+    <url-pattern>/AddReservationPassenger</url-pattern>
+  </servlet-mapping>
+  
+  
+  
 </web-app>

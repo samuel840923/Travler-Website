@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MoreInfoServlet extends HttpServlet{
 	public static final String ADV_DISCOUNT = "Select Days, DiscountRate from advpurchasediscount where AirlineID = ?";
-	public static final String BOOK_FARE = "Select HiddenFare from fare where AirlineID = ? and FlightNo = ?";
+	
 	protected void doPost(HttpServletRequest request, 
 		      HttpServletResponse response) throws ServletException, IOException 
 		  {
@@ -31,6 +31,9 @@ public class MoreInfoServlet extends HttpServlet{
 		 String classtype = request.getParameter("class"); 
 		 String  fare = request.getParameter("fare");
 		 String  type = request.getParameter("type");
+		 int  legno1 = Integer.parseInt(request.getParameter("leg1"));
+		 int  legno2 = Integer.parseInt(request.getParameter("leg2"));
+		 
 		 String dtime2 = null;
 		 String atime2 = null;
 		 String flight2 = null; 
@@ -42,9 +45,9 @@ public class MoreInfoServlet extends HttpServlet{
 		 String faretype2 = null; 
 		 String classtype2 = null;  
 		 String  fare2 = null; 
-		 List bookfare = new ArrayList();
+		 
 		 List discount = new ArrayList();
-		 List bookfare2 = new ArrayList();
+		 
 		 List discount2 = new ArrayList();
 		 try {
 			Connection connection = JDBC.getConnection();
@@ -56,19 +59,15 @@ public class MoreInfoServlet extends HttpServlet{
 			 
 			 PreparedStatement stmt=connection.prepareStatement(ADV_DISCOUNT);  
 			 stmt.setString(1,air);
-			 PreparedStatement stmt1=connection.prepareStatement(BOOK_FARE);  
-			 stmt1.setString(1,air);
-			 stmt1.setInt(2,Integer.parseInt(flight));
+			
+			 
 			 ResultSet dis = stmt.executeQuery();
-			 ResultSet book = stmt1.executeQuery();
+			
 			 if(dis!= null && dis.next()) {
 				 discount.add(dis.getInt("Days"));
 				 discount.add(dis.getDouble("DiscountRate"));
 			 }
-			 if(book!=null && book.next()) {
-				
-				 bookfare.add(book.getDouble("HiddenFare"));
-			 }
+			 
 			 request.setAttribute("dtime2",dtime2);
 			 request.setAttribute("atime2",atime2);
 		  }
@@ -85,41 +84,29 @@ public class MoreInfoServlet extends HttpServlet{
 			  
 			  PreparedStatement stmt=connection.prepareStatement(ADV_DISCOUNT);  
 				 stmt.setString(1,air);
-				 PreparedStatement stmt1=connection.prepareStatement(BOOK_FARE);  
-				 stmt1.setString(1,air);
-				 stmt1.setInt(2,Integer.parseInt(flight));
+				 
 				 PreparedStatement stmt2=connection.prepareStatement(ADV_DISCOUNT);  
 				 stmt2.setString(1,air2);
-				 PreparedStatement stmt3=connection.prepareStatement(BOOK_FARE);  
-				 stmt3.setString(1,air2);
-				 stmt3.setInt(2,Integer.parseInt(flight2));
+				
 				 ResultSet dis = stmt.executeQuery();
-				 ResultSet book = stmt1.executeQuery();
+				
 				 ResultSet dis2 = stmt2.executeQuery();
-				 ResultSet book2 = stmt3.executeQuery();
+				
 				 if(dis!= null && dis.next()) {
 					
 					 discount.add(dis.getInt("Days"));
 					 discount.add(dis.getDouble("DiscountRate"));
 					
 				 }
-				 if(book!=null && book.next()) {
-					
-					 bookfare.add(book.getDouble("HiddenFare"));
-					 
-				 }
+				
 				 if(dis2!= null && dis2.next()) {
 					
 					 discount2.add(dis2.getInt("Days"));
 					 discount2.add(dis2.getDouble("DiscountRate"));
 					 
 				 }
-				 if(book2!=null && book2.next()) {
-					
-					 bookfare2.add(book2.getDouble("HiddenFare"));
-					
-				 }
-				 request.setAttribute("flight2",flight2); 
+				
+				   request.setAttribute("flight2",flight2); 
 				   request.setAttribute("air2",air2);
 				   request.setAttribute("depair2",depairname2); 
 				   request.setAttribute("arrair2",arrairname2); 
@@ -128,31 +115,27 @@ public class MoreInfoServlet extends HttpServlet{
 				   request.setAttribute("faret2",faretype2);
 				   request.setAttribute("fare2",fare2);
 				   request.setAttribute("class2",classtype2);
-				   request.setAttribute("bookfare2",bookfare2);
 				   request.setAttribute("discount2",discount2); 
+				   request.setAttribute("leg11",Integer.parseInt(request.getParameter("leg11")));
+				   request.setAttribute("leg22",Integer.parseInt(request.getParameter("leg22"))); 
 			  
 		 }
 		 else {
 			 PreparedStatement stmt=connection.prepareStatement(ADV_DISCOUNT);  
 			 stmt.setString(1,air);
-			 PreparedStatement stmt1=connection.prepareStatement(BOOK_FARE);  
-			 stmt1.setString(1,air);
-			 stmt1.setInt(2,Integer.parseInt(flight));
+			 
 			 ResultSet dis = stmt.executeQuery();
-			 ResultSet book = stmt1.executeQuery();
+			 
 			 if(dis!= null && dis.next()) {
 				
 				 discount.add(dis.getInt("Days"));
 				 discount.add(dis.getDouble("DiscountRate"));
 				 
 			 }
-			 if(book!=null && book.next()) {
-				
-				 bookfare.add(book.getDouble("HiddenFare"));
-			 }
+			
 			 
 		 }
-		    request.setAttribute("bookfare",bookfare); 
+		   
 		   
 		   request.setAttribute("discount",discount); 
 		   
@@ -167,6 +150,8 @@ public class MoreInfoServlet extends HttpServlet{
 		   request.setAttribute("fare",fare);
 		   request.setAttribute("type",type);
 		   request.setAttribute("class",classtype);
+		   request.setAttribute("leg1",legno1);
+		   request.setAttribute("leg2",legno2);
 		   
 		   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/FlightDetailInfo.jsp");
 		   dispatcher.forward(request, response); 

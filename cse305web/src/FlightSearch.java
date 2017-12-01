@@ -23,10 +23,10 @@ public class FlightSearch extends HttpServlet {
   public static final String ROUND = "Round";
   public static final String MULTI = "Multi";
   public static final String addzero = " 00:00:00";
-  public static final String SQL_SINGLE = "Select l1.AirlineID, l1.FlightNo, l1.DepAirportID, l2.ArrAirportID, l1.DepTime, l2.ArrTime, f.FareType,f.Fare, f.Class\n" + 
+  public static final String SQL_SINGLE = "Select l1.AirlineID, l1.FlightNo, l1.DepAirportID, l2.ArrAirportID, l1.DepTime, l2.ArrTime, f.FareType,f.Fare, f.Class, l1.legno,l2.legno as transfer, l2.DepAirportID as D2\n" + 
   		"  			 		from leg l1, leg l2 , fare f where l1.DepAirportID = ? and  l1.DepTime >= ?  and l2.ArrAirportID = ? and l2.FlightNo = l1.FlightNo\n" + 
   		"                    and f.FlightNo = l1.FlightNo and f.FareType = 'One Way'";
-  public static final String SQL_ROUND = "Select l1.AirlineID, l1.FlightNo, l1.DepAirportID, l2.ArrAirportID, l1.DepTime, l1.ArrTime ,l2.DepTime as DepTime2, l2.ArrTime as ArrTime2,  f.FareType,f.Fare, f.Class\n" + 
+  public static final String SQL_ROUND = "Select l1.AirlineID, l1.FlightNo, l1.DepAirportID, l2.ArrAirportID, l1.DepTime, l1.ArrTime ,l2.DepTime as DepTime2, l2.ArrTime as ArrTime2,  f.FareType,f.Fare, f.Class, l1.legno,l2.legno as transfer, l2.DepAirportID as D2\n" + 
   		"  			 		from leg l1, leg l2 , fare f where l1.DepAirportID = ? and  l1.DepTime >= ?   and l2.ArrAirportID = ? and l2.FlightNo = l1.FlightNo " + 
   		"                    and f.FlightNo = l1.FlightNo and f.FareType = 'Round'";
   protected void doPost(HttpServletRequest request, 
@@ -61,6 +61,7 @@ public class FlightSearch extends HttpServlet {
 		 stmt.setString(1, flyfrom);
 		 stmt.setTimestamp(2, sd);
 		 stmt.setString(3, flyto);
+		 
 		 re =  stmt.executeQuery();
 		}
 		else if (type.equals(ROUND)) {
@@ -115,6 +116,9 @@ public class FlightSearch extends HttpServlet {
 			subresult.add(re.getString("FareType"));
 			subresult.add(re.getString("Class"));
 			subresult.add(re.getDouble("Fare"));
+			subresult.add(re.getInt("legno"));
+			subresult.add(re.getInt("transfer"));
+			subresult.add(re.getString("D2"));
 		result.add(subresult);
 		}
 		while(re2!=null && re2.next()) {
@@ -128,6 +132,9 @@ public class FlightSearch extends HttpServlet {
 			subresult.add(re2.getString("FareType"));
 			subresult.add(re2.getString("Class"));
 			subresult.add(re2.getDouble("Fare"));
+			subresult.add(re2.getInt("legno"));
+			subresult.add(re2.getInt("transfer"));
+			subresult.add(re2.getString("D2"));
 		result2.add(subresult);
 		}
 		connection.close();
