@@ -189,13 +189,17 @@
         <h1 class="employee-title">Add Passenger</h1>
         <div class="col-lg-12 well">
           <div class="row">
-            <form method="POST" action="/cse305/addPassenger">
+            <form method="POST" action="/cse305web/addPassenger">
                 <div class="row">
-                  <div class="col-sm-6 form-group">
+	              <div class="col-sm-4 form-group">
+	                <label>Reservation Number</label>
+	              	<input type="text" placeholder="Enter Reservation Number Here" class="form-control" name="reservationNumber" required>
+	              </div> 
+                  <div class="col-sm-4 form-group">
                     <label>First Name</label>
                     <input type="text" placeholder="Enter First Name Here" class="form-control" name="firstName" required>
                   </div>
-                  <div class="col-sm-6 form-group">
+                  <div class="col-sm-4 form-group">
                     <label>Last Name</label>
                     <input type="text" placeholder="Enter Last Name Here" class="form-control" name="lastName" required>
                   </div>
@@ -244,7 +248,17 @@
         <h1 class="employee-title">Delete Passenger</h1>
         <div class="col-lg-12 well">
           <div class="row">
-            <form method="POST" action="/cse305/deletePassenger">
+            <form method="POST" action="/cse305web/deletePassenger">
+            	<div class="row">
+                  <div class="col-sm-6 form-group">
+                    <label>Reservation Number</label>
+                    <input type="text" placeholder="Enter Reservation Number Here" class="form-control" name="reservationNumber" required>
+                  </div>  
+                  <div class="col-sm-6 form-group">
+                    <label>Passenger Account Number</label>
+                    <input type="text" placeholder="Enter Passenger Account Number Here" class="form-control" name="accountNumber" required>
+                  </div>   
+                </div>
                 <div class="row">
                   <div class="col-sm-6 form-group">
                     <label>First Name</label>
@@ -274,15 +288,15 @@
         <h1 class="employee-title">Update Passenger</h1>
         <div class="col-lg-12 well">
           <div class="row">
-            <form method="POST" action="/cse305/updatePassenger">
+            <form method="POST" action="/cse305web/updatePassenger">
                 <div class="row">
                   <div class="col-sm-6 form-group">
                     <label>Reservation Number</label>
-                    <input type="text" placeholder="Enter City Name Here" class="form-control" name="reservationNumber" required>
+                    <input type="text" placeholder="Enter Reservation Number Here" class="form-control" name="reservationNumber" required>
                   </div>  
                   <div class="col-sm-6 form-group">
-                    <label>Account Number</label>
-                    <input type="text" placeholder="Enter State Name Here" class="form-control" name="accountNumber" required>
+                    <label>Passenger Account Number</label>
+                    <input type="text" placeholder="Enter Passenger Account Number Here" class="form-control" name="accountNumber" required>
                   </div>   
                 </div>
                 <div class="row">
@@ -364,7 +378,7 @@
         <h1 class="employee-title">Flight Suggestions</h1>
         <div class="col-lg-12 well">
           <div class="row">
-            <form method="POST" action="/cse305/flightSuggestion">     
+            <form method="POST" action="/cse305web/flightSuggestion">     
               <div class="form-group">
                 <label>Customer</label>
                 <select class="form-control selectpicker" name="customer">

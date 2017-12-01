@@ -136,9 +136,6 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setString(6, state[i]);
 				stmt.setInt(7, Integer.parseInt(zipcode[i]));
 				error = stmt.executeUpdate();
-				if (error == 0) {
-					//handle error by loading error
-				}
 				stmt = connection.prepareStatement(insertPassenger);
 				stmt.setInt(1, id);
 				stmt.setInt(2, accountNo);
