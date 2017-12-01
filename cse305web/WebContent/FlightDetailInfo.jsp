@@ -68,14 +68,17 @@ double total = fares*(1-rate)*nop1 + bookfee;
 
 %>
 		<input type="hidden" name = "nop" value= "<%=nop1 %>"/>	
+		<input type="hidden" name = "class" value= "<%=classtype %>"/>	
 		<input type="hidden" name = "type" value= "<%=type %>"/>		
 			</div>
 			<div class="row">
 				<div class="col-xs-2 form-group">
 					<label><%=air %></label>
 				</div>
+				<input type="hidden" name = "air" value= "<%=air %>"/>
 				<div class="col-xs-2 form-group">
 					<label><%=flight %>.</label>
+					<input type="hidden" name = "flight" value= "<%=flight %>"/>
 				</div>
 				<div class="col-xs-2 form-group">
 					<label><%=depname %></label>
@@ -146,7 +149,7 @@ String deptime1 = (String)request.getAttribute("deptime2");
 String arrtime1 = (String)request.getAttribute("arrtime2");
 String faretype1 = (String)request.getAttribute("faret2");
 String fare1 =  (String)request.getAttribute("fare2");
-String classtype1 = (String)request.getAttribute("class2");
+String classtype2 = (String)request.getAttribute("class2");
 int leg11  = (int) request.getAttribute("leg11");
 int leg22 = (int)request.getAttribute("leg22");
 double fares1 = Double.parseDouble(fare1); 
@@ -185,9 +188,11 @@ total = fares1*(1-rate)*nop1 + bookfee;
 			<div class="row">
 				<div class="col-xs-2 form-group">
 					<label><%=air1 %></label>
+					<input type="hidden" name = "air2" value= "<%=air1 %>"/>
 				</div>
 				<div class="col-xs-2 form-group">
 					<label><%=flight1 %>.</label>
+					<input type="hidden" name = "flight2" value= "<%=flight1 %>"/>
 				</div>
 				<div class="col-xs-2 form-group">
 					<label><%=depname1 %></label>
@@ -244,6 +249,7 @@ total = fares1*(1-rate)*nop1 + bookfee;
 				</div>
 				<input type="hidden" name = "leg11" value= "<%=leg11 %>"/>
 				<input type="hidden" name = "leg22" value= "<%=leg22 %>"/>
+				<input type="hidden" name = "class2" value= "<%=classtype2%>"/>	
 				
 			</div>
 			</div>

@@ -75,7 +75,6 @@
   </servlet-mapping>
   
   <servlet>
-<<<<<<< HEAD
     <servlet-name>cusReserve</servlet-name>
     <servlet-class>AddReservationPassenger</servlet-class>
   </servlet>
@@ -86,8 +85,7 @@
   </servlet-mapping>
   
   
-  
-=======
+  <servlet>
     <servlet-name>empAddPassenger</servlet-name>
     <servlet-class>AddPassengerServlet</servlet-class>
   </servlet>
@@ -136,5 +134,4 @@
     <servlet-name>flightSuggestions</servlet-name>
     <url-pattern>/empFlightSuggestions</url-pattern>
   </servlet-mapping>
->>>>>>> ef10e07c377c7f08f1a5f5aa7b0ac8b590b78117
 </web-app>

@@ -47,7 +47,10 @@
 <% 
 String Total=  request.getParameter("total");
 String Book =  request.getParameter("bookfee");
+String air=  request.getParameter("air");
+String flight =  request.getParameter("flight");
 String number =  request.getParameter("nop");
+String class1 =  request.getParameter("class");
 int type = Integer.parseInt( request.getParameter("type"));
 int nop = Integer.parseInt(number);
 int leg1 =  Integer.parseInt(request.getParameter("leg1"));
@@ -84,14 +87,31 @@ double bookfee = Double.parseDouble(Book);
  <%if(type==2){
 	int leg11 =  Integer.parseInt(request.getParameter("leg11"));
 	int leg22 =  Integer.parseInt(request.getParameter("leg22"));
+	String flight2 =  request.getParameter("flight2");
+	String class2 =  request.getParameter("class2");
+	String air2 =  request.getParameter("air2");
+	String total2 =  request.getParameter("total2");
+	String bookfee2 =  request.getParameter("bookfee2");
+	
 %>
  <input type="hidden" name = "leg11" value= "<%= leg11 %>"/>
  <input type="hidden" name = "leg22"value= "<%= leg22 %>"/>
-<% } %>
+ <input type="hidden" name = "air2" value= "<%=air2 %>"/>	
+ <input type="hidden" name = "flight2" value= "<%=flight2 %>"/>
+ <input type="hidden" name = "class2" value= "<%=class2 %>"/>	
+ <input type="hidden" name = "total2" value= "<%=total2 %>"/>	
+ <input type="hidden" name = "bookfee2" value= "<%=bookfee2 %>"/>
+<% }  System.out.println(air+"Asdasdsd");%>
+
 <input type="hidden" name = "leg1" value= "<%= leg1 %>"/>
+<input type="hidden" name = "class" value= "<%= class1 %>"/>
  <input type="hidden" name = "leg2"value= "<%= leg2 %>"/>
  <input type="hidden" name = "nop" value= "<%=nop %>"/>	
  <input type="hidden" name = "type" value= "<%=type %>"/>	
+ <input type="hidden" name = "air" value= "<%=air %>"/>	
+ <input type="hidden" name = "flight" value= "<%=flight %>"/>	
+ <input type="hidden" name = "total" value= "<%=total %>"/>	
+ <input type="hidden" name = "bookfee" value= "<%=bookfee %>"/>	
  <% for (int i=0;i<nop;i++){ %>
                   <h4>Passenger <%=i+1 %>:</h4>
                   <div class="row">
@@ -122,6 +142,28 @@ double bookfee = Double.parseDouble(Book);
                       <input type="text" placeholder="Enter Zip Code Here" class="form-control" name="zipcode<%=i %>" required>
                     </div>    
                   </div>
+                  <div class="row">
+                    <div class="col-sm-4 form-group">
+                      <label>Food Preference</label>
+                      <input type="text" placeholder="Enter Choice Food" class="form-control" name="food<%=i %>" required>
+                    </div>  
+                    <div class="col-sm-4 form-group">
+                      <label>Seat Number Preference</label>
+                      <input type="text" placeholder="Enter seat" class="form-control" name="seat<%=i %>" required>
+                    </div>  
+                  </div>
+                  <%if (type==2){ %>
+                  <div class="row">
+                    <div class="col-sm-4 form-group">
+                      <label>Food Preference for flight2</label>
+                      <input type="text" placeholder="Enter Choice Food" class="form-control" name="food2<%=i %>" required>
+                    </div>  
+                    <div class="col-sm-4 form-group">
+                      <label>Seat Number Preference for flight 2</label>
+                      <input type="text" placeholder="Enter seat" class="form-control" name="seat2<%=i %>" required>
+                    </div>  
+                  </div>
+                  <%} %>
   <%} %>
   <div class='form-row'>
               <div class='col-md-6 form-group'>
