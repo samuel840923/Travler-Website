@@ -75,7 +75,7 @@
 						for (Object customer : customers) {
 							List c = (ArrayList)customer;
 						%>
-							<option value="<%= c.get(0) %>"><%= c.get(1) %></option>
+							<option value="<%= c.get(0) %>"><%= c.get(0) + " - " + c.get(1) %></option>
 						<%
 						}		
 					%>
@@ -255,8 +255,8 @@
                     <input type="text" placeholder="Enter Reservation Number Here" class="form-control" name="reservationNumber" required>
                   </div>  
                   <div class="col-sm-6 form-group">
-                    <label>Passenger Account Number</label>
-                    <input type="text" placeholder="Enter Passenger Account Number Here" class="form-control" name="accountNumber" required>
+                    <label>Account Number</label>
+                    <input type="text" placeholder="Enter Account Number Here" class="form-control" name="accountNumber" required>
                   </div>   
                 </div>
                 <div class="row">
@@ -269,16 +269,6 @@
                     <input type="text" placeholder="Enter Last Name Here" class="form-control" name="lastName" required>
                   </div>
                 </div>          
-                <div class="row">
-                  <div class="col-sm-6 form-group">
-                    <label>Reservation Number</label>
-                    <input type="text" placeholder="Enter City Name Here" class="form-control" name="reservationNumber" required>
-                  </div>  
-                  <div class="col-sm-6 form-group">
-                    <label>Account Number</label>
-                    <input type="text" placeholder="Enter State Name Here" class="form-control" name="accountNumber" required>
-                  </div>   
-                </div>
               <button type="submit" class="btn btn-lg btn-primary">Delete Passenger</button>          
             </form> 
           </div>
@@ -295,8 +285,8 @@
                     <input type="text" placeholder="Enter Reservation Number Here" class="form-control" name="reservationNumber" required>
                   </div>  
                   <div class="col-sm-6 form-group">
-                    <label>Passenger Account Number</label>
-                    <input type="text" placeholder="Enter Passenger Account Number Here" class="form-control" name="accountNumber" required>
+                    <label>Account Number</label>
+                    <input type="text" placeholder="Enter Account Number Here" class="form-control" name="accountNumber" required>
                   </div>   
                 </div>
                 <div class="row">
@@ -363,14 +353,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Jane</td>
-              <td>Smith</td>
-              <td>100 Nicolls Rd</td>
-              <td>Stony Brook</td>
-              <td>New York</td>
-              <td>17790</td>
-            </tr>
+          	<%
+				List mailingList = new ArrayList();
+          		mailingList = (ArrayList)request.getAttribute("mailingList");
+			%>
+			<%
+				for (Object mail : mailingList) {
+					List m = (ArrayList)mail;
+				%>
+					<tr>
+		              <td><%= m.get(0) %></td>
+		              <td><%= m.get(1) %></td>
+		              <td><%= m.get(2) %></td>
+		              <td><%= m.get(3) %></td>
+		              <td><%= m.get(4) %></td>
+		              <td><%= m.get(5) %></td>
+		            </tr>
+				<%
+				}		
+			%>
+            
           </tbody>
         </table>
       </div>
@@ -382,9 +384,76 @@
               <div class="form-group">
                 <label>Customer</label>
                 <select class="form-control selectpicker" name="customer">
-                  <option value="id1">Customer 1</option>
-                  <option value="id2">Customer 2</option>
+                  <%
+						//List customers = new ArrayList();
+						//customers = (ArrayList)request.getAttribute("customers");
+				  %>
+				  <%
+						for (Object customer : customers) {
+							List c = (ArrayList)customer;
+						%>
+							<option value="<%= c.get(0) %>"><%= c.get(0) + " - " + c.get(1) %></option>
+						<%
+						}		
+				  %>
                 </select>
+                <%
+					List flightSuggestions = new ArrayList();
+		          	flightSuggestions = (ArrayList)request.getAttribute("flightSuggestions");
+		          	if (flightSuggestions.size() > 0) {
+		          	%>
+		          		<table class="table well">
+				          <thead>
+				            <tr>
+				              <th>Airline Id</th>
+				              <th>Flight #</th>
+				              <th>Leg #</th>
+				              <th>Dept. Airport</th>
+				              <th>Arr. Airport</th>
+				              <th>Arr. Time</th>
+				              <th>Dept. Time</th>
+				              <th>Curr Arr. Time</th>
+				              <th>Curr Dept. Time</th>
+				              <th># Seats</th>
+				              <th>Days Operating</th>
+				              <th>Min Length of Stay</th>
+				              <th>Max Length of Stay</th>
+				            </tr>
+				          </thead>
+				          <tbody>
+		          	<%}
+				%>
+              	
+		          	
+					<%
+						for (Object flight : flightSuggestions) {
+							List f = (ArrayList)flight;
+						%>
+							<tr>
+				              <td><%= f.get(0) %></td>
+				              <td><%= f.get(1) %></td>
+				              <td><%= f.get(2) %></td>
+				              <td><%= f.get(3) %></td>
+				              <td><%= f.get(4) %></td>
+				              <td><%= f.get(5) %></td>
+				              <td><%= f.get(6) %></td>
+				              <td><%= f.get(7) %></td>
+				              <td><%= f.get(8) %></td>
+				              <td><%= f.get(9) %></td>
+				              <td><%= f.get(10) %></td>
+				              <td><%= f.get(11) %></td>
+				              <td><%= f.get(12) %></td>
+				            </tr>
+						<%
+						}
+						if (flightSuggestions.size() > 0) {
+				        %>
+				        </tbody>
+	        			</table>
+	        			<%}
+					%>
+		            
+		          
               </div>
               <button type="submit" class="btn btn-lg btn-primary">Produce List</button>          
             </form> 

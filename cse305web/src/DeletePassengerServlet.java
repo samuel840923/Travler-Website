@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class EditPassengerServlet extends HttpServlet{
+public class DeletePassengerServlet extends HttpServlet{
 	public static final String getPassengerId = "SELECT R.Id FROM ReservationPassenger R, Person P WHERE ResrNo=? AND AccountNo=? "
 			+ "P.Id=R.ID AND P.FirstName=? AND P.LastName=?";
-	public static final String updatePerson = "UPDATE Person SET FirstName=?, LastName=?, Address=?, City=?, "
-			+ "State=?, Zipcode=? WHERE Id=?;";
-	public static final String updatePassenger = "UPDATE ReservationPassenger SET SeatNo=?, Class=?, Meal=? "
-			+ "WHERE AccountNo=? AND ResrNo=? AND Id=?;";
+	public static final String deleteReservationPassenger = "DELETE FROM ReservationPassenger WHERE AccountNo=? AND ResrNo=? AND Id=?;";
+	public static final String deletePassenger = "DELETE FROM Passenger WHERE AccountNo=? AND Id=?;";
+	public static final String deletePerson = "DELETE FROM Person WHERE Id=?;";
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,13 +30,6 @@ public class EditPassengerServlet extends HttpServlet{
 		int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
-		String address = request.getParameter("address");
-		String city = request.getParameter("city");
-		String state = request.getParameter("state");
-		int zipcode = Integer.parseInt(request.getParameter("zipcode"));
-		String seatNumber = request.getParameter("seatNumber");
-		String rank = request.getParameter("class");
-		String meal = request.getParameter("meal");
 		int error = 0;
 		int passengerId = -1;	
 		
@@ -56,25 +48,23 @@ public class EditPassengerServlet extends HttpServlet{
 			else {
 				//Error, no reservation found
 			}
-			stmt = connection.prepareStatement(updatePerson);
-			stmt.setString(1, firstName);
-			stmt.setString(2, lastName);
-			stmt.setString(3, address);
-			stmt.setString(4, city);
-			stmt.setString(5, state);
-			stmt.setInt(6, zipcode);
-			stmt.setInt(7, passengerId);
+			stmt = connection.prepareStatement(deleteReservationPassenger);
+			stmt.setInt(1, accountNumber);
+			stmt.setInt(2, reservationNumber);
+			stmt.setInt(3, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
 			}
-			stmt = connection.prepareStatement(updatePassenger);
-			stmt.setString(1, seatNumber);
-			stmt.setString(2, rank);
-			stmt.setString(3, meal);
-			stmt.setInt(4, accountNumber);
-			stmt.setInt(5,  reservationNumber);
-			stmt.setInt(6, passengerId);
+			stmt = connection.prepareStatement(deletePassenger);
+			stmt.setInt(1, accountNumber);
+			stmt.setInt(2, passengerId);
+			error = stmt.executeUpdate();
+			if (error == 0) {
+				//handle error by loading error
+			}
+			stmt = connection.prepareStatement(deletePerson);
+			stmt.setInt(1, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
