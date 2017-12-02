@@ -18,7 +18,7 @@ public class CustomerServlet extends HttpServlet{
 	public static Customer cust; 
 	public static final String PERSON_INFO = "SELECT * From person where Id = ?";
 	public static final String CUSTOMER_INFO = "SELECT Id, CreditCardNo, Email, CreationDate, Rating FROM customer Where AccountNo = ?";
-	public static final String CURRENT_BID = "SELECT NYOP FROM Auctions WHERE AccountNo = ?";
+	public static final String CURRENT_BID = "SELECT NYOP, AirlineID, FlightNo FROM Auctions WHERE AccountNo = ?";
 	public static final String BID_HISTORY = "Select A.NYOP, R.ResrNo, ResrDate, R.BookingFee, R.TotalFare, R.AccountNo " + 
 			" From reservation R, Customer C, Auctions A " + 
 			" Where C.AccountNo = R.AccountNo AND R.ResrNo=? AND A.AccountNo = C.AccountNo";
@@ -70,7 +70,9 @@ public class CustomerServlet extends HttpServlet{
 			currentbid =  stmt.executeQuery();
 			while(currentbid!=null&&currentbid.next()) {
 				List subresult = new ArrayList();
-				subresult.add(currentbid.getLong("NYOP"));
+				subresult.add(currentbid.getDouble("NYOP"));
+				subresult.add(currentbid.getString("AirlineID"));
+				subresult.add(currentbid.getString("FlightNo"));
 				current_bid.add(subresult);
 			}
 			if(resrno!=null) {

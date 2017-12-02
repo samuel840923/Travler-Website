@@ -100,15 +100,20 @@ if(current!=null && current.size()>0 ){
 %>
   <thead>
       <tr>
-        <th>NYOP</th>
+        <th>The Price You Named</th>
+         <th>AirLine ID</th>
+          <th>Flight Number</th>
       </tr>
   </thead> 
    
   <tbody> 
   
-  <%for(int i=0;i<current.size();i++){ %>
+  <%for(int i=0;i<current.size();i++){ 
+  	List sub = (ArrayList)current.get(i);%>
   		<tr>
-      <td> <%= current.get(0) %> </td>
+      <td> <%= sub.get(0) %> </td>
+      <td> <%= sub.get(1) %> </td>
+      <td> <%= sub.get(2) %> </td>
       </tr>
       <% }%>
        
