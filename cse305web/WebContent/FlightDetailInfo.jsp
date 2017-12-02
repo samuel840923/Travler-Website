@@ -256,7 +256,7 @@ total = fares1*(1-rate)*nop1 + bookfee;
 			<%} %>
 			 <div class='form-row'>
               <div class='col-md-6 form-group'>
-                <button class='form-control btn btn-info submit-button' type='submit'>Back To Flight List</button>
+                <button class='form-control btn btn-info submit-button' type='button' onclick="location.href = 'FlightInfo.html'">Back To Flight List</button>
               </div>
 			  <div class='col-md-6 form-group'>
                 <button class='form-control btn btn-success submit-button' type='submit'>Book this flight!</button>

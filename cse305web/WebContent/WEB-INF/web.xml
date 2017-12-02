@@ -134,4 +134,24 @@
     <servlet-name>flightSuggestions</servlet-name>
     <url-pattern>/empFlightSuggestions</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>reservelist</servlet-name>
+    <servlet-class>ReservationListServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>reservelist</servlet-name>
+    <url-pattern>/ReservationListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>deletereservelist</servlet-name>
+    <servlet-class>DeleteReservationServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>deletereservelist</servlet-name>
+    <url-pattern>/DeleteReservationServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

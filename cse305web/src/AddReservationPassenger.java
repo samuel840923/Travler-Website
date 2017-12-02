@@ -184,6 +184,7 @@ System.out.println(reservationNumber+ " 1st");
 			}
 
 		}	
+		connection.close();
 		}
 		catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

@@ -165,11 +165,18 @@ double bookfee = Double.parseDouble(Book);
                   </div>
                   <%} %>
   <%} %>
-  <div class='form-row'>
-              <div class='col-md-6 form-group'>
-                <button class='form-control btn btn-info submit-button' type='submit'>Back To Flight List</button>
+  <div class='row'>
+ 
+               <div class='col-md-6 form-group'>
+                <button class='form-control btn btn-info submit-button' type='submit'>Book this flight</button>
+              </div>
+                 <div class='col-md-6 form-group'>
+             
+                <button class='form-control btn btn-info submit-button' type='button' onclick="location.href = 'FlightInfo.html'">Go Back to Search</button>
+               
               </div>
   </div>
   </form>
+
   </div>
 </html>

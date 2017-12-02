@@ -74,10 +74,13 @@ int rate = (int)request.getAttribute("rating");
           <label for="ex1">Fish</label>
           </div>
   </div>
+  
   <div class="form-group row">
+  <form action = "ReservationListServlet"  method = "post">
            <div class="col-xs-4">
-         <button type="button" class="btn btn-primary">See Reservation</button>
+         <button type="submit" class="btn btn-primary">See Reservation</button>
           </div>
+  </form>
   </div>
 </div>
 <div class="container">
