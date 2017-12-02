@@ -13,8 +13,10 @@ public class DeleteReservationServlet extends HttpServlet{
 	public static final String deleteIncludes = "DELETE FROM Includes WHERE ResrNo=?;";
 	public static final String deleteReservationPassenger = "DELETE FROM ReservationPassenger WHERE ResrNo=?;";
 	public static final String deleteReservation = "DELETE FROM Reservation WHERE ResrNo=?;";
+	public static final String UpdateRating = "Update Customer Set rating = rating - 1 where accountno =? ";
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			int accountno=102;
 			Connection connection = JDBC.getConnection();
 			int reserno = Integer.parseInt(request.getParameter("reserveno"));
 			PreparedStatement delete = connection.prepareStatement(deleteIncludes);
@@ -34,6 +36,12 @@ public class DeleteReservationServlet extends HttpServlet{
 			 error = delete.executeUpdate();
 			 if(error ==0) {
 					
+				}
+			 PreparedStatement updaterating = connection.prepareStatement(UpdateRating);
+				updaterating.setInt(1, accountno);
+				error = updaterating.executeUpdate();
+				if (error == 0) {
+					//handle error by loading error
 				}
 			 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ReservationListServlet");
 			dispatcher.forward(request, response); 

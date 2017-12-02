@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Random;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ public class AddReservationPassenger extends HttpServlet{
 			"                    and l1.legno = ? and l1.FlightNo = ? and l2.FlightNo = ? and l2.legno = ?";
 	public static final String findseat = "SELECT SeatNo FROM reservationpassenger r, includes i where r.ResrNo = i.ResrNo and i.AirlineID = ? and i.FlightNo = ? and SeatNo = ?";
 	public static final String insertReservation = "INSERT INTO Reservation values(?, NOW(), ?, ?, ?, ?);";
+	public static final String UpdateRating = "Update Customer Set rating = rating + 1 where accountno =? ";
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
@@ -73,6 +75,13 @@ public class AddReservationPassenger extends HttpServlet{
 			if (error == 0) {
 				//handle error by loading error
 			}
+			PreparedStatement updaterating = connection.prepareStatement(UpdateRating);
+			updaterating.setInt(1, accountno);
+			error = updaterating.executeUpdate();
+			if (error == 0) {
+				//handle error by loading error
+			}
+			
 			 reservation = connection.prepareStatement(insertIncludes);
 			 reservation.setInt(1, reservationNumber);
 			 reservation.setString(2, air);
@@ -185,6 +194,8 @@ System.out.println(reservationNumber+ " 1st");
 
 		}	
 		connection.close();
+	   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ReservationListServlet");
+		dispatcher.forward(request, response); 
 		}
 		catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -228,6 +239,12 @@ PreparedStatement reservation = connection.prepareStatement(insertReservation);
 			reservation.setInt(4, employee);
 			reservation.setInt(5, customer);
 			int error = reservation.executeUpdate();
+			if (error == 0) {
+				//handle error by loading error
+			}
+			PreparedStatement updaterating = connection.prepareStatement(UpdateRating);
+			updaterating.setInt(1, customer);
+			error = updaterating.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
 			}
