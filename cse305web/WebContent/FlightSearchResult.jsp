@@ -90,7 +90,8 @@ for(int i=0;i<round.size();i++){
 List sub=(List)round.get(i);
 List sub1=(List)roundtime.get(i);
 int legno1 = (int)sub.get(9);
-int legno2 = (int)sub.get(10);
+int legno2 = (int)sub1.get(2);
+
 String transfer = (String)sub.get(11);
 %>
 <form action = "MoreInfoServlet" method = "post">

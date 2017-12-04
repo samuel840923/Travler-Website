@@ -85,6 +85,7 @@ public class FlightSearch extends HttpServlet {
 			 List sub = new ArrayList();
 			 sub.add(re3.getString("DepTime"));
 		     sub.add(re3.getString("ArrTime"));
+		     sub.add(re3.getInt("legno"));
 		    roundtime.add(sub);
 		 }
 		  

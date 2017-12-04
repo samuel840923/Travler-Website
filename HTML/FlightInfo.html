@@ -13,7 +13,7 @@
 <div class="container">
   <h2>Flight Info</h2>
   <p>Search for your flight</p>
-  <form>
+  <form id = "notEmptyForm" onsubmit="return checkform()">
     <div class="form-group row">
       <div class="col-xs-4">
         <label for="ex1">Airline Name</label>
@@ -23,7 +23,7 @@
     <div class="form-group row">
       <div class="col-xs-4">
         <label for="ex1">Flying From</label>
-        <input class="form-control" id="from" type="text">
+        <input class="form-control" name="fullName" type="text" >
       </div>
       <div class="col-xs-4">
         <label for="ex2">Flying To</label>
@@ -43,7 +43,7 @@
        <div class="form-group row">
       <div class="col-xs-2">
         <label for="start_date">Number of Passengers</label>
-    <input class="form-control" id="flyto" type="text">
+    <input class="form-control" id="number" type="text">
       </div>
         <div class="col-xs-4">
         <label for="start_date">Flight Type</label>
@@ -57,11 +57,23 @@
     </div>
       <div class="form-group row">
            <div class="col-xs-4">
-          <button type="button" class="btn btn-primary">Search</button>
+          <button type="submit" class="btn btn-primary">Search</button>
           </div>
       </div>
   </form>
 </div> 
-
+<script>
+function checkform()
+{
+  if($("#flyto").val()=="")
+  {
+    alert("checkform alert");
+    return false;
+  }
+  else{
+  return true;
+}
+}
+</script>
 </body>
 </html>
