@@ -9,7 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form action = "FlightSearch" method = "post">
+<form action = "FlightSearch" method = "post" id = "profileForm" onsubmit="return checkform()">
 <div class="container" id = "con">
   <h2>Flight Info</h2>
   <p>Search for your flight</p>
@@ -36,7 +36,7 @@
        <div class="form-group row">
       <div class="col-xs-2">
         <label for="nop">Number of Passengers</label>
-    <input class="form-control" name="nop" type="text">
+    <input class="form-control" name="nop" type="text" id = "nop">
       </div>
         <div class="col-xs-4">
         <label for="ftype">Flight Type</label>
@@ -62,7 +62,7 @@
     <div class="form-group row" id = "2r" style= "display: none;">
       <div class="col-xs-4">
         <label for="start_date">Depart Date</label>
-    <input type="date" class="form-control" name="start_date2" id="start_date" placeholder="mm/dd/yyyy">
+    <input type="date" class="form-control" name="start_date2" id="start_date2" placeholder="mm/dd/yyyy">
       </div>
     </div>
     
@@ -92,6 +92,57 @@
 
        }
   </script>
+  <script>
+$(document).ready(function() {
+    $('#profileForm').formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            birthday: {
+                validators: {
+                    date: {
+                        format: 'MM/DD/YYYY',
+                        message: 'The value is not a valid date'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+<script>
+function checkform()
+{
+	 var x = document.getElementById("sp");
+  if($("#nop").val()=="")
+  {
+    alert("Please specify the number of passenger");
+    return false;
+  }
+  else if($("#start_date").val()=="")
+  {
+    alert("Please specify the Depart Date");
+    return false;
+  }
+  else if(x.value == "Round" && $("#arrive_date").val()=="")
+  {
+    alert("Please specify the Round Date");
+    return false;
+  }
+  else if(x.value == "Multi" && $("#start_date2").val()=="")
+  {
+    alert("Please specify the second start date");
+    return false;
+  }
+  else{
+  return true;
+}
+}
+</script>
 </div> 
  </form>
 </body>

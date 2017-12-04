@@ -83,7 +83,7 @@ double bookfee = Double.parseDouble(Book);
 				</div>
 </div>
  <div id="passengers">
- <form  action = "AddReservationPassenger" method = "post">
+ <form  action = "AddReservationPassenger" method = "post" >
  <%if(type==2){
 	int leg11 =  Integer.parseInt(request.getParameter("leg11"));
 	int leg22 =  Integer.parseInt(request.getParameter("leg22"));
@@ -177,6 +177,34 @@ double bookfee = Double.parseDouble(Book);
               </div>
   </div>
   </form>
-
+<script>
+function checkform()
+{
+	 var x = document.getElementById("sp");
+  if($("#nop").val()=="")
+  {
+    alert("Please specify the number of passenger");
+    return false;
+  }
+  else if($("#start_date").val()=="")
+  {
+    alert("Please specify the Depart Date");
+    return false;
+  }
+  else if(x.value == "Round" && $("#arrive_date").val()=="")
+  {
+    alert("Please specify the Round Date");
+    return false;
+  }
+  else if(x.value == "Multi" && $("#start_date2").val()=="")
+  {
+    alert("Please specify the second start date");
+    return false;
+  }
+  else{
+  return true;
+}
+}
+</script>
   </div>
 </html>
