@@ -14,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class EditPassengerServlet extends HttpServlet{
 	//public static final String getPassengerId = "SELECT R.Id FROM ReservationPassenger R, Person P WHERE ResrNo=? AND AccountNo=? "
@@ -24,6 +25,12 @@ public class EditPassengerServlet extends HttpServlet{
 			+ "WHERE AccountNo=? AND ResrNo=? AND Id=?;";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
 	    dispatcher.forward(request, response);
 	}
@@ -31,7 +38,12 @@ public class EditPassengerServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
-		int empId = 4; // Need to grab from cookie/session. Check for employee log in
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		int empId = (int)session.getAttribute("id"); // Need to grab from cookie/session. Check for employee log in
 		int reservationNumber = Integer.parseInt(request.getParameter("reservationNumber"));
 		int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
 		String firstName = request.getParameter("firstName");

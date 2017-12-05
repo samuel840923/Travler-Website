@@ -19,6 +19,11 @@ public class RegisterServlet extends HttpServlet{
 	public static final String insertPerson = "INSERT INTO PERSON values(?, ?, ?, ?, ?, ?, ?);";
 	public static final String insertCustomer = "INSERT INTO CUSTOMER values(?, ?, null, ?, NOW(), 0, ?);";
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.jsp");
+	    dispatcher.forward(request, response); 
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
@@ -63,7 +68,7 @@ public class RegisterServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 	    dispatcher.forward(request, response); 
 	}
 }
