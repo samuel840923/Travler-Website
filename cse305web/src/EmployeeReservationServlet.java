@@ -46,7 +46,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		request.setAttribute("customers", customers);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 		dispatcher.forward(request, response); 
 	}
 	
@@ -161,7 +161,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 	    dispatcher.forward(request, response); 
 	}
 }

@@ -90,8 +90,10 @@ for(int i=0;i<round.size();i++){
 List sub=(List)round.get(i);
 List sub1=(List)roundtime.get(i);
 int legno1 = (int)sub.get(9);
-int legno2 = (int)sub.get(10);
+int legno2 = (int)sub1.get(2);
+
 String transfer = (String)sub.get(11);
+String dep = (String)sub.get(2);
 %>
 <form action = "MoreInfoServlet" method = "post">
       <tr>
@@ -107,7 +109,7 @@ String transfer = (String)sub.get(11);
         <td><label for="ex1" name = "cl" value = "<%= sub.get(7) %>"> <%= sub.get(7) %> </label></td>
         <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> <%= sub.get(8) %> </label></td>
        
-         <%if(legno1 != legno2) {%>
+         <%if(!dep.equals(transfer)) {%>
         <td><label for="ex1" name = "fa" value = "<%= transfer %>"> <%= transfer %> </label></td>
         <%}else{ %>
         <td><label for="ex1" name = "fa" value = "<%= sub.get(8) %>"> None </label></td>

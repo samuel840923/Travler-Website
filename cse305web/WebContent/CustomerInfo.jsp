@@ -135,10 +135,10 @@ if(bid!=null && bid.size()>0 ){
 <thead>
       <tr>
         <th>NYOP</th>
-        <th>Reserve Number</th>
-        <th>Reserve Date</th>
-        <th>Booking Fee</th>
-        <th>Total Fee</th>
+        <th>Airline ID</th>
+        <th>Flight Number</th>
+        <th>Class</th>
+        <th>Date</th>
       </tr>
   </thead>    
   <tbody> 
@@ -160,8 +160,12 @@ if(bid!=null && bid.size()>0 ){
 <form action = "CustomerServlet" >
 <div class="form-group row">
       <div class="col-xs-4">
-        <label for="ex1">Search For BID with id</label>
-        <input class="form-control" name="resrno" type="text">
+        <label for="ex1">Search For BID with Flight ID and Airline ID</label>
+        <br>
+         <label for="ex1">Airline ID</label>
+        <input class="form-control" name="airid" type="text" required>
+         <label for="ex1">Flight Number</label>
+        <input class="form-control" name="flightid" type="text" required>
       </div>  
 </div>
 <div class="form-group row">
@@ -174,7 +178,7 @@ if(bid!=null && bid.size()>0 ){
 </table>
 </div>
 <div class="container">
-  <h2>Your BID History</h2>         
+  <h2>Your Reservation History</h2>         
 <table class="table">
 <%
 List customerbid=new ArrayList();
@@ -230,7 +234,29 @@ if(bestsell!=null && bestsell.size()>0 ){
       <td><%= sub.get(0) %> </td>
       <td> <%= sub.get(1) %></td>
       <td> <%= sub.get(2) %> </td>
-      <td> <%= sub.get(3) %> </td>
+      <%if(sub.get(3)!= null){
+    	  char[] d = ((String)sub.get(3)).toCharArray();
+          String dop = "";
+          if(d[0]=='1')
+        	  	dop+="M ";
+          if(d[1]=='1')
+      	  	dop+=" TU ";
+          if(d[2]=='1')
+      	  	dop+=" W ";
+          if(d[3]=='1')
+      	  	dop+=" TH ";
+          if(d[4]=='1')
+      	  	dop+=" F ";
+          if(d[5]=='1')
+      	  	dop+=" SAT ";
+          if(d[6]=='1')
+      	  	dop+="SUN";
+     
+      %>
+      <td> <%= dop %> </td>
+      <%} else{ %>
+      <td> None </td>
+      <%} %>
        <td> <%= sub.get(4) %> </td>
   </tr>
   <%} %>
@@ -266,8 +292,29 @@ if(fs!=null && fs.size()>0 ){
       <td> <%= sub.get(1) %> </td>
       <td> <%= sub.get(2) %> </td>
       <td> <%= sub.get(3) %> </td>
-      <td> <%= sub.get(4) %></td>
-      <td> <%= sub.get(5) %> </td>
+      <td> <%= sub.get(4) %> </td>
+      <%if(sub.get(5)!=null){ 
+      char[] d = ((String)sub.get(5)).toCharArray();
+      String dop = "";
+      if(d[0]=='1')
+    	  	dop+="M ";
+      if(d[1]=='1')
+  	  	dop+=" TU ";
+      if(d[2]=='1')
+  	  	dop+=" W ";
+      if(d[3]=='1')
+  	  	dop+=" TH ";
+      if(d[4]=='1')
+  	  	dop+=" F ";
+      if(d[5]=='1')
+  	  	dop+=" SAT ";
+      if(d[6]=='1')
+  	  	dop+="SUN";
+      %>
+      <td> <%= dop %></td>
+      <%} else{%>
+      <td> None</td>
+      <%} %>
        </tr>
   </tbody>  
   <%} %>

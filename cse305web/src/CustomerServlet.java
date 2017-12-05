@@ -19,9 +19,9 @@ public class CustomerServlet extends HttpServlet{
 	public static final String PERSON_INFO = "SELECT * From person where Id = ?";
 	public static final String CUSTOMER_INFO = "SELECT Id, CreditCardNo, Email, CreationDate, Rating FROM customer Where AccountNo = ?";
 	public static final String CURRENT_BID = "SELECT NYOP, AirlineID, FlightNo FROM Auctions WHERE AccountNo = ?";
-	public static final String BID_HISTORY = "Select A.NYOP, R.ResrNo, ResrDate, R.BookingFee, R.TotalFare, R.AccountNo " + 
-			" From reservation R, Customer C, Auctions A " + 
-			" Where C.AccountNo = R.AccountNo AND R.ResrNo=? AND A.AccountNo = C.AccountNo";
+	public static final String BID_HISTORY = "Select A.NYOP, A.AirlineID, A.FlightNo, A.Class, A.Date" + 
+			" From Auctions A " + 
+			" Where A.AirlineID = ? and A.FlightNo = ? ";
 	public static final String CUSTOMER_BID = "SELECT * FROM Reservation WHERE AccountNo = ?";
 	public static final String BEST_SELL = "SELECT F.*, T.total " + 
 			"FROM flight F, " + 
@@ -60,7 +60,8 @@ public class CustomerServlet extends HttpServlet{
 		List customer_bid = new ArrayList();
 		List best_sell = new ArrayList();
 		List flight_suggest = new ArrayList();
-		String resrno = request.getParameter("resrno");
+		String resrno = request.getParameter("airid");
+		String flightid = request.getParameter("flightid");
 		
 		try {
 			connection = JDBC.getConnection();
@@ -75,18 +76,19 @@ public class CustomerServlet extends HttpServlet{
 				subresult.add(currentbid.getString("FlightNo"));
 				current_bid.add(subresult);
 			}
-			if(resrno!=null) {
+			if(resrno!=null&&flightid!=null) {
 				PreparedStatement stmt1=connection.prepareStatement(BID_HISTORY);  
-				int rno = Integer.parseInt(resrno);
-				stmt1.setInt(1,rno);
+				int rno = Integer.parseInt(flightid);
+				stmt1.setString(1,resrno);
+				stmt1.setInt(2,rno);
 				ResultSet reserve = stmt1.executeQuery();
 				while(reserve!=null && reserve.next()) {
 					List subresult = new ArrayList();
-					subresult.add(reserve.getLong("NYOP"));
-					subresult.add(reserve.getLong("ResrNo"));
-					subresult.add(reserve.getTimestamp("ResrDate"));
-					subresult.add(reserve.getLong("BookingFee"));
-					subresult.add(reserve.getLong("TotalFare"));
+					subresult.add(reserve.getDouble("NYOP"));
+					subresult.add(reserve.getString("AirlineID"));
+					subresult.add(reserve.getInt("FlightNo"));
+					subresult.add(reserve.getString("Class"));
+					subresult.add(reserve.getTimestamp("Date"));
 				bid.add(subresult);
 				}
 			}
