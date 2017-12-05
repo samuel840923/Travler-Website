@@ -126,6 +126,16 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>Manager</servlet-name>
+    <servlet-class>ManagerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Manager</servlet-name>
+    <url-pattern>/ManagerServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>customerMailingList</servlet-name>
     <servlet-class>CustomerMailingListServlet</servlet-class>
   </servlet>
