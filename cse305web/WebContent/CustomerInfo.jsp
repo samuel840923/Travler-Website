@@ -163,9 +163,9 @@ if(bid!=null && bid.size()>0 ){
         <label for="ex1">Search For BID with Flight ID and Airline ID</label>
         <br>
          <label for="ex1">Airline ID</label>
-        <input class="form-control" name="airid" type="text">
+        <input class="form-control" name="airid" type="text" required>
          <label for="ex1">Flight Number</label>
-        <input class="form-control" name="flightid" type="text">
+        <input class="form-control" name="flightid" type="text" required>
       </div>  
 </div>
 <div class="form-group row">
