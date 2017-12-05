@@ -19,15 +19,19 @@
 	        		 employeeId = cookies[i];
 	        	 }
 	        	 else if (cookies[i].getName().equals("isManager")) {
-	        		 employeeId = cookies[i];
+	        		 isManager = cookies[i];
 	        	 }
 	      	}
 	      }
+	      System.out.println("Navbar - " + name);
+	      System.out.println("Navbar - " + accountId);
+	      System.out.println("Navbar - " + employeeId);
+	      System.out.println("Navbar - " + isManager);
    %>
     <ul class="nav navbar-nav">
       <!--<li class="active"><a href="#">Home</a></li>-->
       <li><a href="#">Home</a></li>
-      <li><a href="/cseweb305/FlightSearch">Flight Search</a></li>
+      <li><a href="/cse305web/FlightSearch">Flight Search</a></li>
       <%
       	if (employeeId == null) {
       %>
@@ -38,13 +42,13 @@
       <%
       	if (accountId == null && employeeId == null) {
       %>
-      	<li><a href="/cseweb305/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      	<li><a href="/cseweb305/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+      	<li><a href="/cse305web/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      	<li><a href="/cse305web/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
       <%
       	}
       	else {
       %>
-      	<li><a href="/cseweb305/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      	<li><a href="/cse305web/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
       	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello <%=name.getValue() %><span class="caret"></span></a>
       <%
       	}
@@ -57,21 +61,21 @@
           <% } 
           	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("True")) {
           %>
-	          <li><a href="/cseweb305/empReserve">Record Reservation</a></li>
-	          <li><a href="/cseweb305/empAddPassenger">Add Passenger</a></li>
-	          <li><a href="/cseweb305/empEditPassenger">Edit Passenger</a></li>
-	          <li><a href="/cseweb305/empDeletePassenger">Delete Passenger</a></li>
-	          <li><a href="/cseweb305/customerMailingList">Mailing List</a></li>
-	          <li><a href="/cseweb305/empFlightSuggestions">Flight Suggestion</a></li>
+	          <li><a href="/cse305web/empReserve">Record Reservation</a></li>
+	          <li><a href="/cse305web/empAddPassenger">Add Passenger</a></li>
+	          <li><a href="/cse305web/empEditPassenger">Edit Passenger</a></li>
+	          <li><a href="/cse305web/empDeletePassenger">Delete Passenger</a></li>
+	          <li><a href="/cse305web/customerMailingList">Mailing List</a></li>
+	          <li><a href="/cse305web/empFlightSuggestions">Flight Suggestion</a></li>
           <% } 
           	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("False")) {
           %>
-          	  <li><a href="/cseweb305/empReserve">Record Reservation</a></li>
-	          <li><a href="/cseweb305/empAddPassenger">Add Passenger</a></li>
-	          <li><a href="/cseweb305/empEditPassenger">Edit Passenger</a></li>
-	          <li><a href="/cseweb305/empDeletePassenger">Delete Passenger</a></li>
-	          <li><a href="/cseweb305/customerMailingList">Mailing List</a></li>
-	          <li><a href="/cseweb305/empFlightSuggestions">Flight Suggestion</a></li>
+          	  <li><a href="/cse305web/empReserve">Record Reservation</a></li>
+	          <li><a href="/cse305web/empAddPassenger">Add Passenger</a></li>
+	          <li><a href="/cse305web/empEditPassenger">Edit Passenger</a></li>
+	          <li><a href="/cse305web/empDeletePassenger">Delete Passenger</a></li>
+	          <li><a href="/cse305web/customerMailingList">Mailing List</a></li>
+	          <li><a href="/cse305web/empFlightSuggestions">Flight Suggestion</a></li>
 	          <li><a href="#">Manager Action</a></li>
           <% } %>
         </ul>

@@ -47,7 +47,7 @@
 		            <div class="account-wall">
 		            	<img src="http://1cl7my3ojidr1w3dre2xexmr.wpengine.netdna-cdn.com/wp-content/uploads/2015/02/Individual-Membership.png"/>
 		                <form class="form-signin" method="POST" action="/cse305web/login">
-			                <input type="text" class="form-control" placeholder="Email" name="email" required autofocus>
+			                <input type="text" class="form-control" placeholder="Customer Email/Employee ID" name="email" required autofocus>
 			                <input type="password" class="form-control" placeholder="Password" name="password" required>
 			                <select class="form-control selectpicker" name="user">
 							  <option>Customer</option>

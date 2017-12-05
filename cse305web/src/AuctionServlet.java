@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class AuctionServlet extends HttpServlet{
 	public static final String getHiddenFare = "SELECT F.HiddenFare FROM Fare F, Leg L, Flight Fl "
@@ -20,6 +21,11 @@ public class AuctionServlet extends HttpServlet{
 	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?);";
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("accountNo") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
 	    dispatcher.forward(request, response); 
 	}
@@ -31,7 +37,12 @@ public class AuctionServlet extends HttpServlet{
 		int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
 		String rank = request.getParameter("class");
 		double nyop = Double.parseDouble(request.getParameter("nyop"));
-		int accountNo = 102; //needs to be changed to grab from cookie
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("accountNo") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		int accountNo = (int)session.getAttribute("accountNo");
 		int error = 0;
 		List fares = new ArrayList();
 		boolean tooLow = true;
