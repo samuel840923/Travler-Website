@@ -43,7 +43,7 @@ public class CustomerMailingListServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		request.setAttribute("mailingList", mailingList);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeCustomerMailingList.jsp");
 		dispatcher.forward(request, response); 
 	}
 }

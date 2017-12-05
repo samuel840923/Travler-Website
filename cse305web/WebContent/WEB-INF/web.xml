@@ -107,7 +107,7 @@
   
   <servlet>
     <servlet-name>empDeletePassenger</servlet-name>
-    <servlet-class>AddPassengerServlet</servlet-class>
+    <servlet-class>DeletePassengerServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -127,7 +127,7 @@
   
   <servlet>
     <servlet-name>flightSuggestions</servlet-name>
-    <servlet-class>flightSuggestionsServlet</servlet-class>
+    <servlet-class>FlightSuggestionServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
