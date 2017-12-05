@@ -21,6 +21,11 @@ public class AddPassengerServlet extends HttpServlet{
 	public static final String insertPassenger = "INSERT INTO Passenger values(?, ?);";
 	public static final String insertReservationPassenger = "INSERT INTO ReservationPassenger values(?, ?, ?, ?, ?, ?);";
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
+	    dispatcher.forward(request, response);
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
@@ -85,7 +90,7 @@ public class AddPassengerServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
 	    dispatcher.forward(request, response); 
 	}
 }

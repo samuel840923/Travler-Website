@@ -16,12 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class EditPassengerServlet extends HttpServlet{
-	public static final String getPassengerId = "SELECT R.Id FROM ReservationPassenger R, Person P WHERE ResrNo=? AND AccountNo=? "
-			+ "P.Id=R.ID AND P.FirstName=? AND P.LastName=?";
+	//public static final String getPassengerId = "SELECT R.Id FROM ReservationPassenger R, Person P WHERE ResrNo=? AND AccountNo=? "
+			//+ "P.Id=R.ID AND P.FirstName=? AND P.LastName=?";
 	public static final String updatePerson = "UPDATE Person SET FirstName=?, LastName=?, Address=?, City=?, "
 			+ "State=?, Zipcode=? WHERE Id=?;";
 	public static final String updatePassenger = "UPDATE ReservationPassenger SET SeatNo=?, Class=?, Meal=? "
 			+ "WHERE AccountNo=? AND ResrNo=? AND Id=?;";
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
+	    dispatcher.forward(request, response);
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,12 +44,13 @@ public class EditPassengerServlet extends HttpServlet{
 		String rank = request.getParameter("class");
 		String meal = request.getParameter("meal");
 		int error = 0;
-		int passengerId = -1;	
+		//int passengerId = -1;
+		int passengerId = Integer.parseInt(request.getParameter("passengerId"));
 		
 		try {
 			connection = JDBC.getConnection();
 			ResultSet data = null;
-			PreparedStatement stmt = connection.prepareStatement(getPassengerId);
+			/*PreparedStatement stmt = connection.prepareStatement(getPassengerId);
 			stmt.setInt(1, reservationNumber);
 			stmt.setInt(2, accountNumber);
 			stmt.setString(3, firstName);
@@ -55,8 +61,8 @@ public class EditPassengerServlet extends HttpServlet{
 			}
 			else {
 				//Error, no reservation found
-			}
-			stmt = connection.prepareStatement(updatePerson);
+			}*/
+			PreparedStatement stmt = connection.prepareStatement(updatePerson);
 			stmt.setString(1, firstName);
 			stmt.setString(2, lastName);
 			stmt.setString(3, address);
@@ -85,7 +91,7 @@ public class EditPassengerServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
 	    dispatcher.forward(request, response); 
 	}
 }

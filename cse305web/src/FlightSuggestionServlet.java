@@ -16,35 +16,50 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class FlightSuggestionServlet extends HttpServlet{
-	public static final String getFlightSuggestions = "SELECT L.*, F.NoOfSeats, F.DaysOperating, F.MinLengthOfStay, F.MaxLengthOfStay "
-			+ "FROM Flight F, Leg L WHERE F.FlightNo=L.FlightNo AND F.AirlineID=L.AirlineID AND L.CurrArrTime>NOW()"
-			+ "AND L.CurrDepTime>NOW() AND F.AirlineID IN (Select Ic.AirlineID FROM Reservation R, Includes Ic "
-			+ "WHERE R.AccountNo=? AND R.ResrNo=Ic.ResrNo AND NOW() > (SELECT MAX(L.DepTime) FROM Leg L, Includes I "
-			+ "WHERE I.ResrNo=R.ResrNo AND I.AirlineID=L.AirlineID AND I.FlightNo=L.FlightNo));";
+	public static final String getFlightSuggestions = "SELECT * FROM FlightReservation FR WHERE NOT EXISTS (" +
+			"SELECT * FROM Reservation R, Includes I WHERE R.ResrNo = I.ResrNo AND FR.AirlineID = I.AirlineID " +
+			"AND FR.FlightNo = I.FlightNo AND R.AccountNo = ?) ORDER BY FR.ResrCount DESC;";
+	public static final String getCustomers = "SELECT C.AccountNo, P.FirstName, P.LastName FROM Customer C, Person P "
+			+ "WHERE C.Id=P.Id";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection;
+		List customers = new ArrayList();
+		try {
+			connection = JDBC.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(getCustomers);
+			ResultSet data = stmt.executeQuery();
+			while(data!=null && data.next()) {
+				List customer = new ArrayList();
+				customer.add(data.getInt("AccountNo") + "");
+				customer.add(data.getString("FirstName") + " " + data.getString("LastName"));
+			    customers.add(customer);
+			}
+			connection.close();
+		}
+		catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("customers", customers);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeFlightSuggestion.jsp");
+		dispatcher.forward(request, response); 
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection;
 		List flightSuggestions = new ArrayList();
-		int accountNo = 102; // Need to grab from cookie/session
+		int accountNo = Integer.parseInt(request.getParameter("customer"));
 		try {
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(getFlightSuggestions);
+			stmt.setInt(1, accountNo);
 			ResultSet data = stmt.executeQuery();
 			while(data!=null && data.next()) {
 				List flight = new ArrayList();
-				flight.add(data.getString(1));
-				flight.add(data.getString(2));
-				flight.add(data.getInt(3));
-				flight.add(data.getString(4));
-				flight.add(data.getString(5));
-				flight.add(data.getString(6));
-				flight.add(data.getString(7));
-				flight.add(data.getString(8));
-				flight.add(data.getString(9));
-				flight.add(data.getInt(10));
-				flight.add(data.getInt(11));
-				flight.add(data.getInt(12));
-				flight.add(data.getInt(13));
+				flight.add(data.getString("AirlineID"));
+				flight.add(data.getInt("FlightNo"));
+				flight.add(data.getInt("ResrCount"));
 				flightSuggestions.add(flight);
 			}
 			connection.close();
@@ -54,7 +69,8 @@ public class FlightSuggestionServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		request.setAttribute("flightSuggestions", flightSuggestions);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeMaster.jsp");
+		request.setAttribute("accountNo", accountNo);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeFlightSuggestion.jsp");
 		dispatcher.forward(request, response); 
 	}
 }
