@@ -30,6 +30,7 @@
     </style>
   </head>
   <body>
+  	<jsp:include page="navbar.jsp" />
     <div class="container"><br/> 
       <div id="updatePassenger">
         <h1 class="employee-title">Update Passenger</h1>

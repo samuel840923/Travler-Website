@@ -15,8 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LogInServlet extends HttpServlet{
-	public static final String customerLogIn = "SELECT AccountNo FROM Customer WHERE Email=? AND Password=?;";
-	public static final String employeeLogIn = "SELECT IsManager, Id FROM Employee WHERE Email=? AND Password=?;";
+	public static final String customerLogIn = "SELECT C.AccountNo, P.FirstName, P.LastName FROM Customer C, Person P WHERE "
+			+ "C.Id=P.Id AND C.Email=? AND C.Password=?;";
+	public static final String employeeLogIn = "SELECT E.IsManager, E.Id, P.FirstName, P.LastName FROM Employee E, Person P "
+			+ "WHERE E.Id=P.Id AND E.Email=? AND E.Password=?;";
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+	    dispatcher.forward(request, response); 
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,24 +45,31 @@ public class LogInServlet extends HttpServlet{
 			if (data != null && data.next()) {
 				if (user.equalsIgnoreCase("customer")) {
 					session.setAttribute("accountNo", data.getInt("AccountNo"));
+					session.setAttribute("name", data.getString("FirstName") + " " + data.getString("LastName"));
 					session.setMaxInactiveInterval(30*60);
-					Cookie userName = new Cookie("user", data.getInt("AccountNo") + "");
-					userName.setMaxAge(30*60);
-					response.addCookie(userName);
+					Cookie accountNo = new Cookie("user", data.getInt("AccountNo") + "");
+					Cookie name = new Cookie("name", data.getString("FirstName") + " " + data.getString("LastName"));
+					name.setMaxAge(30*60);
+					accountNo.setMaxAge(30*60);
+					response.addCookie(name);
+					response.addCookie(accountNo);
 					response.sendRedirect("/cse305web/CustomerServlet");
 				}
 				else {
 					session.setAttribute("id", data.getInt("Id"));
+					session.setAttribute("name", data.getString("FirstName") + " " + data.getString("LastName"));
+					session.setAttribute("isManager", data.getBoolean("IsManager") + "");
 					session.setMaxInactiveInterval(30*60);
 					Cookie id = new Cookie("id", data.getInt("Id") + "");
+					Cookie name = new Cookie("name", data.getString("FirstName") + " " + data.getString("LastName"));
+					Cookie isManager = new Cookie("isManager", data.getBoolean("IsManager") + "");
 					id.setMaxAge(30*60);
+					name.setMaxAge(30*60);
+					isManager.setMaxAge(30*60);
 					response.addCookie(id);
-					if (data.getBoolean("IsManager")) {
-						response.sendRedirect("Employee.jsp");
-					}
-					else {
-						response.sendRedirect("Manager.jsp");
-					}
+					response.addCookie(name);
+					response.addCookie(isManager);
+					response.sendRedirect("Employee.jsp");
 				}
 				connection.close();
 				return;

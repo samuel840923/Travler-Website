@@ -19,6 +19,11 @@ public class AuctionServlet extends HttpServlet{
 			+ "AND L.DepTime > NOW() AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
 	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?);";
 	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
+	    dispatcher.forward(request, response); 
+	}
+	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
@@ -72,7 +77,7 @@ public class AuctionServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
 	    dispatcher.forward(request, response); 
 	}
 }
