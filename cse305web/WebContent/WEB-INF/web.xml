@@ -126,6 +126,16 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>employeeInfo</servlet-name>
+    <servlet-class>EmployeeInfoServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>employeeInfo</servlet-name>
+    <url-pattern>/employeeInfo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>Manager</servlet-name>
     <servlet-class>ManagerServlet</servlet-class>
   </servlet>

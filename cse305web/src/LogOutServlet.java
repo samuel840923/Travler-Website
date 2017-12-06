@@ -18,7 +18,6 @@ public class LogOutServlet extends HttpServlet{
 		         c.setPath("/");
 		         c.setMaxAge(0);
 		         response.addCookie(c);
-		         System.out.println("Log out - " + c.getName());
 		     }
 		 }
 		 HttpSession session = request.getSession(false);

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterServlet extends HttpServlet{
 	public static final String insertPerson = "INSERT INTO PERSON values(?, ?, ?, ?, ?, ?, ?);";
 	public static final String insertCustomer = "INSERT INTO CUSTOMER values(?, ?, null, ?, NOW(), 0, ?);";
+	public static final String insertPreference = "INSERT INTO CustomerPreferences values(?, ?)";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.jsp");
@@ -58,6 +59,13 @@ public class RegisterServlet extends HttpServlet{
 			stmt.setInt(2, rand.nextInt(Integer.MAX_VALUE));
 			stmt.setString(3, email);
 			stmt.setString(4,  password);
+			error = stmt.executeUpdate();
+			if (error == 0) {
+				//handle error by loading error
+			}
+			stmt = connection.prepareStatement(insertPreference);
+			stmt.setInt(1, id);
+			stmt.setString(2, "");
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
