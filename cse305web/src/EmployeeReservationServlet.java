@@ -70,23 +70,23 @@ public class EmployeeReservationServlet extends HttpServlet{
 		int empId = (int)session.getAttribute("id");
 		int accountNo = Integer.parseInt(request.getParameter("customer"));
 		int repSSN = -1;
-		Double bookingFee = Double.parseDouble(request.getParameter("bookingFee"));
-		Double totalFee = Double.parseDouble(request.getParameter("totalFee"));
-		String airlineId = request.getParameter("airlineId");
-		int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
-		String[] legs = request.getParameter("legNumbers").split(",");
-		String[] firstName = request.getParameterValues("firstName");
-		String[] lastName = request.getParameterValues("lastName");
-		String[] address = request.getParameterValues("address");
-		String[] city = request.getParameterValues("city");
-		String[] state = request.getParameterValues("state");
-		String[] zipcode = request.getParameterValues("zipcode");
-		String[] seatNumber = request.getParameterValues("seatNumber");
-		String[] rank = request.getParameterValues("class");
-		String[] meal = request.getParameterValues("meal");
 		int error = 0;
 		
 		try {
+			Double bookingFee = Double.parseDouble(request.getParameter("bookingFee"));
+			Double totalFee = Double.parseDouble(request.getParameter("totalFee"));
+			String airlineId = request.getParameter("airlineId");
+			int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
+			String[] legs = request.getParameter("legNumbers").split(",");
+			String[] firstName = request.getParameterValues("firstName");
+			String[] lastName = request.getParameterValues("lastName");
+			String[] address = request.getParameterValues("address");
+			String[] city = request.getParameterValues("city");
+			String[] state = request.getParameterValues("state");
+			String[] zipcode = request.getParameterValues("zipcode");
+			String[] seatNumber = request.getParameterValues("seatNumber");
+			String[] rank = request.getParameterValues("class");
+			String[] meal = request.getParameterValues("meal");
 			connection = JDBC.getConnection();
 			ResultSet data = null;
 			PreparedStatement stmt = connection.prepareStatement(getSSN);
@@ -169,7 +169,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

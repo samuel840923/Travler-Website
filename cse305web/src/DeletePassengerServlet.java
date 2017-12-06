@@ -43,15 +43,15 @@ public class DeletePassengerServlet extends HttpServlet{
 		    return;
 		}
 		int empId = (int)session.getAttribute("id"); // Need to grab from cookie/session. Check for employee log in
-		int reservationNumber = Integer.parseInt(request.getParameter("reservationNumber"));
-		int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
-		int passengerId = Integer.parseInt(request.getParameter("passengerId"));
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
 		int error = 0;
 		//int passengerId = -1;	
 		
 		try {
+			int reservationNumber = Integer.parseInt(request.getParameter("reservationNumber"));
+			int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
+			int passengerId = Integer.parseInt(request.getParameter("passengerId"));
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
 			connection = JDBC.getConnection();
 			ResultSet data = null;
 			/*PreparedStatement stmt = connection.prepareStatement(getPassengerId);
@@ -89,7 +89,7 @@ public class DeletePassengerServlet extends HttpServlet{
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

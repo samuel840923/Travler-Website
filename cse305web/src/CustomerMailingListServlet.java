@@ -45,7 +45,7 @@ public class CustomerMailingListServlet extends HttpServlet{
 			}
 			connection.close();
 		}
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

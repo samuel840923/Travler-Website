@@ -64,8 +64,9 @@ public class FlightSuggestionServlet extends HttpServlet{
 		int empId = (int)session.getAttribute("id");
 		Connection connection;
 		List flightSuggestions = new ArrayList();
-		int accountNo = Integer.parseInt(request.getParameter("customer"));
+		int accountNo = 0;
 		try {
+			accountNo = Integer.parseInt(request.getParameter("customer"));
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(getFlightSuggestions);
 			stmt.setInt(1, accountNo);
@@ -79,7 +80,7 @@ public class FlightSuggestionServlet extends HttpServlet{
 			}
 			connection.close();
 		}
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

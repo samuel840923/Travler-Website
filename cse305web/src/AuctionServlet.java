@@ -33,10 +33,6 @@ public class AuctionServlet extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
-		String airlineId = request.getParameter("airlineId");
-		int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
-		String rank = request.getParameter("class");
-		double nyop = Double.parseDouble(request.getParameter("nyop"));
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("accountNo") ==  null) {
 			response.sendRedirect("/cse305web/login");
@@ -48,6 +44,10 @@ public class AuctionServlet extends HttpServlet{
 		boolean tooLow = true;
 		
 		try {
+			String airlineId = request.getParameter("airlineId");
+			int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
+			String rank = request.getParameter("class");
+			double nyop = Double.parseDouble(request.getParameter("nyop"));
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(getHiddenFare);
 			ResultSet data = null;
@@ -85,7 +85,7 @@ public class AuctionServlet extends HttpServlet{
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

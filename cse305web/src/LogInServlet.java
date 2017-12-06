@@ -37,6 +37,12 @@ public class LogInServlet extends HttpServlet{
 			ResultSet data = null;
 			PreparedStatement stmt = connection.prepareStatement(customerLogIn);
 			if (user.equalsIgnoreCase("employee")) {
+				if (!password.equals(email)) {
+					request.setAttribute("error", "Invalid email/id and password");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+				    dispatcher.forward(request, response); 
+				    return;
+				}
 				stmt = connection.prepareStatement(employeeLogIn);
 				stmt.setString(1, email);
 			}
@@ -84,15 +90,16 @@ public class LogInServlet extends HttpServlet{
 				return;
 			}
 			else {
-				//Error, invalid log in credentials
+				request.setAttribute("error", "Invalid email/id and password");
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
-	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
+	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 	    dispatcher.forward(request, response); 
 	}
 

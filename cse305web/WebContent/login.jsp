@@ -40,6 +40,7 @@
 	</head>
 	<body>
 		<jsp:include page="navbar.jsp" />
+		<jsp:include page="Error.jsp" />
 		<div class="container">
 		    <div class="row">
 		        <div class="col-sm-6 col-md-4 col-md-offset-4 ">
