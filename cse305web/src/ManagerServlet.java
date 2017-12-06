@@ -57,20 +57,16 @@ public class ManagerServlet extends HttpServlet{
 			"	) Revenue, Person P, Employee E\n" + 
 			"WHERE P.Id=E.Id AND E.SSN=Revenue.RepSSN;\n";
 	
-	public static final String MOST_CUS = "SELECT P.FirstName, P.LastName\n" + 
-			"FROM Customer C, Person P\n" + 
-			"WHERE C.AccountNo=(\n" + 
-			"	select AccountNo\n" + 
-			"	from reservation\n" + 
-			"	where BookingFee=(\n" + 
-			"		select MAX(BookingFee)\n" + 
-			"		from (SELECT SUM(BookingFee)as BookingFee, AccountNO\n" + 
-			"			FROM Reservation\n" + 
-			"			GROUP BY(AccountNo)\n" + 
-			"			)AS A\n" + 
+	public static final String MOST_CUS = "SELECT P.FirstName, P.LastName, C.AccountNo, MAX(TR.BookingFee)\n" + 
+			"FROM Customer C, Person P, TotalRevenue TR\n" + 
+			"WHERE C.AccountNo = (\n" + 
+			"SELECT AccountNo FROM TotalRevenue\n" + 
+			"  WHERE BookingFee IN (\n" + 
+			"    SELECT MAX(BookingFee)\n" + 
+			"    FROM TotalRevenue\n" + 
+			"  )\n" + 
 			")\n" + 
-			")\n" + 
-			"and P.Id = C.Id\n";
+			"and P.Id = C.Id;";
 	public static final String MOST_FL = "Select AirlineID, FlightNo , count(*) AS 'Number Of Flights'\n" + 
 			"from leg\n" + 
 			"group by AirlineID, FlightNo\n" + 

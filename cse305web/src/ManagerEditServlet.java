@@ -24,6 +24,7 @@ public class ManagerEditServlet extends HttpServlet{
 	
 	public static final String ADD_EMP = "Insert into Employee values(?, ?, ?, ?, ?, ?);\n";
 	
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		Connection connection;
@@ -51,7 +52,7 @@ public class ManagerEditServlet extends HttpServlet{
 			PreparedStatement stmt2 = connection.prepareStatement(ADD_EMP);
 			
 			
-			int Id = 0;
+			int Id = -1;
 			if (id!=null)
 				Id = Integer.parseInt(id);
 			if (first==null)
@@ -77,9 +78,6 @@ public class ManagerEditServlet extends HttpServlet{
 			if (SSN!=null)
 				SSn = Integer.parseInt(SSN); 
 			
-			int IsM = 0;
-			if (isM=="1")
-				IsM = 1; 
 
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
 			Date startD = df.parse(start);
@@ -88,30 +86,37 @@ public class ManagerEditServlet extends HttpServlet{
 			double hour = 0.0;
 			if (hourly!=null)
 				hour = Double.parseDouble(hourly); 
-			
-			stmt.setInt(1, Id);
-			stmt.setString(2, first);
-			stmt.setString(3, last);
-			stmt.setString(4, add);
-			stmt.setString(5, city);
-			stmt.setString(6, state);
-			stmt.setInt(7, code);
-			stmt2.setInt(1, Id);
-			stmt2.setInt(2, SSn);
-			stmt2.setInt(3, IsM);
-			stmt2.setDate(4, sql);
-			stmt2.setDouble(5, hour);
-			stmt2.setString(6, "");
-			
-			int reserve = stmt.executeUpdate();
-			int reserve2 = stmt2.executeUpdate();
-			
-			if(reserve!=100) 
+			if (Id!=-1 && SSn != 0)
 			{
-				List subresult = new ArrayList();
-				subresult.add(reserve);
-				ok.add(subresult);
+				stmt.setInt(1, Id);
+				stmt.setString(2, first);
+				stmt.setString(3, last);
+				stmt.setString(4, add);
+				stmt.setString(5, city);
+				stmt.setString(6, state);
+				stmt.setInt(7, code);
+				stmt2.setInt(1, Id);
+				stmt2.setInt(2, SSn);
+				stmt2.setString(3, isM);
+				stmt2.setDate(4, sql);
+				stmt2.setDouble(5, hour);
+				stmt2.setString(6, "");
+				
+				int reserve = stmt.executeUpdate();
+				int reserve2 = stmt2.executeUpdate();
+
+				if(reserve!=100) 
+				{
+					List subresult = new ArrayList();
+					subresult.add(reserve);
+					ok.add(subresult);
+				}
 			}
+			else
+			{
+				//error
+			}
+			
 			connection.close();
 			
 			
