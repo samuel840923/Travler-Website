@@ -30,8 +30,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("id") ==  null) {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
-		    dispatcher.forward(request, response);
+			response.sendRedirect("/cse305web/login");
 		    return;
 		}
 		Connection connection;
