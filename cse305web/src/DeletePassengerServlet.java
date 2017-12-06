@@ -14,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class DeletePassengerServlet extends HttpServlet{
 	//public static final String getPassengerId = "SELECT R.Id FROM ReservationPassenger R, Person P WHERE R.ResrNo=? AND R.AccountNo=? "
@@ -23,6 +24,12 @@ public class DeletePassengerServlet extends HttpServlet{
 	public static final String deletePerson = "DELETE FROM Person WHERE Id=?;";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
 	    dispatcher.forward(request, response);
 	}
@@ -30,16 +37,21 @@ public class DeletePassengerServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
-		int empId = 4; // Need to grab from cookie/session. Check for employee log in
-		int reservationNumber = Integer.parseInt(request.getParameter("reservationNumber"));
-		int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
-		int passengerId = Integer.parseInt(request.getParameter("passengerId"));
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		int empId = (int)session.getAttribute("id"); // Need to grab from cookie/session. Check for employee log in
 		int error = 0;
 		//int passengerId = -1;	
 		
 		try {
+			int reservationNumber = Integer.parseInt(request.getParameter("reservationNumber"));
+			int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
+			int passengerId = Integer.parseInt(request.getParameter("passengerId"));
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
 			connection = JDBC.getConnection();
 			ResultSet data = null;
 			/*PreparedStatement stmt = connection.prepareStatement(getPassengerId);
@@ -77,7 +89,7 @@ public class DeletePassengerServlet extends HttpServlet{
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

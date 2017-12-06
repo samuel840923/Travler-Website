@@ -1,12 +1,13 @@
-public class Employee{
+public class Employee extends Person{
     int Id;
     int SSN;
     boolean IsManager;
     String StartDate;
     double HourlyRate;
 
-    public Employee(int Id, int SSN, boolean IsManager, String StartDate, double HourlyRate) {
-        this.Id = Id;
+    public Employee(int Id, String FirstName, String LastName, String Address, String City, String State, int ZipCode, int SSN, boolean IsManager, String StartDate, double HourlyRate) {
+    	super(Id, FirstName, LastName, Address, City, State, ZipCode);
+    	this.Id = Id;
         this.SSN = SSN;
         this.IsManager = IsManager;
         this.StartDate = StartDate;

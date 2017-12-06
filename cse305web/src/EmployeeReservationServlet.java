@@ -14,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class EmployeeReservationServlet extends HttpServlet{
 	public static final String getSSN = "SELECT SSN FROM Employee WHERE Id=?;";
@@ -27,6 +28,11 @@ public class EmployeeReservationServlet extends HttpServlet{
 			+ "WHERE C.Id=P.Id";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
 		Connection connection;
 		List customers = new ArrayList();
 		try {
@@ -55,26 +61,32 @@ public class EmployeeReservationServlet extends HttpServlet{
 		Connection connection = null;
 		Random rand = new Random(System.nanoTime());
 		int reservationNumber = rand.nextInt(Integer.MAX_VALUE);
-		int empId = 4; // Need to grab from cookie/session
-		int accountNo = 102; // Need to grab from cookie/session
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
+		    dispatcher.forward(request, response);
+		    return;
+		}
+		int empId = (int)session.getAttribute("id");
+		int accountNo = Integer.parseInt(request.getParameter("customer"));
 		int repSSN = -1;
-		Double bookingFee = Double.parseDouble(request.getParameter("bookingFee"));
-		Double totalFee = Double.parseDouble(request.getParameter("totalFee"));
-		String airlineId = request.getParameter("airlineId");
-		int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
-		String[] legs = request.getParameter("legNumbers").split(",");
-		String[] firstName = request.getParameterValues("firstName");
-		String[] lastName = request.getParameterValues("lastName");
-		String[] address = request.getParameterValues("address");
-		String[] city = request.getParameterValues("city");
-		String[] state = request.getParameterValues("state");
-		String[] zipcode = request.getParameterValues("zipcode");
-		String[] seatNumber = request.getParameterValues("seatNumber");
-		String[] rank = request.getParameterValues("class");
-		String[] meal = request.getParameterValues("meal");
 		int error = 0;
 		
 		try {
+			Double bookingFee = Double.parseDouble(request.getParameter("bookingFee"));
+			Double totalFee = Double.parseDouble(request.getParameter("totalFee"));
+			String airlineId = request.getParameter("airlineId");
+			int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
+			String[] legs = request.getParameter("legNumbers").split(",");
+			String[] firstName = request.getParameterValues("firstName");
+			String[] lastName = request.getParameterValues("lastName");
+			String[] address = request.getParameterValues("address");
+			String[] city = request.getParameterValues("city");
+			String[] state = request.getParameterValues("state");
+			String[] zipcode = request.getParameterValues("zipcode");
+			String[] seatNumber = request.getParameterValues("seatNumber");
+			String[] rank = request.getParameterValues("class");
+			String[] meal = request.getParameterValues("meal");
 			connection = JDBC.getConnection();
 			ResultSet data = null;
 			PreparedStatement stmt = connection.prepareStatement(getSSN);
@@ -157,7 +169,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

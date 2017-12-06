@@ -24,6 +24,7 @@
 	</head>
 	<body>
 		<jsp:include page="navbar.jsp" />
+		<jsp:include page="Error.jsp" />
 		<div class="container">
 		    <h1 class="register-title">Customer Sign Up</h1>
 			<div class="col-lg-12 well">

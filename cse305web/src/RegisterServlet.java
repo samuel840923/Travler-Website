@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterServlet extends HttpServlet{
 	public static final String insertPerson = "INSERT INTO PERSON values(?, ?, ?, ?, ?, ?, ?);";
 	public static final String insertCustomer = "INSERT INTO CUSTOMER values(?, ?, null, ?, NOW(), 0, ?);";
+	public static final String insertPreference = "INSERT INTO CustomerPreferences values(?, ?)";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.jsp");
@@ -29,17 +30,17 @@ public class RegisterServlet extends HttpServlet{
 		Connection connection = null;
 		Random rand = new Random(System.nanoTime());
 		int id = rand.nextInt(Integer.MAX_VALUE);
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String address = request.getParameter("address");
-		String city = request.getParameter("city");
-		String state = request.getParameter("state");
-		int zipcode = Integer.parseInt(request.getParameter("zipcode"));
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
 		int error = 0;
 		
 		try {
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
+			String address = request.getParameter("address");
+			String city = request.getParameter("city");
+			String state = request.getParameter("state");
+			int zipcode = Integer.parseInt(request.getParameter("zipcode"));
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(insertPerson);
 			stmt.setInt(1, id);
@@ -51,7 +52,7 @@ public class RegisterServlet extends HttpServlet{
 			stmt.setInt(7, zipcode);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Person already exists. Please try again later.");
 			}
 			stmt = connection.prepareStatement(insertCustomer);
 			stmt.setInt(1, id);
@@ -60,13 +61,21 @@ public class RegisterServlet extends HttpServlet{
 			stmt.setString(4,  password);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Customer already exists. Please try again later.");
+			}
+			stmt = connection.prepareStatement(insertPreference);
+			stmt.setInt(1, id);
+			stmt.setString(2, "");
+			error = stmt.executeUpdate();
+			if (error == 0) {
+				request.setAttribute("error", "Error connecting to database. Please try again later.");
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 	    dispatcher.forward(request, response); 

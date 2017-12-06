@@ -11,15 +11,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class AuctionServlet extends HttpServlet{
 	public static final String getHiddenFare = "SELECT F.HiddenFare FROM Fare F, Leg L, Flight Fl "
 			+ "WHERE F.AirlineID=? AND F.FlightNo=? AND L.AirlineID=F.AirlineID AND L.FlightNo=F.FlightNo AND F.Class=? "
 			//+ "AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
 			+ "AND L.DepTime > NOW() AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
-	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?);";
+	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?, ?);";
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("accountNo") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
 	    dispatcher.forward(request, response); 
 	}
@@ -27,16 +33,21 @@ public class AuctionServlet extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
-		String airlineId = request.getParameter("airlineId");
-		int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
-		String rank = request.getParameter("class");
-		double nyop = Double.parseDouble(request.getParameter("nyop"));
-		int accountNo = 102; //needs to be changed to grab from cookie
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("accountNo") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		int accountNo = (int)session.getAttribute("accountNo");
 		int error = 0;
 		List fares = new ArrayList();
 		boolean tooLow = true;
 		
 		try {
+			String airlineId = request.getParameter("airlineId");
+			int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
+			String rank = request.getParameter("class");
+			double nyop = Double.parseDouble(request.getParameter("nyop"));
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(getHiddenFare);
 			ResultSet data = null;
@@ -67,13 +78,14 @@ public class AuctionServlet extends HttpServlet{
 			stmt.setInt(3,  flightNumber);
 			stmt.setString(4, rank);
 			stmt.setDouble(5, nyop);
+			stmt.setBoolean(6, tooLow);
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
 			}
 			connection.close();
 		} 
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

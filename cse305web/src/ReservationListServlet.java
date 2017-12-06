@@ -20,7 +20,6 @@ public class ReservationListServlet extends HttpServlet{
 		
 		try {
 			Cookie[] cookies = null;
-			List pref = new ArrayList();
 			Cookie account = null;
 			cookies = request.getCookies();
 			if (cookies != null) {
@@ -28,7 +27,8 @@ public class ReservationListServlet extends HttpServlet{
 		 			if (cookies[i].getName().equals("accountId")) {
 		      		 account = cookies[i];
 		      	 }
-		 		}
+		 		
+		 		}}
 			Connection connection = JDBC.getConnection();
 			int accountno = Integer.parseInt(account.getValue());
 			PreparedStatement find = connection.prepareStatement(getreservation);

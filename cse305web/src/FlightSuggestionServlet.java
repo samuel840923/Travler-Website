@@ -14,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class FlightSuggestionServlet extends HttpServlet{
 	public static final String getFlightSuggestions = "SELECT * FROM FlightReservation FR WHERE NOT EXISTS (" +
@@ -23,6 +24,13 @@ public class FlightSuggestionServlet extends HttpServlet{
 			+ "WHERE C.Id=P.Id";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
+		    dispatcher.forward(request, response);
+		    return;
+		}
+		int empId = (int)session.getAttribute("id");
 		Connection connection;
 		List customers = new ArrayList();
 		try {
@@ -47,10 +55,18 @@ public class FlightSuggestionServlet extends HttpServlet{
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login");
+		    dispatcher.forward(request, response);
+		    return;
+		}
+		int empId = (int)session.getAttribute("id");
 		Connection connection;
 		List flightSuggestions = new ArrayList();
-		int accountNo = Integer.parseInt(request.getParameter("customer"));
+		int accountNo = 0;
 		try {
+			accountNo = Integer.parseInt(request.getParameter("customer"));
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(getFlightSuggestions);
 			stmt.setInt(1, accountNo);
@@ -64,7 +80,7 @@ public class FlightSuggestionServlet extends HttpServlet{
 			}
 			connection.close();
 		}
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

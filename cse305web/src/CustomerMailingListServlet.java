@@ -14,12 +14,19 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class CustomerMailingListServlet extends HttpServlet{
 	public static final String getMailingList = "SELECT P.FIrstName, P.LastName, P.Address, P.City, P.State, "
 			+ "P.ZipCode FROM Customer C, Person P WHERE P.Id=C.Id;";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		int empId = (int)session.getAttribute("id");
 		Connection connection;
 		List mailingList = new ArrayList();
 		try {
@@ -38,7 +45,7 @@ public class CustomerMailingListServlet extends HttpServlet{
 			}
 			connection.close();
 		}
-		catch (ClassNotFoundException | SQLException e) {
+		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

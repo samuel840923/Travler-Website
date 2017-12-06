@@ -126,6 +126,16 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>employeeInfo</servlet-name>
+    <servlet-class>EmployeeInfoServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>employeeInfo</servlet-name>
+    <url-pattern>/employeeInfo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>Manager</servlet-name>
     <servlet-class>ManagerServlet</servlet-class>
   </servlet>
@@ -133,6 +143,26 @@
   <servlet-mapping>
     <servlet-name>Manager</servlet-name>
     <url-pattern>/ManagerServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ManagerUpdate</servlet-name>
+    <servlet-class>ManagerUpdateServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ManagerUpdate</servlet-name>
+    <url-pattern>/ManagerUpdateServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ManagerEdit</servlet-name>
+    <servlet-class>ManagerEditServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ManagerEdit</servlet-name>
+    <url-pattern>/ManagerEditServlet</url-pattern>
   </servlet-mapping>
   
   <servlet>
