@@ -24,6 +24,8 @@ public class ManagerEditServlet extends HttpServlet{
 	
 	public static final String ADD_EMP = "Insert into Employee values(?, ?, ?, ?, ?, ?);\n";
 	
+	public static final String ADD_CUS = "Insert into Customer values(?,?,?,?,?,?,?);\n";
+	
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -41,6 +43,13 @@ public class ManagerEditServlet extends HttpServlet{
 		String start = request.getParameter("start");
 		String hourly = request.getParameter("hourly");
 		
+		String accountN = request.getParameter("accountno");
+		String creditC = request.getParameter("credit");
+		String Email = request.getParameter("email");
+		String creatD = request.getParameter("creation");
+		String Rating = request.getParameter("rate");
+		String Pass = request.getParameter("pass");
+		
 		List ok = new ArrayList();
 		
 		
@@ -50,6 +59,7 @@ public class ManagerEditServlet extends HttpServlet{
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(ADD_PER);
 			PreparedStatement stmt2 = connection.prepareStatement(ADD_EMP);
+			PreparedStatement stmt3 = connection.prepareStatement(ADD_CUS);
 			
 			
 			int Id = -1;
@@ -74,19 +84,58 @@ public class ManagerEditServlet extends HttpServlet{
 			if (zip!=null)
 				code = Integer.parseInt(zip);
 			
-			int SSn = 0;
+			int SSn = -1;
 			if (SSN!=null)
 				SSn = Integer.parseInt(SSN); 
 			
-
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
-			Date startD = df.parse(start);
-			java.sql.Date sql = new java.sql.Date(startD.getTime());
+			
+			java.sql.Date sql=null;
+			if (start !=null)
+			{
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+				Date startD = df.parse(start);
+				sql = new java.sql.Date(startD.getTime());
+			}
+			
+			
 
 			double hour = 0.0;
 			if (hourly!=null)
 				hour = Double.parseDouble(hourly); 
-			if (Id!=-1 && SSn != 0)
+			
+			//customer
+			int account = -1;
+			if (accountN!=null)
+			{
+				account = Integer.parseInt(accountN);
+			}
+			
+			if (creditC==null)
+				creditC = "";
+			
+			if (Email==null)
+				Email = "";
+			
+			java.sql.Date sql2=null;
+			if (creatD !=null)
+			{
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+				Date startD = df.parse(creatD);
+				sql2 = new java.sql.Date(startD.getTime());
+			}
+			
+			int rate = 0;
+			if (Rating!=null)
+			{
+				rate = Integer.parseInt(Rating);
+			}
+			
+			if (Pass==null)
+			{
+				Pass = "";
+			}
+			
+			if (Id!=-1 && SSn != -1)//add employee
 			{
 				stmt.setInt(1, Id);
 				stmt.setString(2, first);
@@ -112,9 +161,25 @@ public class ManagerEditServlet extends HttpServlet{
 					ok.add(subresult);
 				}
 			}
-			else
+			if (Id!=-1 && account!=-1)//add customer
 			{
-				//error
+				stmt.setInt(1, Id);
+				stmt.setString(2, first);
+				stmt.setString(3, last);
+				stmt.setString(4, add);
+				stmt.setString(5, city);
+				stmt.setString(6, state);
+				stmt.setInt(7, code);
+				stmt3.setInt(1, Id);
+				stmt3.setInt(2, account);
+				stmt3.setString(3, creditC);
+				stmt3.setString(4, Email);
+				stmt3.setDate(5, sql2);
+				stmt3.setInt(6, rate);
+				stmt3.setString(7, Pass);
+				
+				int reserve = stmt.executeUpdate();
+				int reserve2 = stmt3.executeUpdate();
 			}
 			
 			connection.close();

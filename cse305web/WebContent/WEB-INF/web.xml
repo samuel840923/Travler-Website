@@ -166,6 +166,16 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>ManagerDelete</servlet-name>
+    <servlet-class>ManagerDeleteServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ManagerDelete</servlet-name>
+    <url-pattern>/ManagerDeleteServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>customerMailingList</servlet-name>
     <servlet-class>CustomerMailingListServlet</servlet-class>
   </servlet>
