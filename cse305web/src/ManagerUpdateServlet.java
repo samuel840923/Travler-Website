@@ -28,6 +28,13 @@ public class ManagerUpdateServlet extends HttpServlet{
 	
 	public static final String UPDATE_EMP_RATE = "UPDATE Employee SET HourlyRate=? WHERE Id=?; \n";
 	
+	public static final String UPDATE_CUS_CREDIT = "UPDATE Customer SET CreditCardNo=? WHERE Id=?; \n";
+	
+	public static final String UPDATE_CUS_EMAIL = "UPDATE Customer SET Email=? WHERE Id=?; \n";
+	
+	public static final String UPDATE_CUS_RATE = "UPDATE Customer SET Rating=? WHERE Id=?; \n";
+	
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		Connection connection;
@@ -38,6 +45,10 @@ public class ManagerUpdateServlet extends HttpServlet{
 		String start = request.getParameter("start");
 		String id3 = request.getParameter("id3");
 		String rate = request.getParameter("rate");
+		
+		String id4 = request.getParameter("id4");
+		String id5 = request.getParameter("id5");
+		String id6 = request.getParameter("id6");
 		
 		List ok = new ArrayList();
 		
@@ -121,6 +132,82 @@ public class ManagerUpdateServlet extends HttpServlet{
 					ok.add(subresult);
 				}
 			}
+			
+			
+			stmt = connection.prepareStatement(UPDATE_CUS_CREDIT);
+			Id = -1;
+			if (id4!=null)
+				Id = Integer.parseInt(id4);
+			
+			
+			if (Id!=-1)
+			{
+				String credit = request.getParameter("credit");
+				 if (credit==null)
+					credit = "";
+				stmt.setInt(2, Id);
+				stmt.setString(1, credit);
+				
+				int error = stmt.executeUpdate();
+				
+				if(error!=100) 
+				{
+					List subresult = new ArrayList();
+					subresult.add(error);
+					ok.add(subresult);
+				}
+			}
+			
+			stmt = connection.prepareStatement(UPDATE_CUS_EMAIL);
+			Id = -1;
+			if (id5!=null)
+				Id = Integer.parseInt(id5);
+			
+			
+			if (Id!=-1)
+			{
+				String email = request.getParameter("email");
+				 if (email==null)
+					email = "";
+				stmt.setInt(2, Id);
+				stmt.setString(1, email);
+				
+				int error = stmt.executeUpdate();
+				
+				if(error!=100) 
+				{
+					List subresult = new ArrayList();
+					subresult.add(error);
+					ok.add(subresult);
+				}
+			}
+			
+			stmt = connection.prepareStatement(UPDATE_CUS_RATE);
+			Id = -1;
+			if (id6!=null)
+				Id = Integer.parseInt(id6);
+			
+			
+			if (Id!=-1)
+			{
+				String rateC = request.getParameter("rateC");
+				int r=-1;
+				 if (rateC!=null)
+					r = Integer.parseInt(rateC);
+				stmt.setInt(2, Id);
+				stmt.setInt(1, r);
+				
+				int error = stmt.executeUpdate();
+				
+				if(error!=100) 
+				{
+					List subresult = new ArrayList();
+					subresult.add(error);
+					ok.add(subresult);
+				}
+			}
+			
+			
 			
 			connection.close();
 			
