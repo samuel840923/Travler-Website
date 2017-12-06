@@ -27,6 +27,7 @@
   </head>
   <body>
     <jsp:include page="navbar.jsp" />
+    <jsp:include page="Error.jsp" />
     <div class="container">
       <h1 class="auction-title">Reverse Auctions</h1>         
       <table class="table well">

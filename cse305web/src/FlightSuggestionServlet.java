@@ -48,6 +48,7 @@ public class FlightSuggestionServlet extends HttpServlet{
 		catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("customers", customers);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeFlightSuggestion.jsp");
@@ -83,6 +84,7 @@ public class FlightSuggestionServlet extends HttpServlet{
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("flightSuggestions", flightSuggestions);
 		request.setAttribute("accountNo", accountNo);

@@ -54,7 +54,6 @@ public class AuctionServlet extends HttpServlet{
 			stmt.setString(1, airlineId);
 			stmt.setInt(2, flightNumber);
 			stmt.setString(3, rank);
-			System.out.println(stmt.toString());
 			data = stmt.executeQuery();
 			while(data !=null && data.next()) {
 				List fare = new ArrayList();
@@ -67,10 +66,10 @@ public class AuctionServlet extends HttpServlet{
 			if (fares.size() == 0) {
 				//handle error by loading error
 				//Flight does not exist
-			}
-			if (tooLow) {
-				//handle error by loading error
-				//NYOP not high enough. Try again
+				request.setAttribute("error", "Flight does not exist.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			stmt = connection.prepareStatement(insertAuction);
 			stmt.setInt(1, accountNo);
@@ -82,12 +81,17 @@ public class AuctionServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
+				request.setAttribute("error", "Auction already exists.");
 			}
 			connection.close();
 		} 
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
+		    dispatcher.forward(request, response);
+		    return;
 		}
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
 	    dispatcher.forward(request, response); 

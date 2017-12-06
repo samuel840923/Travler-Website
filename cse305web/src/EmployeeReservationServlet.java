@@ -50,6 +50,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 		catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("customers", customers);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
@@ -68,11 +69,11 @@ public class EmployeeReservationServlet extends HttpServlet{
 		    return;
 		}
 		int empId = (int)session.getAttribute("id");
-		int accountNo = Integer.parseInt(request.getParameter("customer"));
 		int repSSN = -1;
 		int error = 0;
 		
 		try {
+			int accountNo = Integer.parseInt(request.getParameter("customer"));
 			Double bookingFee = Double.parseDouble(request.getParameter("bookingFee"));
 			Double totalFee = Double.parseDouble(request.getParameter("totalFee"));
 			String airlineId = request.getParameter("airlineId");
@@ -87,6 +88,12 @@ public class EmployeeReservationServlet extends HttpServlet{
 			String[] seatNumber = request.getParameterValues("seatNumber");
 			String[] rank = request.getParameterValues("class");
 			String[] meal = request.getParameterValues("meal");
+			if (firstName.length == 0 || lastName.length == 0) {
+				request.setAttribute("error", "No passenger name specified.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
+			    dispatcher.forward(request, response);
+			    return;
+			}
 			connection = JDBC.getConnection();
 			ResultSet data = null;
 			PreparedStatement stmt = connection.prepareStatement(getSSN);
@@ -96,7 +103,10 @@ public class EmployeeReservationServlet extends HttpServlet{
 				repSSN = data.getInt("SSN");
 			}
 			else {
-				//Error, employee needs to relog
+				request.setAttribute("error", "Session timed out.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			stmt = connection.prepareStatement(insertReservation);
 			stmt.setInt(1, reservationNumber);
@@ -106,7 +116,10 @@ public class EmployeeReservationServlet extends HttpServlet{
 			stmt.setInt(5, accountNo);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to place a reservation.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			PreparedStatement stmt1;
 			String date = "";
@@ -120,7 +133,10 @@ public class EmployeeReservationServlet extends HttpServlet{
 					date = data.getString("DepTime").split(" ")[0];
 				}
 				else {
-					//Error, invalid leg number
+					request.setAttribute("error", "Invalid Leg Number(s) specified");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
+				    dispatcher.forward(request, response);
+				    return;
 				}
 				stmt = connection.prepareStatement(insertIncludes);
 				stmt.setInt(1, reservationNumber);
@@ -130,13 +146,13 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setString(5, date);
 				error = stmt.executeUpdate();
 				if (error == 0) {
-					//handle error by loading error
+					request.setAttribute("error", "Unable to place a reservation.");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
+				    dispatcher.forward(request, response);
+				    return;
 				}
 			}
 			int id;
-			if (firstName.length == 0) {
-				//handle error since no passenger
-			}
 			for (int i = 0; i < firstName.length; i++) {
 				stmt = connection.prepareStatement(insertPerson);
 				id = rand.nextInt(Integer.MAX_VALUE);
@@ -153,7 +169,10 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setInt(2, accountNo);
 				error = stmt.executeUpdate();
 				if (error == 0) {
-					//handle error by loading error
+					request.setAttribute("error", "Unable to reserve seat for passenger.");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
+				    dispatcher.forward(request, response);
+				    return;
 				}
 				stmt = connection.prepareStatement(insertReservationPassenger);
 				stmt.setInt(1, reservationNumber);
@@ -164,7 +183,10 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setString(6, meal[i]);
 				error = stmt.executeUpdate();
 				if (error == 0) {
-					//handle error by loading error
+					request.setAttribute("error", "Unable to reserve seat for passenger.");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
+				    dispatcher.forward(request, response);
+				    return;
 				}
 			}
 			connection.close();
@@ -172,6 +194,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 	    dispatcher.forward(request, response); 

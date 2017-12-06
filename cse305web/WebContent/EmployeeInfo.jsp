@@ -12,6 +12,7 @@
 </head>
 <body>
 	<jsp:include page="navbar.jsp" />
+	<jsp:include page="Error.jsp" />
 	<div class="container">
 	 <h2>Employee Profile</h2>
 	 <form action="/cse305web/employeeInfo" method="POST">

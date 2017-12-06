@@ -48,6 +48,7 @@ public class CustomerMailingListServlet extends HttpServlet{
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("mailingList", mailingList);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeCustomerMailingList.jsp");

@@ -85,6 +85,10 @@ public class EditPassengerServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
+				request.setAttribute("error", "Unable to update passenger.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			stmt = connection.prepareStatement(updatePassenger);
 			stmt.setString(1, seatNumber);
@@ -95,13 +99,17 @@ public class EditPassengerServlet extends HttpServlet{
 			stmt.setInt(6, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to update passenger.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			connection.close();
 		} 
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
 	    dispatcher.forward(request, response); 

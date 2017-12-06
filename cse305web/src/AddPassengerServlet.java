@@ -67,7 +67,10 @@ public class AddPassengerServlet extends HttpServlet{
 				accountNumber = data.getInt("AccountNo");
 			}
 			else {
-				//Error, no reservation found
+				request.setAttribute("error", "Invalid reservation number.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			stmt = connection.prepareStatement(insertPerson);
 			stmt.setInt(1, id);
@@ -83,7 +86,10 @@ public class AddPassengerServlet extends HttpServlet{
 			stmt.setInt(2, accountNumber);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to add passenger.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			stmt = connection.prepareStatement(insertReservationPassenger);
 			stmt.setInt(1, reservationNumber);
@@ -94,13 +100,17 @@ public class AddPassengerServlet extends HttpServlet{
 			stmt.setString(6, meal);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to add passenger.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			connection.close();
 		} 
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
 	    dispatcher.forward(request, response); 

@@ -73,25 +73,36 @@ public class DeletePassengerServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
+				request.setAttribute("error", "Unable to delete passenger.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			stmt = connection.prepareStatement(deletePassenger);
 			stmt.setInt(1, accountNumber);
 			stmt.setInt(2, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to delete passenger.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			stmt = connection.prepareStatement(deletePerson);
 			stmt.setInt(1, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to delete passenger.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			connection.close();
 		} 
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
 	    dispatcher.forward(request, response); 

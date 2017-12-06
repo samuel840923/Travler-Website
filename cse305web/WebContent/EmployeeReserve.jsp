@@ -31,6 +31,7 @@
   </head>
   <body>
   	<jsp:include page="navbar.jsp" />
+  	<jsp:include page="Error.jsp" />
     <div class="container"><br/> 
       <div id="recordReservation">
         <h1 class="employee-title">Record Reservation</h1>

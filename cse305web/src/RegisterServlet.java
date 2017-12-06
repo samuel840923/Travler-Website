@@ -53,6 +53,9 @@ public class RegisterServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				request.setAttribute("error", "Person already exists. Please try again later.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+			    dispatcher.forward(request, response); 
+			    return;
 			}
 			stmt = connection.prepareStatement(insertCustomer);
 			stmt.setInt(1, id);
@@ -62,6 +65,9 @@ public class RegisterServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				request.setAttribute("error", "Customer already exists. Please try again later.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+			    dispatcher.forward(request, response); 
+			    return;
 			}
 			stmt = connection.prepareStatement(insertPreference);
 			stmt.setInt(1, id);
@@ -69,6 +75,9 @@ public class RegisterServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				request.setAttribute("error", "Error connecting to database. Please try again later.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+			    dispatcher.forward(request, response); 
+			    return;
 			}
 			connection.close();
 		} 

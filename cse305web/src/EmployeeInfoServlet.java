@@ -62,6 +62,7 @@ public class EmployeeInfoServlet extends HttpServlet{
 		catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("employee", employee); 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeInfo.jsp");
@@ -97,19 +98,26 @@ public class EmployeeInfoServlet extends HttpServlet{
 			stmt.setInt(7, id);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to update employee profile.");
+				response.sendRedirect("/cse305web/employeeInfo");
+			    return;
 			}
 			stmt = connection.prepareStatement(updateEmployee);
 			stmt.setInt(1, ssn);
 			stmt.setInt(2, id);
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Unable to update employee profile.");
+				response.sendRedirect("/cse305web/employeeInfo");
+			    return;
 			}
 			connection.close();
 		}
 		catch (ClassNotFoundException | NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
+			response.sendRedirect("/cse305web/employeeInfo");
+		    return;
 		}
 		response.sendRedirect("/cse305web/employeeInfo");
 		//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeInfo.jsp");
