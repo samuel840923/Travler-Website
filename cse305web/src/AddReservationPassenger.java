@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,17 @@ public class AddReservationPassenger extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			int accountno = 102;
+			Cookie[] cookies = null;
+			Cookie account = null;
+			cookies = request.getCookies();
+			if (cookies != null) {
+		 		for (int i = 0; i < cookies.length; i++) {
+		 			if (cookies[i].getName().equals("accountId")) {
+		      		 account = cookies[i];
+		      	 }
+		 		
+		 		}}
+			int accountno = Integer.parseInt(account.getValue());
 			int DefaultEmployee = 123456789;
 			Connection connection = null;
 			int flight = Integer.parseInt(request.getParameter("flight"));

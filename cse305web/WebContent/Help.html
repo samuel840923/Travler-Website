@@ -1,6 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+
+
+/* Style the buttons inside the tab */
+div.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 70%;
+    border-left: none;
+    height: 300px;
+}
+</style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -9,9 +51,17 @@
 <body>
 
 <div class="container">
+    
+    <div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'customer')" id="defaultOpen">Customer</button>
+  <button class="tablinks" onclick="openCity(event, 'employee')">Employee</button>
+  <button class="tablinks" onclick="openCity(event, 'manager')">Manager</button>
+</div>
+ 
   <h2>Help Info</h2>
   <p><strong>Note:</strong> To view help tap on the questions below.</p>
-  <div class="panel-group" id="accordion">
+<div id="customer" class="tabcontent">
+  <div class="panel-group" id="accordion" >
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -93,14 +143,243 @@
             <br> <strong> Bid History:</strong> User can search for a bid history if they know the number of the reservation of a particular reservation.
             <br> <strong>Best Sell:</strong> List of best flight that is trending right now
             <br> <strong>Flight Suggestion: </strong> Flight Suggestion based on the purchase that the customer made. 
-            
+            </p>
+        </div>
+      </div>
+    </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Reverse Auction</a>
+        </h4>
+      </div>
+      <div id="collapse5" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p>Customer Can Bid The flight ticket to potentially get a better price on a flight
+            <br>
+            <br> Go to the bid option to make auction price
+            <br> After going to bid auction user can start bidding the flight
+            <br> User need to indicate which flight they are bidding for. 
+            <br> they need to fill out:
+            <br> - Airline ID
+            <br> - Flight Number
+            <br> - Class
+            <br> - And the price they want to bid
+            <br> 
+                <br> If the Price they enter are lower than the current highest bid then the price will not be accepted. This can be seen in the customer profile under current bid tab. 
             
             </p>
         </div>
       </div>
     </div>
   </div> 
+   
 </div>
+ 
+    
+<div id="employee" class="tabcontent">
+  <div class="panel-group" id="accordion" >
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Recording Reservation </a>
+        </h4>
+      </div>
+      <div id="collapse6" class="panel-collapse collapse in">
+        <div class="panel-body"><p>
+            Employeer Can Reserve Flight for customer
+        <br> 
+        <br> Go to the Flight Search to look for flight that customer want to take.
+        <br> After You are done searching for the flight you want you can follow the guidance to make reservation
+        <br> And After that everything works the same way that the customer reserve for their flight. 
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Edit Customer</a>
+        </h4>
+      </div>
+      <div id="collapse7" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p>If you want to edit the customer information, you can do so by selecting the edit customer tab provided to make edit for the customer. 
+            <br> Under the Customer info editor you can provide all the neccesary infomation that is needed to edit the customer profile. 
+            <br> You can choose to Add or Delete information for a customer. 
+            <br> And after you are done filling out the information for the customer just hit the button and it will be save!
+            
+            </p>
+              </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Producing Customer Mailing List </a>
+        </h4>
+      </div>
+      <div id="collapse8" class="panel-collapse collapse">
+        <div class="panel-body"> You can also produce all the mailing list for all the customer in the database. 
+            <br> To do this you can just go to mailing list tab
+            <br> And After you click on the tab you will now see all the address of each customer for you to mail. 
+        </div>
+      </div>
+    </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">Suggest Flight For a given customer</a>
+        </h4>
+      </div>
+      <div id="collapse9" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p> If you want to produce suggestion list for a particular customer, you can do so by selecting the Flight Suggestion list tab 
+            <br> After you tap the tab, it will take you to a page where you can enter customer information
+            <br> When you are done entering the information needed for the customer, it will go to database and grab the data based on user activity.
+        
+            </p>
+        </div>
+      </div>
+    </div>
+     
+  </div> 
+   
+</div>
+        
+ <div id="manager" class="tabcontent">
+  <div class="panel-group" id="accordion" >
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">Edit Emplyoee Information </a>
+        </h4>
+      </div>
+      <div id="collapse10" class="panel-collapse collapse in">
+          <div class="panel-body">
+           Manager have the ability to edit employee information
+          <br>
+          <br> You can do this by going to the edit employee tab
+          <br> You can select 
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">Obtain Sales report </a>
+        </h4>
+      </div>
+      <div id="collapse11" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p>If you want to obtain a sales report for a particulart month you can do so by clicking on
+            <br> It will take you to a page where you can enter the month you are interested.
+            <br> After entering the month, you can see the sales report!
+            
+            </p>
+              </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">Producing Customer Mailing List </a>
+        </h4>
+      </div>
+      <div id="collapse12" class="panel-collapse collapse">
+        <div class="panel-body"> You can also produce all the mailing list for all the customer in the database. 
+            <br> To do this you can just go to mailing list tab
+            <br> And After you click on the tab you will now see all the address of each customer for you to mail. 
+        </div>
+      </div>
+    </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse13">Produce list of all flights</a>
+        </h4>
+      </div>
+      <div id="collapse13" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p> If you want to produce suggestion list for a particular customer, you can do so by selecting the Flight Suggestion list tab 
+            <br> After you tap the tab, it will take you to a page where you can enter customer information
+            <br> When you are done entering the information needed for the customer, it will go to database and grab the data based on user activity.
+        
+            </p>
+        </div>
+      </div>
+    </div>
+        <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse14">Produce a list of reservations</a>
+        </h4>
+      </div>
+      <div id="collapse14" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p> If you want to produce suggestion list for a particular customer, you can do so by selecting the Flight Suggestion list tab 
+            <br> After you tap the tab, it will take you to a page where you can enter customer information
+            <br> When you are done entering the information needed for the customer, it will go to database and grab the data based on user activity.
+        
+            </p>
+        </div>
+      </div>
+    </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse15">See which employee earn the most revenue</a>
+        </h4>
+      </div>
+      <div id="collapse15" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p> If you want to produce suggestion list for a particular customer, you can do so by selecting the Flight Suggestion list tab 
+            <br> After you tap the tab, it will take you to a page where you can enter customer information
+            <br> When you are done entering the information needed for the customer, it will go to database and grab the data based on user activity.
+        
+            </p>
+        </div>
+      </div>
+    </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse16">See which customer generate most profit</a>
+        </h4>
+      </div>
+      <div id="collapse16" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p> If you want to produce suggestion list for a particular customer, you can do so by selecting the Flight Suggestion list tab 
+            <br> After you tap the tab, it will take you to a page where you can enter customer information
+            <br> When you are done entering the information needed for the customer, it will go to database and grab the data based on user activity.
+        
+            </p>
+        </div>
+      </div>
+    </div>
+  </div> 
+   
+</div>   
+    
+    
     
 </body>
+    
+    <script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
 </html>

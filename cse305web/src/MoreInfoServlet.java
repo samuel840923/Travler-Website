@@ -153,9 +153,10 @@ public class MoreInfoServlet extends HttpServlet{
 		   request.setAttribute("leg1",legno1);
 		   request.setAttribute("leg2",legno2);
 		   
+		   connection.close();
 		   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/FlightDetailInfo.jsp");
 		   dispatcher.forward(request, response); 
-		 
+		   
 		 }catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -10,14 +10,17 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CustomerServlet extends HttpServlet{
 	public static Customer cust; 
+	public static ArrayList cf;
 	public static final String PERSON_INFO = "SELECT * From person where Id = ?";
 	public static final String CUSTOMER_INFO = "SELECT Id, CreditCardNo, Email, CreationDate, Rating FROM customer Where AccountNo = ?";
+	public static final String CUSTOMER_PREFERENCE_INFO = "SELECT Preference FROM CustomerPreferences Where AccountNo = ?";
 	public static final String CURRENT_BID = "SELECT NYOP, AirlineID, FlightNo FROM Auctions WHERE AccountNo = ?";
 	public static final String BID_HISTORY = "Select A.NYOP, A.AirlineID, A.FlightNo, A.Class, A.Date" + 
 			" From Auctions A " + 
@@ -50,8 +53,145 @@ public class CustomerServlet extends HttpServlet{
 			")" + 
 			")";
 	
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	  {
+	Cookie[] cookies = null;
+	List pref = new ArrayList();
+	Cookie account = null;
+	cookies = request.getCookies();
+	if (cookies != null) {
+ 		for (int i = 0; i < cookies.length; i++) {
+ 			if (cookies[i].getName().equals("accountId")) {
+      		 account = cookies[i];
+      	 }
+ 		}
+	Connection connection;
+	int Account = Integer.parseInt(account.getValue());
+	SetCustomer(Account);
+	List current_bid = new ArrayList();
+	List bid = new ArrayList();
+	List customer_bid = new ArrayList();
+	List best_sell = new ArrayList();
+	List flight_suggest = new ArrayList();
+	String resrno = request.getParameter("airid");
+	String flightid = request.getParameter("flightid");
+	
+	try {
+		connection = JDBC.getConnection();
+		ResultSet currentbid = null;
+		PreparedStatement stmt=connection.prepareStatement(CURRENT_BID);  
+		stmt.setInt(1, Account);
+		currentbid =  stmt.executeQuery();
+		while(currentbid!=null&&currentbid.next()) {
+			List subresult = new ArrayList();
+			subresult.add(currentbid.getDouble("NYOP"));
+			subresult.add(currentbid.getString("AirlineID"));
+			subresult.add(currentbid.getString("FlightNo"));
+			current_bid.add(subresult);
+		}
+		if(resrno!=null&&flightid!=null) {
+			PreparedStatement stmt1=connection.prepareStatement(BID_HISTORY);  
+			int rno = Integer.parseInt(flightid);
+			stmt1.setString(1,resrno);
+			stmt1.setInt(2,rno);
+			ResultSet reserve = stmt1.executeQuery();
+			while(reserve!=null && reserve.next()) {
+				List subresult = new ArrayList();
+				subresult.add(reserve.getDouble("NYOP"));
+				subresult.add(reserve.getString("AirlineID"));
+				subresult.add(reserve.getInt("FlightNo"));
+				subresult.add(reserve.getString("Class"));
+				subresult.add(reserve.getTimestamp("Date"));
+			bid.add(subresult);
+			}
+		}
+		PreparedStatement stmt2=connection.prepareStatement(CUSTOMER_BID);  
+		stmt2.setInt(1, Account);
+		ResultSet cust_bid = stmt2.executeQuery();
+		while(cust_bid!= null && cust_bid.next()) {
+			List subresult = new ArrayList();
+			subresult.add(cust_bid.getLong("ResrNo"));
+			subresult.add(cust_bid.getTimestamp("ResrDate"));
+			subresult.add(cust_bid.getLong("BookingFee"));
+			subresult.add(cust_bid.getLong("TotalFare"));
+			
+		customer_bid.add(subresult);
+		}
+		Statement stmt3 = connection.createStatement();
+		ResultSet best = stmt3.executeQuery(BEST_SELL);
+		while(best!= null && best.next()) {
+			List subresult = new ArrayList();
+			subresult.add(best.getString("AirlineID"));
+			subresult.add(best.getInt("FlightNo"));
+			subresult.add(best.getInt("NoOfSeats"));
+			subresult.add(best.getString("DaysOperating"));
+			subresult.add(best.getInt("total"));
+		best_sell.add(subresult);
+		}
+		PreparedStatement stmt4=connection.prepareStatement(FLIGHT_SUGGESTION);  
+		stmt4.setInt(1, cust.getId());
+		ResultSet suggest = stmt4.executeQuery();
+		while(suggest!= null && suggest.next()) {
+			List subresult = new ArrayList();
+			subresult.add(suggest.getString("AirlineID"));
+			subresult.add(suggest.getInt("FlightNo"));
+			subresult.add(suggest.getString("DepAirportID"));
+			subresult.add(suggest.getString("ArrAirportID"));
+			subresult.add(suggest.getInt("NoOfSeats"));
+			subresult.add(suggest.getString("DaysOperating"));
+			
+		flight_suggest.add(subresult);
+		
+		}
+		stmt = connection.prepareStatement(CUSTOMER_PREFERENCE_INFO);
+		stmt.setInt(1,Account);
+		ResultSet persons = stmt.executeQuery();
+		while(persons!=null && persons.next()) {
+			pref.add(persons.getString("Preference"));
+		}
+		connection.close();
+		
+	} catch (ClassNotFoundException | SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	if(cust!=null) {
+	request.setAttribute("fname",cust.getFirstName()); 
+	request.setAttribute("lname",cust.getLastName()); 
+	request.setAttribute("address",cust.getAddress()); 
+	request.setAttribute("city",cust.getCity());
+	request.setAttribute("state",cust.getState()); 
+	request.setAttribute("zip", cust.getZipCode());
+	request.setAttribute("credit",cust.getCreditCardNo()); 
+	request.setAttribute("email",cust.getEmail()); 
+	request.setAttribute("create",cust.getCreationDate()); 
+	request.setAttribute("rating",cust.getRating());
+	request.setAttribute("pref",pref);
+	request.setAttribute("currentbid",current_bid); 
+	request.setAttribute("bid",bid); 
+	request.setAttribute("customerbid",customer_bid); 
+	request.setAttribute("bestsell",best_sell); 
+	request.setAttribute("flightsuggest",flight_suggest); 
+	}
+  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerInfo.jsp");
+  dispatcher.forward(request, response); 
+	
+	}
+	  }
+	
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 		  {
+		List pref = new ArrayList();
+		Cookie[] cookies = null;
+		Cookie account = null;
+		cookies = request.getCookies();
+		if (cookies != null) {
+	   		for (int i = 0; i < cookies.length; i++) {
+	   			if (cookies[i].getName().equals("accountId")) {
+	        		 account = cookies[i];
+	        	 }
+	   		}
 		Connection connection;
 		int Account = 102;
 		SetCustomer(Account);
@@ -129,6 +269,12 @@ public class CustomerServlet extends HttpServlet{
 				
 			flight_suggest.add(subresult);
 			}
+			stmt = connection.prepareStatement(CUSTOMER_PREFERENCE_INFO);
+			stmt.setInt(1,Account);
+			ResultSet persons = stmt.executeQuery();
+			while(persons!=null && persons.next()) {
+				pref.add(persons.getString("Preference"));
+			}
 			connection.close();
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -146,15 +292,17 @@ public class CustomerServlet extends HttpServlet{
 		request.setAttribute("email",cust.getEmail()); 
 		request.setAttribute("create",cust.getCreationDate()); 
 		request.setAttribute("rating",cust.getRating());
-		}
+		request.setAttribute("pref",pref);
 		request.setAttribute("currentbid",current_bid); 
 		request.setAttribute("bid",bid); 
 		request.setAttribute("customerbid",customer_bid); 
 		request.setAttribute("bestsell",best_sell); 
 		request.setAttribute("flightsuggest",flight_suggest); 
+		}
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerInfo.jsp");
 	    dispatcher.forward(request, response); 
-	    
+		
+		}
 		  }
 	public static void SetCustomer(int AccountNumber) {
 		Connection connection;
@@ -187,6 +335,8 @@ public class CustomerServlet extends HttpServlet{
 				int zip = persons.getInt("ZipCode");
 				cust = new Customer(personid, fname, lname, address, city, state, zip,creditcard,email,create,AccountNumber,rating);
 			}
+			
+			
 			connection.close();
 			
 		} catch (ClassNotFoundException | SQLException e) {

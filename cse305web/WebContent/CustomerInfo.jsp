@@ -27,10 +27,11 @@ String credit= (String)request.getAttribute("credit");
 String email = (String)request.getAttribute("email"); 
 Timestamp create = (Timestamp)request.getAttribute("create"); 
 int rate = (int)request.getAttribute("rating");
-
+List pref = (ArrayList)request.getAttribute("pref"); 
 
 
 %>
+
    <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Name: </label>
@@ -71,9 +72,18 @@ int rate = (int)request.getAttribute("rating");
   <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Preference:</label>
-          <label for="ex1">Fish</label>
+          <% for (int i=0;i<pref.size();i++){ %>
+          <label for="ex1"><%= pref.get(i) %></label>
+          <%} %>
           </div>
   </div>
+  
+  <form action = "CustomerUpdatejsp.jsp"  method = "post">
+           <div class="col-xs-4">
+         <button type="submit" class="btn btn-primary">Edit</button>
+          </div>
+  </form>
+  
   
   <div class="form-group row">
   <form action = "ReservationListServlet"  method = "post">

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,8 +19,18 @@ public class ReservationListServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
+			Cookie[] cookies = null;
+			List pref = new ArrayList();
+			Cookie account = null;
+			cookies = request.getCookies();
+			if (cookies != null) {
+		 		for (int i = 0; i < cookies.length; i++) {
+		 			if (cookies[i].getName().equals("accountId")) {
+		      		 account = cookies[i];
+		      	 }
+		 		}
 			Connection connection = JDBC.getConnection();
-			int accountno = 102;
+			int accountno = Integer.parseInt(account.getValue());
 			PreparedStatement find = connection.prepareStatement(getreservation);
 			find.setInt(1, accountno);
 			ResultSet re = find.executeQuery();

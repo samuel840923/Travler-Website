@@ -174,4 +174,17 @@
     <servlet-name>deletereservelist</servlet-name>
     <url-pattern>/DeleteReservationServlet</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>updatec</servlet-name>
+    <servlet-class>UpdateCustomerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>updatec</servlet-name>
+    <url-pattern>/UpdateCustomerServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
 </web-app>
