@@ -18,7 +18,7 @@ public class AuctionServlet extends HttpServlet{
 			+ "WHERE F.AirlineID=? AND F.FlightNo=? AND L.AirlineID=F.AirlineID AND L.FlightNo=F.FlightNo AND F.Class=? "
 			//+ "AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
 			+ "AND L.DepTime > NOW() AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
-	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?);";
+	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?, ?);";
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
@@ -78,6 +78,7 @@ public class AuctionServlet extends HttpServlet{
 			stmt.setInt(3,  flightNumber);
 			stmt.setString(4, rank);
 			stmt.setDouble(5, nyop);
+			stmt.setBoolean(6, tooLow);
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error

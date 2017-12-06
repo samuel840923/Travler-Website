@@ -23,10 +23,6 @@
 	        	 }
 	      	}
 	      }
-	      System.out.println("Navbar - " + name);
-	      System.out.println("Navbar - " + accountId);
-	      System.out.println("Navbar - " + employeeId);
-	      System.out.println("Navbar - " + isManager);
    %>
     <ul class="nav navbar-nav">
       <!--<li class="active"><a href="#">Home</a></li>-->
@@ -35,7 +31,7 @@
       <%
       	if (employeeId == null) {
       %>
-      	<li><a href="#">Reverse Auction</a></li>
+      	<li><a href="/cse305web/auction">Reverse Auction</a></li>
       <% } %>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -59,7 +55,7 @@
           %>
           	<li><a href="/CustomerServlet">Profile</a></li>
           <% } 
-          	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("True")) {
+          	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("False")) {
           %>
 	          <li><a href="/cse305web/empReserve">Record Reservation</a></li>
 	          <li><a href="/cse305web/empAddPassenger">Add Passenger</a></li>
@@ -68,7 +64,7 @@
 	          <li><a href="/cse305web/customerMailingList">Mailing List</a></li>
 	          <li><a href="/cse305web/empFlightSuggestions">Flight Suggestion</a></li>
           <% } 
-          	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("False")) {
+          	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("True")) {
           %>
           	  <li><a href="/cse305web/empReserve">Record Reservation</a></li>
 	          <li><a href="/cse305web/empAddPassenger">Add Passenger</a></li>
@@ -76,7 +72,7 @@
 	          <li><a href="/cse305web/empDeletePassenger">Delete Passenger</a></li>
 	          <li><a href="/cse305web/customerMailingList">Mailing List</a></li>
 	          <li><a href="/cse305web/empFlightSuggestions">Flight Suggestion</a></li>
-	          <li><a href="#">Manager Action</a></li>
+	          <li><a href="/cse305web/Manager.jsp">Manager Action</a></li>
           <% } %>
         </ul>
       </li>

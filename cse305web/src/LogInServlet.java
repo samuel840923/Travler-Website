@@ -38,9 +38,12 @@ public class LogInServlet extends HttpServlet{
 			PreparedStatement stmt = connection.prepareStatement(customerLogIn);
 			if (user.equalsIgnoreCase("employee")) {
 				stmt = connection.prepareStatement(employeeLogIn);
+				stmt.setString(1, email);
 			}
-			stmt.setString(1, email);
-			//stmt.setString(2, password);
+			else {
+				stmt.setString(1, email);
+				stmt.setString(2, password);
+			}
 			data = stmt.executeQuery();
 			HttpSession session = request.getSession();
 			if (data != null && data.next()) {
