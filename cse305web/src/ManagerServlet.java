@@ -76,7 +76,7 @@ public class ManagerServlet extends HttpServlet{
 				monSales.add(subresult);
 			}
 			PreparedStatement stmt2 = connection.prepareStatement(SHOW_LEG);
-			reserve = stmt.executeQuery();
+			reserve = stmt2.executeQuery();
 			while(reserve!=null && reserve.next()) 
 			{
 				List subresult = new ArrayList();
@@ -104,5 +104,5 @@ public class ManagerServlet extends HttpServlet{
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Manager.jsp");
 	    dispatcher.forward(request, response); 
 	    
-		  }
+	}
 }
