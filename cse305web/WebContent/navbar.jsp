@@ -12,7 +12,7 @@
 	        	 if (cookies[i].getName().equals("name")) {
 	        		 name = cookies[i];
 	        	 }
-	        	 else if (cookies[i].getName().equals("accountId")) {
+	        	 else if (cookies[i].getName().equals("accountNo")) {
 	        		 accountId = cookies[i];
 	        	 }
 	        	 else if (cookies[i].getName().equals("id")) {
@@ -53,7 +53,7 @@
           <%
           	if (accountId != null && employeeId == null) {
           %>
-          	<li><a href="/CustomerServlet">Profile</a></li>
+          	<li><a href="/cse305web/CustomerServlet">Profile</a></li>
           <% } 
           	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("False")) {
           %>

@@ -57,7 +57,7 @@ public class LogInServlet extends HttpServlet{
 					session.setAttribute("accountNo", data.getInt("AccountNo"));
 					session.setAttribute("name", data.getString("FirstName") + " " + data.getString("LastName"));
 					session.setMaxInactiveInterval(30*60);
-					Cookie accountNo = new Cookie("user", data.getInt("AccountNo") + "");
+					Cookie accountNo = new Cookie("accountNo", data.getInt("AccountNo") + "");
 					Cookie name = new Cookie("name", data.getString("FirstName") + " " + data.getString("LastName"));
 					name.setPath("/");
 					accountNo.setPath("/");
