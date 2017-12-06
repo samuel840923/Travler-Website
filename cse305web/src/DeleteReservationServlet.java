@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,17 @@ public class DeleteReservationServlet extends HttpServlet{
 	public static final String UpdateRating = "Update Customer Set rating = rating - 1 where accountno =? ";
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			int accountno=102;
+			Cookie[] cookies = null;
+			Cookie account = null;
+			cookies = request.getCookies();
+			if (cookies != null) {
+		 		for (int i = 0; i < cookies.length; i++) {
+		 			if (cookies[i].getName().equals("accountId")) {
+		      		 account = cookies[i];
+		      	 }
+		 		
+		 		}}
+			int accountno= Integer.parseInt(account.getValue());
 			Connection connection = JDBC.getConnection();
 			int reserno = Integer.parseInt(request.getParameter("reserveno"));
 			PreparedStatement delete = connection.prepareStatement(deleteIncludes);

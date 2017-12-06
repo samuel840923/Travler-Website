@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Timestamp"%>
+<%@include file="navbar.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -27,10 +28,11 @@ String credit= (String)request.getAttribute("credit");
 String email = (String)request.getAttribute("email"); 
 Timestamp create = (Timestamp)request.getAttribute("create"); 
 int rate = (int)request.getAttribute("rating");
-
+List pref = (ArrayList)request.getAttribute("pref"); 
 
 
 %>
+
    <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Name: </label>
@@ -71,9 +73,18 @@ int rate = (int)request.getAttribute("rating");
   <div class="form-group row">
            <div class="col-xs-4">
           <label for="ex1">Preference:</label>
-          <label for="ex1">Fish</label>
+          <% for (int i=0;i<pref.size();i++){ %>
+          <label for="ex1"><%= pref.get(i) %></label>
+          <%} %>
           </div>
   </div>
+  
+  <form action = "CustomerUpdatejsp.jsp"  method = "post">
+           <div class="col-xs-4">
+         <button type="submit" class="btn btn-primary">Edit</button>
+          </div>
+  </form>
+  
   
   <div class="form-group row">
   <form action = "ReservationListServlet"  method = "post">
@@ -103,6 +114,7 @@ if(current!=null && current.size()>0 ){
         <th>The Price You Named</th>
          <th>AirLine ID</th>
           <th>Flight Number</th>
+          <th>Accepted</th>
       </tr>
   </thead> 
    
@@ -114,6 +126,11 @@ if(current!=null && current.size()>0 ){
       <td> <%= sub.get(0) %> </td>
       <td> <%= sub.get(1) %> </td>
       <td> <%= sub.get(2) %> </td>
+      <%if(sub.get(3)!= null){ %>
+       <td> <%= sub.get(3) %> </td>
+       <%} else{%>
+       <td> N/A </td>
+       <%} %>
       </tr>
       <% }%>
        

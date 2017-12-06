@@ -146,6 +146,16 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>ManagerUpdate</servlet-name>
+    <servlet-class>ManagerUpdateServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ManagerUpdate</servlet-name>
+    <url-pattern>/ManagerUpdateServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>ManagerEdit</servlet-name>
     <servlet-class>ManagerEditServlet</servlet-class>
   </servlet>
@@ -194,4 +204,17 @@
     <servlet-name>deletereservelist</servlet-name>
     <url-pattern>/DeleteReservationServlet</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>updatec</servlet-name>
+    <servlet-class>UpdateCustomerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>updatec</servlet-name>
+    <url-pattern>/UpdateCustomerServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
 </web-app>
