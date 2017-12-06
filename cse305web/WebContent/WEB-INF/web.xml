@@ -146,6 +146,16 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>ManagerEdit</servlet-name>
+    <servlet-class>ManagerEditServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ManagerEdit</servlet-name>
+    <url-pattern>/ManagerEditServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>customerMailingList</servlet-name>
     <servlet-class>CustomerMailingListServlet</servlet-class>
   </servlet>
