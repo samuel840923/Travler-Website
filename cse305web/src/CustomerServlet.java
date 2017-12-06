@@ -21,7 +21,7 @@ public class CustomerServlet extends HttpServlet{
 	public static final String PERSON_INFO = "SELECT * From person where Id = ?";
 	public static final String CUSTOMER_INFO = "SELECT Id, CreditCardNo, Email, CreationDate, Rating FROM customer Where AccountNo = ?";
 	public static final String CUSTOMER_PREFERENCE_INFO = "SELECT Preference FROM CustomerPreferences Where AccountNo = ?";
-	public static final String CURRENT_BID = "SELECT NYOP, AirlineID, FlightNo FROM Auctions WHERE AccountNo = ?";
+	public static final String CURRENT_BID = "SELECT NYOP, AirlineID, FlightNo, accepted FROM Auctions WHERE AccountNo = ?";
 	public static final String BID_HISTORY = "Select A.NYOP, A.AirlineID, A.FlightNo, A.Class, A.Date" + 
 			" From Auctions A " + 
 			" Where A.AirlineID = ? and A.FlightNo = ? ";
@@ -87,6 +87,7 @@ public class CustomerServlet extends HttpServlet{
 			subresult.add(currentbid.getDouble("NYOP"));
 			subresult.add(currentbid.getString("AirlineID"));
 			subresult.add(currentbid.getString("FlightNo"));
+			subresult.add(currentbid.getString("accepted"));
 			current_bid.add(subresult);
 		}
 		if(resrno!=null&&flightid!=null) {
@@ -214,6 +215,7 @@ public class CustomerServlet extends HttpServlet{
 				subresult.add(currentbid.getDouble("NYOP"));
 				subresult.add(currentbid.getString("AirlineID"));
 				subresult.add(currentbid.getString("FlightNo"));
+				subresult.add(currentbid.getString("accepted"));
 				current_bid.add(subresult);
 			}
 			if(resrno!=null&&flightid!=null) {

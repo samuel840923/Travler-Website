@@ -114,6 +114,7 @@ if(current!=null && current.size()>0 ){
         <th>The Price You Named</th>
          <th>AirLine ID</th>
           <th>Flight Number</th>
+          <th>Accepted</th>
       </tr>
   </thead> 
    
@@ -125,6 +126,11 @@ if(current!=null && current.size()>0 ){
       <td> <%= sub.get(0) %> </td>
       <td> <%= sub.get(1) %> </td>
       <td> <%= sub.get(2) %> </td>
+      <%if(sub.get(3)!= null){ %>
+       <td> <%= sub.get(3) %> </td>
+       <%} else{%>
+       <td> N/A </td>
+       <%} %>
       </tr>
       <% }%>
        
