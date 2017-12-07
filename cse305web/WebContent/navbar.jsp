@@ -27,7 +27,7 @@
     <ul class="nav navbar-nav">
       <!--<li class="active"><a href="#">Home</a></li>-->
       <li><a href="#">Home</a></li>
-      <li><a href="/FlightSearch.jsp">Flight Search</a></li>
+      <li><a href="/cse305web/FlightInfo.jsp">Flight Search</a></li>
       <%
       	if (employeeId == null) {
       %>
