@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class AddReservationPassenger extends HttpServlet{
 	public static final String insertPerson = "INSERT INTO Person values(?, ?, ?, ?, ?, ?, ?);";
@@ -25,21 +26,16 @@ public class AddReservationPassenger extends HttpServlet{
 	public static final String insertReservation = "INSERT INTO Reservation values(?, NOW(), ?, ?, ?, ?);";
 	public static final String UpdateRating = "Update Customer Set rating = rating + 1 where accountno =? ";
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Connection connection = null;
 		try {
-			Cookie[] cookies = null;
-			Cookie account = null;
-			cookies = request.getCookies();
-			if (cookies != null) {
-		 		for (int i = 0; i < cookies.length; i++) {
-		 			if (cookies[i].getName().equals("accountId")) {
-		      		 account = cookies[i];
-		      	 }
-		 		
-		 		}}
-			int accountno = Integer.parseInt(account.getValue());
+			HttpSession session = request.getSession(false);
+			if (session == null || session.getAttribute("accountNo") ==  null) {
+				response.sendRedirect("/cse305web/login");
+			    return;
+			}
+			int accountno = (int)session.getAttribute("accountNo");
 			int DefaultEmployee = 123456789;
-			Connection connection = null;
+			
 			int flight = Integer.parseInt(request.getParameter("flight"));
 			int leg1 = Integer.parseInt(request.getParameter("leg1"));
 			int leg2 = Integer.parseInt(request.getParameter("leg2"));
@@ -84,13 +80,21 @@ public class AddReservationPassenger extends HttpServlet{
 			reservation.setInt(5, accountno);
 			int error = reservation.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Error Inserting.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+				 dispatcher.forward(request, response);
+				 connection.close();
+				return;
 			}
 			PreparedStatement updaterating = connection.prepareStatement(UpdateRating);
 			updaterating.setInt(1, accountno);
 			error = updaterating.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Error Inserting.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+				 dispatcher.forward(request, response);
+				 connection.close();
+				return;
 			}
 			
 			 reservation = connection.prepareStatement(insertIncludes);
@@ -101,7 +105,11 @@ public class AddReservationPassenger extends HttpServlet{
 			 reservation.setTimestamp(5, depdate);
 			error = reservation.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Error Inserting.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+				 dispatcher.forward(request, response);
+				 connection.close();
+				return;
 			}
 			if(leg2 != leg1) {
 				 reservation = connection.prepareStatement(insertIncludes);
@@ -112,7 +120,11 @@ public class AddReservationPassenger extends HttpServlet{
 				 reservation.setTimestamp(5, depdate2);
 				 error = reservation.executeUpdate();
 					if (error == 0) {
-						//handle error by loading error
+						request.setAttribute("error", "Error Inserting.");
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+						 dispatcher.forward(request, response);
+						 connection.close();
+						return;
 					}
 			}
 			int reserve2=0;
@@ -153,14 +165,22 @@ public class AddReservationPassenger extends HttpServlet{
 			stmt.setInt(7, zipcode);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Error Inserting.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+				 dispatcher.forward(request, response);
+				 connection.close();
+				return;
 			}
 			PreparedStatement stmt1 = connection.prepareStatement(insertPassenger);
 			stmt1.setInt(1, id);
 			stmt1.setInt(2, accountno);
 			error = stmt1.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Error Inserting.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+				 dispatcher.forward(request, response);
+				 connection.close();
+				return;
 			}
 			stmt = connection.prepareStatement(insertReservationPassenger);
 System.out.println(reservationNumber+ " 1st");
@@ -172,7 +192,11 @@ System.out.println(reservationNumber+ " 1st");
 			stmt.setString(6, food);
 			error = stmt.executeUpdate();
 			if (error == 0) {
-				//handle error by loading error
+				request.setAttribute("error", "Error Inserting.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+				 dispatcher.forward(request, response);
+				 connection.close();
+				return;
 			}
 			if (type == 2) {
 				int flight2 = Integer.parseInt(request.getParameter("flight2"));
@@ -199,7 +223,11 @@ System.out.println(reservationNumber+ " 1st");
 				stmt.setString(6, food2);
 				error = stmt.executeUpdate();
 				if (error == 0) {
-					//handle error by loading error
+					request.setAttribute("error", "Error Inserting.");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+					 dispatcher.forward(request, response);
+					 connection.close();
+					return;
 				}
 			}
 
@@ -208,10 +236,19 @@ System.out.println(reservationNumber+ " 1st");
 	   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ReservationListServlet");
 		dispatcher.forward(request, response); 
 		}
-		catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (ClassNotFoundException | SQLException |  NumberFormatException e) {
+			request.setAttribute("error", "Error Inserting.");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+			 dispatcher.forward(request, response);
+			 try {
+				connection.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			 return ;
 		}
+		
 	}
 	public static int addReservationFlight2(HttpServletRequest request, Connection connection,int customer,int employee) {
 		

@@ -12,7 +12,7 @@
 	        	 if (cookies[i].getName().equals("name")) {
 	        		 name = cookies[i];
 	        	 }
-	        	 else if (cookies[i].getName().equals("accountId")) {
+	        	 else if (cookies[i].getName().equals("accountNo")) {
 	        		 accountId = cookies[i];
 	        	 }
 	        	 else if (cookies[i].getName().equals("id")) {
@@ -27,7 +27,7 @@
     <ul class="nav navbar-nav">
       <!--<li class="active"><a href="#">Home</a></li>-->
       <li><a href="#">Home</a></li>
-      <li><a href="/cse305web/FlightSearch">Flight Search</a></li>
+      <li><a href="/FlightSearch.jsp">Flight Search</a></li>
       <%
       	if (employeeId == null) {
       %>
@@ -53,7 +53,7 @@
           <%
           	if (accountId != null && employeeId == null) {
           %>
-          	<li><a href="/CustomerServlet">Profile</a></li>
+          	<li><a href="/cse305web/CustomerServlet">Profile</a></li>
           <% } 
           	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("False")) {
           %>

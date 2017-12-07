@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@include file="navbar.jsp" %>
+<%@include file="Error.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -68,9 +69,7 @@ List sub = (ArrayList)result.get(i);
 					<div class='col-md-6 form-group'>
 						<button class='form-control btn btn-success submit-button' type='button' onclick="location.href = 'FlightInfo.html'">Search More Flights</button>
 					</div>
-					<div class='col-md-2 form-group'>
-						<button class='form-control btn btn-danger submit-button' type='submit'>Log Out</button>
-					</div>
+	
             </div>
           </form>
         </div>
