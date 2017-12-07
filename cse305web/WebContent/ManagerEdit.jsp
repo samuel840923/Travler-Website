@@ -24,7 +24,6 @@
 
 
 %>
-</div>
 
 <div class="container">
   
@@ -59,8 +58,6 @@
 	
 	<button type="submit" formmethod="post" form="form1">Submit Info</button>
 	
-	</table>
-	</div>
 </form>
 
 <form action="ManagerEditServlet" method="POST" id="form2" style="display:none;">
@@ -81,7 +78,6 @@
 	
 	<button type="submit" formmethod="post" form="form2">Submit Info</button>
 	
-	</div>
 </form>
 
 <script>
@@ -139,6 +135,7 @@ function fun2()
 
 
 
-
+</table>
+</div>
 </body>
 </html>

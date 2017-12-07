@@ -24,7 +24,7 @@
 
 
 %>
-</div><div class="container">
+<div class="container">
   
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select
@@ -65,7 +65,6 @@
 	 <%} else{ %>
 	 <%} %>
 	</table>
-	</div>
 </form>
 
 <form action="ManagerUpdateServlet" method="POST" id="form2" style="display:none">
@@ -84,7 +83,6 @@
 	 <%} else{ %>
 	 <%} %>
 	</table>
-	</div>
 </form>
 
 <form action="ManagerUpdateServlet" method="POST" id="form3" style="display:none">
@@ -108,7 +106,7 @@
 	 <%} else{ %>
 	 <%} %>
 	</table>
-	</div>
+	
 </form>
 
 <form action="ManagerUpdateServlet" method="POST" id="form4" style="display:none">
@@ -117,7 +115,7 @@
 	<input name = "credit" placeholder="New Credit Card #" required="true"/>
 	
 	<button type="submit" formmethod="post" form="form4">Submit Info</button>
-	</div>
+	
 </form>
 
 <form action="ManagerUpdateServlet" method="POST" id="form5" style="display:none">
@@ -126,7 +124,7 @@
 	<input name = "email" placeholder="New Email" required="true"/>
 	
 	<button type="submit" formmethod="post" form="form5">Submit Info</button>
-	</div>
+	
 </form>
 
 <form action="ManagerUpdateServlet" method="POST" id="form6" style="display:none">
@@ -135,7 +133,7 @@
 	<input name = "rateC" placeholder="New Rating" required="true"/>
 	
 	<button type="submit" formmethod="post" form="form6">Submit Info</button>
-	</div>
+	
 </form>
 
 <script>
@@ -278,7 +276,7 @@ function fun6(){
 
 
 
-
+</div>
 
 </body>
 </html>

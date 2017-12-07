@@ -24,7 +24,7 @@
 
 
 %>
-</div>
+
 
 <form action="ManagerServlet" method="POST" id="form0">
 <div class="dropdown">
@@ -181,7 +181,7 @@
 	  <h2>Reservation By Customer Name</h2>  
 	<input name = "firstN" placeholder="Enter First Name" required="true"/>
 	<input name = "lastN" placeholder="Enter Last Name" required="true"/>
-	<button type="submit" formmethod="post" form="form4">Submit Flight Number</button>       
+	<button type="submit" formmethod="post" form="form4">Submit Customer Name</button>       
 	<table class="table" type = "hidden">
 	<%
 	List N=new ArrayList();
@@ -454,7 +454,7 @@
 <form action="ManagerServlet" method="POST" id="form12"style="display:none">
 	  <h2>Flights by Airport</h2>  
 	<input name = "airportN" placeholder="Enter Airport Name" required="true"/>
-	<button type="submit" formmethod="post" form="form12">Submit Airport ID</button>       
+	<button type="submit" formmethod="post" form="form12">Submit Airport Name</button>       
 	<table class="table" type = "hidden">
 	<%
 	List airport=new ArrayList();
@@ -819,6 +819,6 @@ function fun3()
 
 
 </script>
-
+</div>
 </body>
 </html>

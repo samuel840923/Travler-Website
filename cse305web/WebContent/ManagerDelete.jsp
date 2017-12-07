@@ -24,7 +24,7 @@
 
 
 %>
-</div><div class="container">
+<div class="container">
   
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select
@@ -35,6 +35,7 @@
       
     </ul>
   </div>
+ </div>
 
 
 
@@ -55,7 +56,6 @@
 	 <%} else{ %>
 	 <%} %>
 	</table>
-	</div>
 </form>
 
 <form action="ManagerDeleteServlet" method="POST" id="form2" style="display:none">
@@ -73,7 +73,6 @@
 	 <%} else{ %>
 	 <%} %>
 	</table>
-	</div>
 </form>
 
 
@@ -122,6 +121,6 @@ function fun2()
 
 
 
-
+</div>
 </body>
 </html>
