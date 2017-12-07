@@ -26,15 +26,11 @@
    %>
     <ul class="nav navbar-nav">
       <!--<li class="active"><a href="#">Home</a></li>-->
-      <li><a href="#">Home</a></li>
+      <li><a href="/cse305web/">Home</a></li>
       <li><a href="/cse305web/FlightInfo.jsp">Flight Search</a></li>
-      <%
-      	if (employeeId == null) {
-      %>
-      	<li><a href="/cse305web/auction">Reverse Auction</a></li>
-      <% } %>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <li><a href="/cse305web/Help.jsp">Help</a></li>
       <%
       	if (accountId == null && employeeId == null) {
       %>
