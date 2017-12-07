@@ -14,11 +14,34 @@
   <link rel="stylesheet" href="Manager.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style type="text/css">
+  	.button {
+  	background-color: #00bfff;
+  	border: none;
+  	
+  	}
+  	body {
+  		background-image:url("background/back2.jpg");
+  		background-size:     cover;                     
+    		background-repeat:   no-repeat;
+  	}
+  	
+  	input {
+  		width: 30%;
+  		border:none;
+  		border-bottom: 1px solid #555;
+  		color: black;
+  		margin-bottom: 15px;
+  		margin-right:5px
+  	}
+  </style>
+  
 </head>
 <body>
 
 <div class="container">
- <h2>Manager</h2>
+ <h1>Manager</h1>
 <%
 
 
@@ -53,7 +76,7 @@
 <form action="ManagerServlet" method="POST" id="form1" style="display:none">
 	  <h2>Monthly Sales Report</h2>         
 	<input name = "Month" placeholder="Enter a month from 1-12" required="true"/>
-	<button type="submit" formmethod="post" form="form1">Submit Month</button>
+	<button class="button"type="submit" formmethod="post" form="form1">Submit Month</button>
 	<div class="container" id="monSales">
 	<table class="table" type = "hidden">
 	<%
@@ -87,7 +110,7 @@
 </div>
 <form action="ManagerServlet" method="POST" id="form2" style="display:none">
 	  <h2>All Legs</h2>         
-<button type="submit" formmethod="post" form="form2">Refresh Legs</button>
+<button class="button"type="submit" formmethod="post" form="form2">Refresh Legs</button>
 
 	<table class="table" type = "hidden">
 	<%
@@ -135,7 +158,7 @@
 <form action="ManagerServlet" method="POST" id="form3" style="display:none">
 	  <h2>Reservation By Flight Number</h2>         
 	<input name = "FlightNo" placeholder="Enter a flight number (All digits)" required="true"/>
-	<button type="submit" formmethod="post" form="form3">Submit Flight Number</button>
+	<button class="button"type="submit" formmethod="post" form="form3">Submit Flight Number</button>
 	<div class="container" id="flightNumber">
 	<table class="table" type = "hidden">
 	<%
@@ -181,7 +204,7 @@
 	  <h2>Reservation By Customer Name</h2>  
 	<input name = "firstN" placeholder="Enter First Name" required="true"/>
 	<input name = "lastN" placeholder="Enter Last Name" required="true"/>
-	<button type="submit" formmethod="post" form="form4">Submit Customer Name</button>       
+	<button class="button"type="submit" formmethod="post" form="form4">Submit Customer Name</button>       
 	<table class="table" type = "hidden">
 	<%
 	List N=new ArrayList();
@@ -226,7 +249,7 @@
 <form action="ManagerServlet" method="POST" id="form5"style="display:none">
 	  <h2>Revenue by Account Number</h2>  
 	<input name = "accN" placeholder="Enter Account Number" required="true"/>
-	<button type="submit" formmethod="post" form="form5">Submit Account Number</button>       
+	<button class="button"type="submit" formmethod="post" form="form5">Submit Account Number</button>       
 	<table class="table" type = "hidden">
 	<%
 	List revC=new ArrayList();
@@ -259,7 +282,7 @@
 	  <h2>Revenue by Flight</h2>  
 	<input name = "airline" placeholder="Enter Airline ID" required="true"/>
 	<input name = "FlightNoR" placeholder="Enter Flight Number" required="true"/>
-	<button type="submit" formmethod="post" form="form6">Submit Flight</button>       
+	<button class="button"type="submit" formmethod="post" form="form6">Submit Flight</button>       
 	<table class="table" type = "hidden">
 	<%
 	List revF=new ArrayList();
@@ -293,7 +316,7 @@
 <form action="ManagerServlet" method="POST" id="form7"style="display:none">
 	  <h2>Revenue by Airport ID</h2>  
 	<input name = "arrCity" placeholder="Enter Arrival Airport ID" required="true"/>
-	<button type="submit" formmethod="post" form="form7">Submit Airport ID</button>       
+	<button class="button"type="submit" formmethod="post" form="form7">Submit Airport ID</button>       
 	<table class="table" type = "hidden">
 	<%
 	List revA=new ArrayList();
@@ -420,7 +443,7 @@
 	  <h2>Customer reserved on flight</h2>  
 	<input name = "airlineidC" placeholder="Enter Airline ID" required="true"/>
 	<input name = "flightnoC" placeholder="Enter Flight Number" required="true"/>
-	<button type="submit" formmethod="post" form="form11">Submit Flight</button>       
+	<button class="button"type="submit" formmethod="post" form="form11">Submit Flight</button>       
 	<table class="table" type = "hidden">
 	<%
 	List cusSeat=new ArrayList();
@@ -454,7 +477,7 @@
 <form action="ManagerServlet" method="POST" id="form12"style="display:none">
 	  <h2>Flights by Airport</h2>  
 	<input name = "airportN" placeholder="Enter Airport Name" required="true"/>
-	<button type="submit" formmethod="post" form="form12">Submit Airport Name</button>       
+	<button class="button"type="submit" formmethod="post" form="form12">Submit Airport Name</button>       
 	<table class="table" type = "hidden">
 	<%
 	List airport=new ArrayList();

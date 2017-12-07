@@ -7,13 +7,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-  <title>Add Employee or Customer/title>
+  <title>Add Employee or Customer</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="Manager.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style type="text/css">
+  	.button {
+  	background-color: #00bfff;
+  	border: none;
+  	
+  	}
+  	body {
+  		background-image:url("background/back3.jpg");
+  		background-size:     cover;                     
+    		background-repeat:   no-repeat;
+  	}
+  	
+  	input {
+  		width: 30%;
+  		border:none;
+  		border-bottom: 1px solid #555;
+  		color: black;
+  		margin-bottom: 15px;
+  		margin-right:5px
+  	}
+  </style>
 </head>
 <body>
 
@@ -39,8 +60,6 @@
 </div>
 
 
-</body>
-</html>
 
 <form action="ManagerEditServlet" method="POST" id="form1" style="display:none;">
 	  <h2>Add a Employee</h2>         
@@ -56,7 +75,7 @@
 	<input name = "start" placeholder="Start Date" required="true"/>
 	<input name = "hourly" placeholder="Hourly Rate" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form1">Submit Info</button>
+	<button class="button" type="submit" formmethod="post" form="form1">Submit Info</button>
 	
 </form>
 
@@ -76,7 +95,7 @@
 	<input name = "rate" placeholder="Rating" required="true"/>
 	<input name = "pass" placeholder="Password" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form2">Submit Info</button>
+	<button class="button" type="submit" formmethod="post" form="form2">Submit Info</button>
 	
 </form>
 
@@ -113,29 +132,10 @@ function fun2()
     	{
     		y.style.display = "none";
     	}
-	}
+}
 </script>
 
-<table class="table" type = "hidden">
-	<%
-	List ok=new ArrayList();
-	ok=(ArrayList)request.getAttribute("ok");
-	if(ok!=null){
-	%>
-	<thead>
-	      <tr>
-	        <th>Succeed!</th>
-	      </tr>
-	  </thead>    
-	  
-	 <%} else{ %>
-	 <%} %>
 
-
-
-
-
-</table>
 </div>
 </body>
 </html>
