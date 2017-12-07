@@ -77,6 +77,7 @@ double total = fares*(1-rate)*nop1 + bookfee;
 					<label><%=air %></label>
 				</div>
 				<input type="hidden" name = "air" value= "<%=air %>"/>
+				<input type="hidden" name = "deptime" value= "<%=deptime %>"/>
 				<div class="col-xs-2 form-group">
 					<label><%=flight %>.</label>
 					<input type="hidden" name = "flight" value= "<%=flight %>"/>
@@ -194,6 +195,7 @@ total = fares1*(1-rate)*nop1 + bookfee;
 				<div class="col-xs-2 form-group">
 					<label><%=flight1 %>.</label>
 					<input type="hidden" name = "flight2" value= "<%=flight1 %>"/>
+					<input type="hidden" name = "deptime1" value= "<%=deptime1 %>"/>
 				</div>
 				<div class="col-xs-2 form-group">
 					<label><%=depname1 %></label>
@@ -262,9 +264,15 @@ total = fares1*(1-rate)*nop1 + bookfee;
 			  <div class='col-md-4 form-group'>
                 <button class='form-control btn btn-success submit-button' type='submit' name="action" value="Book Flight">Book this flight!</button>
               </div>
-              <div class='col-md-4 form-group'>
-                <button class='form-control btn btn-success submit-button' type='submit' name="action" value="Reverse Bid">Reverse Bid</button>
-              </div>
+              <%
+              	if (type.equals("0")) {
+              %>
+	              <div class='col-md-4 form-group'>
+	                <button class='form-control btn btn-success submit-button' type='submit' name="action" value="Reverse Bid">Reverse Bid</button>
+	              </div>
+	          <%
+              	}
+	          %>
             </div>
           </form>
         </div>

@@ -168,6 +168,7 @@ public class MoreInfoServlet extends HttpServlet{
 						response.sendRedirect("/cse305web/login");
 					    return;
 					}
+					System.out.println(deptime);
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
 				    dispatcher.forward(request, response); 
 			   }

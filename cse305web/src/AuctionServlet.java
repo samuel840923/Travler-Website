@@ -19,7 +19,7 @@ public class AuctionServlet extends HttpServlet{
 	public static final String getHiddenFare = "SELECT F.HiddenFare FROM Fare F, Leg L, Flight Fl "
 			+ "WHERE F.AirlineID=? AND F.FlightNo=? AND L.AirlineID=F.AirlineID AND L.FlightNo=F.FlightNo AND F.Class=? "
 			//+ "AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
-			+ "AND L.DepTime > NOW() AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
+			+ "AND L.DepTime >= ? AND Fl.AirlineID=F.AirlineID AND Fl.FlightNo=F.FlightNo AND Fl.NoOfSeats > 0;";
 	public static final String insertAuction = "INSERT INTO AUCTIONS values(?, ?, ?, ?, NOW(), ?, ?);";
 	public static final String insertPerson = "INSERT INTO Person values(?, ?, ?, ?, ?, ?, ?);";
 	public static final String insertPassenger = "INSERT INTO Passenger values(?, ?);";
@@ -55,23 +55,27 @@ public class AuctionServlet extends HttpServlet{
 		List fares = new ArrayList();
 		boolean tooLow = true;
 		int DefaultEmployee = 123456789;
+		int counter = 0;
 		try {
-			String airlineId = request.getParameter("airlineId");
-			int flightNumber = Integer.parseInt(request.getParameter("flightNumber"));
-			String rank = request.getParameter("class");
+			String airlineId = request.getParameter("air");
+			int flightNumber = Integer.parseInt(request.getParameter("flight"));
+			String rank = request.getParameter("class").trim();
 			double nyop = Double.parseDouble(request.getParameter("nyop"));
+			String deptime = request.getParameter("deptime");
 			connection = JDBC.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(getHiddenFare);
 			ResultSet data = null;
 			stmt.setString(1, airlineId);
 			stmt.setInt(2, flightNumber);
 			stmt.setString(3, rank);
+			stmt.setString(4, deptime);
 			data = stmt.executeQuery();
-			while(data !=null && data.next()) {
+			while(data !=null && data.next() && counter < 1) {
 				List fare = new ArrayList();
+				fare.add(data.getDouble("HiddenFare"));
+				fares.add(fare);
+				counter++;
 				if (data.getDouble("HiddenFare") >= nyop) {
-					fare.add(data.getDouble("HiddenFare"));
-					fares.add(fare);
 					tooLow = false;
 				}
 			}
@@ -141,7 +145,7 @@ public class AuctionServlet extends HttpServlet{
 				error = reservation.executeUpdate();
 				if (error == 0) {
 					request.setAttribute("error", "Error Inserting.");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
 					 connection.close();
 					return;
@@ -151,7 +155,7 @@ public class AuctionServlet extends HttpServlet{
 				error = updaterating.executeUpdate();
 				if (error == 0) {
 					request.setAttribute("error", "Error Inserting.");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
 					 connection.close();
 					return;
@@ -166,7 +170,7 @@ public class AuctionServlet extends HttpServlet{
 				error = reservation.executeUpdate();
 				if (error == 0) {
 					request.setAttribute("error", "Error Inserting.");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
 					 connection.close();
 					return;
@@ -181,7 +185,7 @@ public class AuctionServlet extends HttpServlet{
 					 error = reservation.executeUpdate();
 						if (error == 0) {
 							request.setAttribute("error", "Error Inserting.");
-							RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+							RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 							 dispatcher.forward(request, response);
 							 connection.close();
 							return;
@@ -226,7 +230,7 @@ public class AuctionServlet extends HttpServlet{
 				error = stmt.executeUpdate();
 				if (error == 0) {
 					request.setAttribute("error", "Error Inserting.");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
 					 connection.close();
 					return;
@@ -237,7 +241,7 @@ public class AuctionServlet extends HttpServlet{
 				error = stmt1.executeUpdate();
 				if (error == 0) {
 					request.setAttribute("error", "Error Inserting.");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
 					 connection.close();
 					return;
@@ -253,7 +257,7 @@ public class AuctionServlet extends HttpServlet{
 				error = stmt.executeUpdate();
 				if (error == 0) {
 					request.setAttribute("error", "Error Inserting.");
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
 					 connection.close();
 					return;
@@ -284,7 +288,7 @@ public class AuctionServlet extends HttpServlet{
 					error = stmt.executeUpdate();
 					if (error == 0) {
 						request.setAttribute("error", "Error Inserting.");
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 						 dispatcher.forward(request, response);
 						 connection.close();
 						return;

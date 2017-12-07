@@ -84,7 +84,7 @@ public class LogInServlet extends HttpServlet{
 					response.addCookie(id);
 					response.addCookie(name);
 					response.addCookie(isManager);
-					response.sendRedirect("/cse305web/empReserve");
+					response.sendRedirect("/cse305web/employeeInfo");
 				}
 				connection.close();
 				return;
