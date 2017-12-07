@@ -126,8 +126,12 @@ if(current!=null && current.size()>0 ){
       <td> <%= sub.get(0) %> </td>
       <td> <%= sub.get(1) %> </td>
       <td> <%= sub.get(2) %> </td>
-      <%if(sub.get(3)!= null){ %>
-       <td> <%= sub.get(3) %> </td>
+      <%if(sub.get(3)!= null){ 
+      if(sub.get(3).equals("1")){%>
+       <td>Yes </td>
+       <%}else{ %>
+       <td>No </td>
+       <%} %>
        <%} else{%>
        <td> N/A </td>
        <%} %>
