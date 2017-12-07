@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class AddReservationPassenger extends HttpServlet{
 	public static final String insertPerson = "INSERT INTO Person values(?, ?, ?, ?, ?, ?, ?);";
@@ -27,17 +28,13 @@ public class AddReservationPassenger extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection connection = null;
 		try {
-			Cookie[] cookies = null;
-			Cookie account = null;
-			cookies = request.getCookies();
-			if (cookies != null) {
-		 		for (int i = 0; i < cookies.length; i++) {
-		 			if (cookies[i].getName().equals("accountId")) {
-		      		 account = cookies[i];
-		      	 }
-		 		
-		 		}}
-			int accountno = Integer.parseInt(account.getValue());
+			HttpSession session = request.getSession(false);
+			if (session == null || session.getAttribute("accountNo") ==  null) {
+				response.sendRedirect("/cse305web/login");
+			    return;
+			}
+			int accountNo = (int)session.getAttribute("accountNo");
+			int accountno = accountNo;
 			int DefaultEmployee = 123456789;
 			
 			int flight = Integer.parseInt(request.getParameter("flight"));

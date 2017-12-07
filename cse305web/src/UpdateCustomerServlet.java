@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class UpdateCustomerServlet extends HttpServlet{
 	public static final String getPersonID = "Select Id from Customer where AccountNo = ?";
@@ -18,18 +19,14 @@ public class UpdateCustomerServlet extends HttpServlet{
 	public static final String UpdatePreference = "Insert into CustomerPreferences values (?,?)";
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Cookie[] cookies = null;
-			Cookie account = null;
-			cookies = request.getCookies();
-			if (cookies != null) {
-		 		for (int i = 0; i < cookies.length; i++) {
-		 			if (cookies[i].getName().equals("accountId")) {
-		      		 account = cookies[i];
-		      	 }
-		 		
-		 		}}
+			HttpSession session = request.getSession(false);
+			if (session == null || session.getAttribute("accountNo") ==  null) {
+				response.sendRedirect("/cse305web/login");
+			    return;
+			}
+			int accountNo = (int)session.getAttribute("accountNo");
 			Connection connection = JDBC.getConnection();
-			int accountno = Integer.parseInt(account.getValue());
+			int accountno = accountNo;
 			String fname = request.getParameter("firstName");
 			String lname = request.getParameter("lastName");
 			String address = request.getParameter("address");
