@@ -182,17 +182,14 @@ public class CustomerServlet extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 		  {
 		List pref = new ArrayList();
-		Cookie[] cookies = null;
-		Cookie account = null;
-		cookies = request.getCookies();
-		if (cookies != null) {
-	   		for (int i = 0; i < cookies.length; i++) {
-	   			if (cookies[i].getName().equals("accountNo")) {
-	        		 account = cookies[i];
-	        	 }
-	   		}
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("accountNo") ==  null) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		int accountNo = (int)session.getAttribute("accountNo");
 		Connection connection;
-		int Account = Integer.parseInt(account.getValue());
+		int Account = accountNo;
 		SetCustomer(Account);
 		List current_bid = new ArrayList();
 		List bid = new ArrayList();
