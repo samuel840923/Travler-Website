@@ -54,7 +54,6 @@
           	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("False")) {
           %>
           	  <li><a href="/cse305web/employeeInfo">Profile</a></li>
-	          <li><a href="/cse305web/empReserve">Record Reservation</a></li>
 	          <li><a href="/cse305web/empAddPassenger">Add Passenger</a></li>
 	          <li><a href="/cse305web/empEditPassenger">Edit Passenger</a></li>
 	          <li><a href="/cse305web/empDeletePassenger">Delete Passenger</a></li>
@@ -64,7 +63,6 @@
           	else if (employeeId != null && isManager.getValue().equalsIgnoreCase("True")) {
           %>
           	  <li><a href="/cse305web/employeeInfo">Profile</a></li>
-          	  <li><a href="/cse305web/empReserve">Record Reservation</a></li>
 	          <li><a href="/cse305web/empAddPassenger">Add Passenger</a></li>
 	          <li><a href="/cse305web/empEditPassenger">Edit Passenger</a></li>
 	          <li><a href="/cse305web/empDeletePassenger">Delete Passenger</a></li>

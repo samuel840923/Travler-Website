@@ -265,7 +265,7 @@ total = fares1*(1-rate)*nop1 + bookfee;
                 <button class='form-control btn btn-success submit-button' type='submit' name="action" value="Book Flight">Book this flight!</button>
               </div>
               <%
-              	if (type.equals("0")) {
+              	if (type.equals("0") && accountId != null) {
               %>
 	              <div class='col-md-4 form-group'>
 	                <button class='form-control btn btn-success submit-button' type='submit' name="action" value="Reverse Bid">Reverse Bid</button>

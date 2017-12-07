@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 public class MoreInfoServlet extends HttpServlet{
 	public static final String ADV_DISCOUNT = "Select Days, DiscountRate from advpurchasediscount where AirlineID = ?";
+	public static final String getCustomers = "SELECT C.AccountNo, P.FirstName, P.LastName FROM Customer C, Person P "
+			+ "WHERE C.Id=P.Id";
 	
 	protected void doPost(HttpServletRequest request, 
 		      HttpServletResponse response) throws ServletException, IOException 
@@ -158,6 +160,32 @@ public class MoreInfoServlet extends HttpServlet{
 		   String page = request.getParameter("action");
 		   if (page != null) {
 			   if (page.equalsIgnoreCase("Book Flight")) {
+				   HttpSession session = request.getSession(false);
+					if (session != null && session.getAttribute("id") !=  null) {
+						int empId = (int)session.getAttribute("id");
+						List customers = new ArrayList();
+						try {
+							connection = JDBC.getConnection();
+							PreparedStatement stmt = connection.prepareStatement(getCustomers);
+							ResultSet data = stmt.executeQuery();
+							while(data!=null && data.next()) {
+								List customer = new ArrayList();
+								customer.add(data.getInt("AccountNo") + "");
+								customer.add(data.getString("FirstName") + " " + data.getString("LastName"));
+							    customers.add(customer);
+							}
+							connection.close();
+						}
+						catch (ClassNotFoundException | SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							request.setAttribute("error", e.getMessage());
+						}
+						request.setAttribute("customers", customers);
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReservation.jsp");
+					    dispatcher.forward(request, response);
+					    return;
+					}
 				   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
 				   dispatcher.forward(request, response); 
 				   return;
