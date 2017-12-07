@@ -33,7 +33,7 @@ public class AddReservationPassenger extends HttpServlet{
 				response.sendRedirect("/cse305web/login");
 			    return;
 			}
-			int accountNo = (int)session.getAttribute("accountNo");
+			int accountno = (int)session.getAttribute("accountNo");
 			int DefaultEmployee = 123456789;
 			
 			int flight = Integer.parseInt(request.getParameter("flight"));
