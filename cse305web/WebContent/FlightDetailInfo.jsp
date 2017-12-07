@@ -10,7 +10,7 @@
  <center> <h1>Flight Info</h1></center>
 </div>
 </head>
-<form  action = "CustomerReserve.jsp" method = "post">
+<form  action = "/cse305web/MoreInfoServlet" method = "post">
 <body>
 <div class="container">
     <div class='row'>
@@ -256,11 +256,14 @@ total = fares1*(1-rate)*nop1 + bookfee;
 			</div>
 			<%} %>
 			 <div class='form-row'>
-              <div class='col-md-6 form-group'>
+              <div class='col-md-4 form-group'>
                 <button class='form-control btn btn-info submit-button' type='button' onclick="location.href = 'FlightInfo.html'">Back To Flight List</button>
               </div>
-			  <div class='col-md-6 form-group'>
-                <button class='form-control btn btn-success submit-button' type='submit'>Book this flight!</button>
+			  <div class='col-md-4 form-group'>
+                <button class='form-control btn btn-success submit-button' type='submit' name="action" value="Book Flight">Book this flight!</button>
+              </div>
+              <div class='col-md-4 form-group'>
+                <button class='form-control btn btn-success submit-button' type='submit' name="action" value="Reverse Bid">Reverse Bid</button>
               </div>
             </div>
           </form>

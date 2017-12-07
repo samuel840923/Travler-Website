@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class MoreInfoServlet extends HttpServlet{
 	public static final String ADV_DISCOUNT = "Select Days, DiscountRate from advpurchasediscount where AirlineID = ?";
@@ -154,8 +155,27 @@ public class MoreInfoServlet extends HttpServlet{
 		   request.setAttribute("leg2",legno2);
 		   
 		   connection.close();
-		   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/FlightDetailInfo.jsp");
-		   dispatcher.forward(request, response); 
+		   String page = request.getParameter("action");
+		   if (page != null) {
+			   if (page.equalsIgnoreCase("Book Flight")) {
+				   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerReserve.jsp");
+				   dispatcher.forward(request, response); 
+				   return;
+			   }
+			   else {
+				   	HttpSession session = request.getSession(false);
+					if (session == null || session.getAttribute("accountNo") ==  null) {
+						response.sendRedirect("/cse305web/login");
+					    return;
+					}
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
+				    dispatcher.forward(request, response); 
+			   }
+		   }
+		   else {
+			   RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/FlightDetailInfo.jsp");
+			   dispatcher.forward(request, response); 
+		   }
 		   
 		 }catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
