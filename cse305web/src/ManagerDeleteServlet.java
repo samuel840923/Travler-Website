@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class ManagerDeleteServlet extends HttpServlet{
@@ -26,6 +27,16 @@ public class ManagerDeleteServlet extends HttpServlet{
 
 	public static final String DELETE_CUS = "DELETE FROM Customer WHERE Customer.Id=?; \n";
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null || ((String)session.getAttribute("isManager")).equalsIgnoreCase("False")) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ManagerDelete.jsp");
+	    dispatcher.forward(request, response);
+	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -102,10 +113,11 @@ public class ManagerDeleteServlet extends HttpServlet{
 			
 			
 		} 
-		catch (ClassNotFoundException | SQLException e) 
+		catch (ClassNotFoundException | SQLException | NullPointerException | NumberFormatException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		} 
 		request.setAttribute("ok", ok);
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ManagerDelete.jsp");

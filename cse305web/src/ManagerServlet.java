@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ManagerServlet extends HttpServlet{
 	public static final String MONTH_SALES = "Select Month(ResrDate) ,SUM(TotalFare) \n" + 
@@ -101,9 +102,18 @@ public class ManagerServlet extends HttpServlet{
 			"	AND L.CurrDepTime>=L.DepTime);\n";
 
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null || ((String)session.getAttribute("isManager")).equalsIgnoreCase("False")) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Manager.jsp");
+	    dispatcher.forward(request, response);
+	}
 	
-	
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		Connection connection;
 		List monSales = new ArrayList();
@@ -131,6 +141,7 @@ public class ManagerServlet extends HttpServlet{
 		
 		List airport = new ArrayList();
 		String airportName = request.getParameter("airportN");
+		
 		
 		List ontime = new ArrayList();
 		
@@ -374,10 +385,11 @@ public class ManagerServlet extends HttpServlet{
 			
 			
 		} 
-		catch (ClassNotFoundException | SQLException e) 
+		catch (ClassNotFoundException | SQLException | NullPointerException | NumberFormatException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("monSales",monSales); 
 		request.setAttribute("legs", leg);
