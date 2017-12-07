@@ -22,6 +22,17 @@ public class LogInServlet extends HttpServlet{
 			+ "WHERE E.Id=P.Id AND E.Id=?;";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			if (session.getAttribute("id") != null) {
+				response.sendRedirect("/cse305web/employeeInfo");
+				return;
+			}
+			else if (session.getAttribute("accountNo") != null) {
+				response.sendRedirect("/cse305web/CustomerServlet");
+				return;
+			}
+		}
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 	    dispatcher.forward(request, response); 
 	}
@@ -84,7 +95,7 @@ public class LogInServlet extends HttpServlet{
 					response.addCookie(id);
 					response.addCookie(name);
 					response.addCookie(isManager);
-					response.sendRedirect("/cse305web/empReserve");
+					response.sendRedirect("/cse305web/employeeInfo");
 				}
 				connection.close();
 				return;

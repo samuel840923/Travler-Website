@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Customer Profile</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -126,8 +126,12 @@ if(current!=null && current.size()>0 ){
       <td> <%= sub.get(0) %> </td>
       <td> <%= sub.get(1) %> </td>
       <td> <%= sub.get(2) %> </td>
-      <%if(sub.get(3)!= null){ %>
-       <td> <%= sub.get(3) %> </td>
+      <%if(sub.get(3)!= null){ 
+      if(sub.get(3).equals("1")){%>
+       <td>Yes </td>
+       <%}else{ %>
+       <td>No </td>
+       <%} %>
        <%} else{%>
        <td> N/A </td>
        <%} %>

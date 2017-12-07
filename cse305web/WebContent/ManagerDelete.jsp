@@ -42,7 +42,7 @@
 
 
 <form action="ManagerDeleteServlet" method="POST" id="form1" style="display:none">
-	  <h2>Update IsManager for a Employee</h2>         
+	  <h2>Delete An Employee</h2>         
 	<input name = "id" placeholder="ID" required="true"/>
 	
 	<button type="submit" formmethod="post" form="form1">Submit Info</button>
@@ -59,7 +59,7 @@
 </form>
 
 <form action="ManagerDeleteServlet" method="POST" id="form2" style="display:none">
-	  <h2>Update StartDate for a Employee</h2>         
+	  <h2>Delete a Customer</h2>         
 	<input name = "id2" placeholder="ID" required="true"/>
 	
 	<button type="submit" formmethod="post" form="form2">Submit Info</button>

@@ -25,7 +25,7 @@
 	</head>
 	<body>
 		<div class="container">
-		    <h1 class="register-title">Customer Sign Up</h1>
+		    <h1 class="register-title">Customer Update</h1>
 			<div class="col-lg-12 well">
 				<div class="row">
 					<form action="UpdateCustomerServlet" method="post">
@@ -64,11 +64,11 @@
 							</div>
 							<div class="form-group">
 								<label>Credit Card</label>
-								<input type="text" placeholder="Enter Password Here.." class="form-control" name="creditcard" required>
+								<input type="text" placeholder="Enter Credit Card Here.." class="form-control" name="creditcard" required>
 							</div>
 							<div class="form-group">
 								<label>Preference</label>
-								<input type="text" placeholder="Enter Password Here.." class="form-control" name="preference" required>
+								<input type="text" placeholder="Enter Preference.." class="form-control" name="preference" required>
 							</div>
 							<button type="submit" class="btn btn-lg btn-primary">Update</button>					
 						</div>
