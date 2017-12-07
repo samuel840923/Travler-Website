@@ -87,6 +87,7 @@ String transfer = (String)sub.get(11);%>
 <%}}
 if(type == 1){
 	List roundtime=(ArrayList)request.getAttribute("round");
+	if(roundtime.size() == round.size()){
 for(int i=0;i<round.size();i++){
 List sub=(List)round.get(i);
 List sub1=(List)roundtime.get(i);
@@ -138,6 +139,7 @@ String dep = (String)sub.get(2);
 
 <%
 }
+	}
 }
 if(type == 2){
 	if(round.size()!=0){
