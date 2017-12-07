@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Timestamp"%>
+<jsp:include page="navbar.jsp" />
+<jsp:include page="Error.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -22,7 +24,6 @@
 
 
 %>
-</div>
 
 <div class="container">
   
@@ -57,8 +58,6 @@
 	
 	<button type="submit" formmethod="post" form="form1">Submit Info</button>
 	
-	</table>
-	</div>
 </form>
 
 <form action="ManagerEditServlet" method="POST" id="form2" style="display:none;">
@@ -79,7 +78,6 @@
 	
 	<button type="submit" formmethod="post" form="form2">Submit Info</button>
 	
-	</div>
 </form>
 
 <script>
@@ -137,6 +135,7 @@ function fun2()
 
 
 
-
+</table>
+</div>
 </body>
 </html>

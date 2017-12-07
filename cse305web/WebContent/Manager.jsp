@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Timestamp"%>
+<jsp:include page="navbar.jsp" />
+<jsp:include page="Error.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -22,11 +24,33 @@
 
 
 %>
-</div>
 
 
+<form action="ManagerServlet" method="POST" id="form0">
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a onclick = fun1() >Monthly Sales Report</a></li>
+      <li><a onclick = fun2()>All Legs</a></li>
+      <li><a onclick = fun3()>Reservation By Flight Number</a></li>
+      <li><a onclick = fun4()>Reservation By Customer Name</a></li>
+      <li><a onclick = fun5()>Revenue by Account Number</a></li>
+      <li><a onclick = fun6()>Revenue by Flight</a></li>
+      <li><a onclick = fun7()>Revenue by Airport ID</a></li>
+      <li><a onclick = fun8()>Representative generates most total Revenue</a></li>
+      <li><a onclick = fun9()>Customer generates most total Revenue</a></li>
+      <li><a onclick = fun10()>Most active flight</a></li>
+      <li><a onclick = fun11()>Customer reserved on flight</a></li>
+      <li><a onclick = fun12()>Flights by Airport</a></li>
+      <li><a onclick = fun13()>On time / Delay</a></li>
+      
+    </ul>
+  </div>
+</form>
 
-<form action="ManagerServlet" method="POST" id="form1">
+
+<form action="ManagerServlet" method="POST" id="form1" style="display:none">
 	  <h2>Monthly Sales Report</h2>         
 	<input name = "Month" placeholder="Enter a month from 1-12" required="true"/>
 	<button type="submit" formmethod="post" form="form1">Submit Month</button>
@@ -54,23 +78,24 @@
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 	</div>
 </form>
 <div>
 </div>
-<form action="ManagerServlet" method="POST" id="form2">
+<form action="ManagerServlet" method="POST" id="form2" style="display:none">
 	  <h2>All Legs</h2>         
 <button type="submit" formmethod="post" form="form2">Refresh Legs</button>
+
 	<table class="table" type = "hidden">
 	<%
 	List leg=new ArrayList();
 	leg=(ArrayList)request.getAttribute("legs");
 	if(leg!=null && leg.size()>0 ){
 	%>
-	<thead id ="thead2" style="display:none">
+	<thead id ="thead2" >
 	      <tr>
 	        <th>AirlineID</th>
 	        <th>FlightNo</th>
@@ -83,7 +108,7 @@
 	        <th>CurrDepTime</th>
 	      </tr>
 	  </thead>    
-	  <tbody id="form2R" style="display:none"> 
+	  <tbody id="form2R"> 
 	
 	  	<%for(int i=0;i<leg.size();i++){
 	  		List sub = (ArrayList)leg.get(i);%>
@@ -106,26 +131,8 @@
 	</table>
 </form>
 
-<button onclick="myFunctionLeg()">Show/Hide Legs</button>
-<script>
-function myFunctionLeg() {
-    var x = document.getElementById("form2R");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-    x = document.getElementById("thead2");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-</script>
 
-
-<form action="ManagerServlet" method="POST" id="form3">
+<form action="ManagerServlet" method="POST" id="form3" style="display:none">
 	  <h2>Reservation By Flight Number</h2>         
 	<input name = "FlightNo" placeholder="Enter a flight number (All digits)" required="true"/>
 	<button type="submit" formmethod="post" form="form3">Submit Flight Number</button>
@@ -163,18 +170,18 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 	</div>
 </form>
 
 
-<form action="ManagerServlet" method="POST" id="form4">
+<form action="ManagerServlet" method="POST" id="form4" style="display:none">
 	  <h2>Reservation By Customer Name</h2>  
 	<input name = "firstN" placeholder="Enter First Name" required="true"/>
 	<input name = "lastN" placeholder="Enter Last Name" required="true"/>
-	<button type="submit" formmethod="post" form="form4">Submit Flight Number</button>       
+	<button type="submit" formmethod="post" form="form4">Submit Customer Name</button>       
 	<table class="table" type = "hidden">
 	<%
 	List N=new ArrayList();
@@ -210,13 +217,13 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
 
-<form action="ManagerServlet" method="POST" id="form5">
+<form action="ManagerServlet" method="POST" id="form5"style="display:none">
 	  <h2>Revenue by Account Number</h2>  
 	<input name = "accN" placeholder="Enter Account Number" required="true"/>
 	<button type="submit" formmethod="post" form="form5">Submit Account Number</button>       
@@ -243,12 +250,12 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
-<form action="ManagerServlet" method="POST" id="form6">
+<form action="ManagerServlet" method="POST" id="form6"style="display:none">
 	  <h2>Revenue by Flight</h2>  
 	<input name = "airline" placeholder="Enter Airline ID" required="true"/>
 	<input name = "FlightNoR" placeholder="Enter Flight Number" required="true"/>
@@ -278,12 +285,12 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
-<form action="ManagerServlet" method="POST" id="form7">
+<form action="ManagerServlet" method="POST" id="form7"style="display:none">
 	  <h2>Revenue by Airport ID</h2>  
 	<input name = "arrCity" placeholder="Enter Arrival Airport ID" required="true"/>
 	<button type="submit" formmethod="post" form="form7">Submit Airport ID</button>       
@@ -310,13 +317,13 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
 
-<form action="ManagerServlet" method="POST" id="form8">
+<form action="ManagerServlet" method="POST" id="form8"style="display:none">
 	  <h2>Representative generates most total Revenue </h2>       
 	<table class="table" type = "hidden">
 	<%
@@ -341,12 +348,12 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
-<form action="ManagerServlet" method="POST" id="form9">
+<form action="ManagerServlet" method="POST" id="form9"style="display:none">
 	  <h2>Customer generates most total Revenue </h2>  
 	<table class="table" type = "hidden">
 	<%
@@ -371,13 +378,13 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
 
-<form action="ManagerServlet" method="POST" id="form10">
+<form action="ManagerServlet" method="POST" id="form10"style="display:none">
 	  <h2>Most active flight</h2>  
 	<table class="table" type = "hidden">
 	<%
@@ -404,12 +411,12 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
-<form action="ManagerServlet" method="POST" id="form11">
+<form action="ManagerServlet" method="POST" id="form11"style="display:none">
 	  <h2>Customer reserved on flight</h2>  
 	<input name = "airlineidC" placeholder="Enter Airline ID" required="true"/>
 	<input name = "flightnoC" placeholder="Enter Flight Number" required="true"/>
@@ -439,15 +446,15 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
-<form action="ManagerServlet" method="POST" id="form12">
-	  <h2>Flights by Aiport</h2>  
+<form action="ManagerServlet" method="POST" id="form12"style="display:none">
+	  <h2>Flights by Airport</h2>  
 	<input name = "airportN" placeholder="Enter Airport Name" required="true"/>
-	<button type="submit" formmethod="post" form="form12">Submit Airport ID</button>       
+	<button type="submit" formmethod="post" form="form12">Submit Airport Name</button>       
 	<table class="table" type = "hidden">
 	<%
 	List airport=new ArrayList();
@@ -491,12 +498,12 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
-<form action="ManagerServlet" method="POST" id="form13">
+<form action="ManagerServlet" method="POST" id="form13"style="display:none">
 	  <h2>On time / Delay</h2>     
 	<table class="table" type = "hidden">
 	<%
@@ -543,11 +550,275 @@ function myFunctionLeg() {
 	   <%} %>
 	  </tbody>  
 	 <%} else{ %>
-	 No Result Found
+	 
 	 <%} %>
 	</table>
 </form>
 
+<script>
+function fun1()
+{
 
+	var x = document.getElementById("form1");
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    	
+}
+function fun2()
+{
+
+	var x = document.getElementById("form2");
+    
+    		x.style.display = "block";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    	
+}
+
+function fun3()
+{
+
+	var x = document.getElementById("form3");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    
+}function fun4()
+{
+
+	var x = document.getElementById("form4");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    
+}function fun5()
+{
+
+	var x = document.getElementById("form5");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    
+}function fun6()
+{
+
+	var x = document.getElementById("form6");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    
+}function fun7()
+{
+
+	var x = document.getElementById("form7");
+   
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    
+}function fun8()
+{
+
+	var x = document.getElementById("form8");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    
+}function fun9()
+{
+
+	var x = document.getElementById("form9");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    	
+}function fun10()
+{
+
+	var x = document.getElementById("form10");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    	
+}function fun11()
+{
+
+	var x = document.getElementById("form11");
+   
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    	
+}function fun12()
+{
+
+	var x = document.getElementById("form12");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    		document.getElementById("form13").style.display = "none";
+    		
+    	
+}function fun13()
+{
+
+	var x = document.getElementById("form13");
+    
+    		x.style.display = "block";
+    		document.getElementById("form2").style.display = "none";
+    		document.getElementById("form3").style.display = "none";
+    		document.getElementById("form4").style.display = "none";
+    		document.getElementById("form5").style.display = "none";
+    		document.getElementById("form6").style.display = "none";
+    		document.getElementById("form7").style.display = "none";
+    		document.getElementById("form8").style.display = "none";
+    		document.getElementById("form9").style.display = "none";
+    		document.getElementById("form10").style.display = "none";
+    		document.getElementById("form11").style.display = "none";
+    		document.getElementById("form12").style.display = "none";
+    		document.getElementById("form1").style.display = "none";
+    	
+}
+
+
+</script>
+</div>
 </body>
 </html>

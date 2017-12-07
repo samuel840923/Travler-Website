@@ -27,7 +27,7 @@
     <ul class="nav navbar-nav">
       <!--<li class="active"><a href="#">Home</a></li>-->
       <li><a href="#">Home</a></li>
-      <li><a href="/cse305web/FlightSearch">Flight Search</a></li>
+      <li><a href="/cse305web/FlightInfo.jsp">Flight Search</a></li>
       <%
       	if (employeeId == null) {
       %>
@@ -74,7 +74,10 @@
 	          <li><a href="/cse305web/empDeletePassenger">Delete Passenger</a></li>
 	          <li><a href="/cse305web/customerMailingList">Mailing List</a></li>
 	          <li><a href="/cse305web/empFlightSuggestions">Flight Suggestion</a></li>
-	          <li><a href="/cse305web/Manager.jsp">Manager Action</a></li>
+	          <li><a href="/cse305web/ManagerServlet">Manager Transaction</a></li>
+	          <li><a href="/cse305web/ManagerEditServlet">Add Employee or Customer</a></li>
+	          <li><a href="/cse305web/ManagerUpdateServlet">Update Info for Employee or Customer</a></li>
+	          <li><a href="/cse305web/ManagerDeleteServlet">Delete Employee or Customer</a></li>
           <% } %>
         </ul>
       </li>

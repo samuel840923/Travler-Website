@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class ManagerEditServlet extends HttpServlet{
@@ -26,8 +27,18 @@ public class ManagerEditServlet extends HttpServlet{
 	
 	public static final String ADD_CUS = "Insert into Customer values(?,?,?,?,?,?,?);\n";
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Connection connection = null;
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("id") ==  null || ((String)session.getAttribute("isManager")).equalsIgnoreCase("False")) {
+			response.sendRedirect("/cse305web/login");
+		    return;
+		}
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ManagerEdit.jsp");
+	    dispatcher.forward(request, response);
+	}
 	
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		Connection connection;
 		String id = request.getParameter("id");
@@ -187,13 +198,15 @@ public class ManagerEditServlet extends HttpServlet{
 			
 			
 		} 
-		catch (ClassNotFoundException | SQLException e) 
+		catch (ClassNotFoundException | SQLException | NullPointerException | NumberFormatException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("ok", ok);
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ManagerEdit.jsp");

@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Timestamp"%>
+<jsp:include page="navbar.jsp" />
+<jsp:include page="Error.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -16,13 +18,13 @@
 <body>
 
 <div class="container">
- <h2>Manager Update Page</h2>
+ <h2>Manager Delete Page</h2>
 <%
 
 
 
 %>
-</div><div class="container">
+<div class="container">
   
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select
@@ -33,11 +35,9 @@
       
     </ul>
   </div>
-</div>
+ </div>
 
 
-</body>
-</html>
 
 
 
@@ -56,7 +56,6 @@
 	 <%} else{ %>
 	 <%} %>
 	</table>
-	</div>
 </form>
 
 <form action="ManagerDeleteServlet" method="POST" id="form2" style="display:none">
@@ -74,7 +73,6 @@
 	 <%} else{ %>
 	 <%} %>
 	</table>
-	</div>
 </form>
 
 
@@ -123,6 +121,6 @@ function fun2()
 
 
 
-
+</div>
 </body>
 </html>
