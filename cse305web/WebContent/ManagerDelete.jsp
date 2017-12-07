@@ -14,11 +14,33 @@
   <link rel="stylesheet" href="Manager.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style type="text/css">
+  	.button {
+  	background-color: #00bfff;
+  	border: none;
+  	}
+  	body {
+  		background-image:url("background/back.jpg");
+  		background-size:     cover;                     
+    		background-repeat:   no-repeat;
+  	}
+  	
+  	input {
+  		width: 30%;
+  		border:none;
+  		border-bottom: 1px solid #555;
+  		color: black;
+  		margin-bottom: 15px;
+  		margin-right:5px
+  	}
+  </style>
+  
 </head>
 <body>
 
 <div class="container">
- <h2>Manager Delete Page</h2>
+ <h1>Manager Delete Page</h1>
 <%
 
 
@@ -45,7 +67,7 @@
 	  <h2>Delete An Employee</h2>         
 	<input name = "id" placeholder="ID" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form1">Submit Info</button>
+	<button class="button" type="submit" formmethod="post" form="form1">Submit Info</button>
 	<table class="table" type = "hidden">
 	<%
 	List ok=new ArrayList();
@@ -62,7 +84,7 @@
 	  <h2>Delete a Customer</h2>         
 	<input name = "id2" placeholder="ID" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form2">Submit Info</button>
+	<button class="button"type="submit" formmethod="post" form="form2">Submit Info</button>
 	<table class="table" type = "hidden">
 	<%
 	ok=new ArrayList();

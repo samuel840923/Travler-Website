@@ -11,14 +11,35 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="Manager.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style type="text/css">
+  	.button {
+  	background-color: #00bfff;
+  	border: none;
+  	
+  	}
+  	body {
+  		background-image:url("background/back4.jpg");
+  		background-size:     cover;                     
+    		background-repeat:   no-repeat;
+  	}
+  	
+  	input {
+  		width: 30%;
+  		border:none;
+  		border-bottom: 1px solid #555;
+  		color: black;
+  		margin-bottom: 15px;
+  		margin-right:5px
+  	}
+  </style>
 </head>
 <body>
 
 <div class="container">
- <h2>Manager Update Page</h2>
+ <h1>Manager Update Page</h1>
 <%
 
 
@@ -54,7 +75,7 @@
 	<input name = "id" placeholder="ID" required="true"/>
 	<input name = "isM" placeholder="Is Manager 1 for Yes other is no" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form1">Submit Info</button>
+	<button class="button" type="submit" formmethod="post" form="form1">Submit Info</button>
 	<table class="table" type = "hidden">
 	<%
 	List ok=new ArrayList();
@@ -72,7 +93,7 @@
 	<input name = "id2" placeholder="ID" required="true"/>
 	<input name = "start" placeholder="New Start Date" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form2">Submit Info</button>
+	<button class="button"type="submit" formmethod="post" form="form2">Submit Info</button>
 	<table class="table" type = "hidden">
 	<%
 	ok=new ArrayList();
@@ -90,7 +111,7 @@
 	<input name = "id3" placeholder="ID" required="true"/>
 	<input name = "rate" placeholder="New Hourly Rate" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form3">Submit Info</button>
+	<button class="button"type="submit" formmethod="post" form="form3">Submit Info</button>
 	<table class="table" type = "hidden">
 	<%
 	ok=new ArrayList();
@@ -114,7 +135,7 @@
 	<input name = "id4" placeholder="ID" required="true"/>
 	<input name = "credit" placeholder="New Credit Card #" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form4">Submit Info</button>
+	<button class="button"class="button"type="submit" formmethod="post" form="form4">Submit Info</button>
 	
 </form>
 
@@ -123,7 +144,7 @@
 	<input name = "id5" placeholder="ID" required="true"/>
 	<input name = "email" placeholder="New Email" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form5">Submit Info</button>
+	<button class="button"type="submit" formmethod="post" form="form5">Submit Info</button>
 	
 </form>
 
@@ -132,7 +153,7 @@
 	<input name = "id6" placeholder="ID" required="true"/>
 	<input name = "rateC" placeholder="New Rating" required="true"/>
 	
-	<button type="submit" formmethod="post" form="form6">Submit Info</button>
+	<button class="button"type="submit" formmethod="post" form="form6">Submit Info</button>
 	
 </form>
 
