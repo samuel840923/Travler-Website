@@ -41,6 +41,7 @@ int type = Integer.parseInt(request.getParameter("type"));
 int nop = Integer.parseInt(number);
 int leg1 =  Integer.parseInt(request.getParameter("leg1"));
 int leg2 =  Integer.parseInt(request.getParameter("leg2"));
+String deptime1 = request.getParameter("deptime");
 %>
 
 <div class="container"><br/>
@@ -54,13 +55,15 @@ int leg2 =  Integer.parseInt(request.getParameter("leg2"));
 	String air2 =  request.getParameter("air2");
 	String total2 =  request.getParameter("total2");
 	String bookfee2 =  request.getParameter("bookfee2");
+	String deptime2 = request.getParameter("deptime2");
 	
 %>
  <input type="hidden" name = "leg11" value= "<%= leg11 %>"/>
  <input type="hidden" name = "leg22"value= "<%= leg22 %>"/>
  <input type="hidden" name = "air2" value= "<%=air2 %>"/>	
  <input type="hidden" name = "flight2" value= "<%=flight2 %>"/>
- <input type="hidden" name = "class2" value= "<%=class2 %>"/>	
+ <input type="hidden" name = "class2" value= "<%=class2 %>"/>
+  <input type="hidden" name = "deptime2" value= "<%=deptime2 %>"/>	
 <% }  System.out.println(air+"Asdasdsd");%>
 
 <input type="hidden" name = "leg1" value= "<%= leg1 %>"/>
@@ -69,7 +72,8 @@ int leg2 =  Integer.parseInt(request.getParameter("leg2"));
  <input type="hidden" name = "nop" value= "<%=nop %>"/>	
  <input type="hidden" name = "type" value= "<%=type %>"/>	
  <input type="hidden" name = "air" value= "<%=air %>"/>	
- <input type="hidden" name = "flight" value= "<%=flight %>"/>	
+ <input type="hidden" name = "flight" value= "<%=flight %>"/>
+ <input type="hidden" name = "deptime" value= "<%=deptime1 %>"/>	
  <% for (int i=0;i<nop;i++){ %>
                   <h4>Passenger <%=i+1 %>:</h4>
                   <div class="row">
@@ -130,11 +134,11 @@ int leg2 =  Integer.parseInt(request.getParameter("leg2"));
   <div class='row'>
  
                <div class='col-md-6 form-group'>
-                <button class='form-control btn btn-info submit-button' type='submit'>Book this flight</button>
+                <button class='form-control btn btn-info submit-button' type='submit'>Reverse Bid</button>
               </div>
                  <div class='col-md-6 form-group'>
              
-                <button class='form-control btn btn-info submit-button' type='button' onclick="location.href = 'FlightInfo.html'">Go Back to Search</button>
+                <button class='form-control btn btn-info submit-button' type='button' onclick="location.href = 'FlightInfo.jsp'">Go Back to Search</button>
                
               </div>
   </div>
