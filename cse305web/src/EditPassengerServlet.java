@@ -85,6 +85,7 @@ public class EditPassengerServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
+				connection.close();
 				request.setAttribute("error", "Unable to update passenger.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
 			    dispatcher.forward(request, response);
@@ -99,6 +100,7 @@ public class EditPassengerServlet extends HttpServlet{
 			stmt.setInt(6, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
+				connection.close();
 				request.setAttribute("error", "Unable to update passenger.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeEditPassenger.jsp");
 			    dispatcher.forward(request, response);

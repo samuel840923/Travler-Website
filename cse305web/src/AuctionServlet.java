@@ -82,6 +82,7 @@ public class AuctionServlet extends HttpServlet{
 			if (fares.size() == 0) {
 				//handle error by loading error
 				//Flight does not exist
+				connection.close();
 				request.setAttribute("error", "Flight does not exist.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
 			    dispatcher.forward(request, response);
@@ -97,7 +98,11 @@ public class AuctionServlet extends HttpServlet{
 			error = stmt.executeUpdate();
 			if (error == 0) {
 				//handle error by loading error
+				connection.close();
 				request.setAttribute("error", "Auction already exists.");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Auction.jsp");
+			    dispatcher.forward(request, response);
+			    return;
 			}
 			if (tooLow == false) {
 				int flight = Integer.parseInt(request.getParameter("flight"));
@@ -144,20 +149,20 @@ public class AuctionServlet extends HttpServlet{
 				reservation.setInt(5, accountNo);
 				error = reservation.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Error Inserting.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
-					 connection.close();
 					return;
 				}
 				PreparedStatement updaterating = connection.prepareStatement(UpdateRating);
 				updaterating.setInt(1, accountNo);
 				error = updaterating.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Error Inserting.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
-					 connection.close();
 					return;
 				}
 				
@@ -169,10 +174,10 @@ public class AuctionServlet extends HttpServlet{
 				 reservation.setTimestamp(5, depdate);
 				error = reservation.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Error Inserting.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
-					 connection.close();
 					return;
 				}
 				if(leg2 != leg1) {
@@ -184,17 +189,14 @@ public class AuctionServlet extends HttpServlet{
 					 reservation.setTimestamp(5, depdate2);
 					 error = reservation.executeUpdate();
 						if (error == 0) {
+							connection.close();
 							request.setAttribute("error", "Error Inserting.");
 							RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 							 dispatcher.forward(request, response);
-							 connection.close();
 							return;
 						}
 				}
-				int reserve2=0;
-				if(type==2) {
-					reserve2= addReservationFlight2(request, connection, accountNo, DefaultEmployee);
-				}
+				
 			int nop = Integer.parseInt(request.getParameter("nop"));
 			for(int i =0;i<nop;i++) {
 				Random rand = new Random(System.nanoTime());
@@ -229,10 +231,10 @@ public class AuctionServlet extends HttpServlet{
 				stmt.setInt(7, zipcode);
 				error = stmt.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Error Inserting.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
-					 connection.close();
 					return;
 				}
 				PreparedStatement stmt1 = connection.prepareStatement(insertPassenger);
@@ -240,10 +242,10 @@ public class AuctionServlet extends HttpServlet{
 				stmt1.setInt(2, accountNo);
 				error = stmt1.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Error Inserting.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
-					 connection.close();
 					return;
 				}
 				stmt = connection.prepareStatement(insertReservationPassenger);
@@ -256,43 +258,11 @@ public class AuctionServlet extends HttpServlet{
 				stmt.setString(6, food);
 				error = stmt.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Error Inserting.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
 					 dispatcher.forward(request, response);
-					 connection.close();
 					return;
-				}
-				if (type == 2) {
-					int flight2 = Integer.parseInt(request.getParameter("flight2"));
-					String air2 = request.getParameter("air2");
-					String seatno2 = request.getParameter("seat2"+i);
-				    check = connection.prepareStatement(findseat);
-					check.setString(1, air2);
-					check.setInt(2, flight2);
-					check.setString(3, seatno2);
-					 ch = check.executeQuery();
-					if(ch!=null) {
-						seatno2 = "CK-in";
-					}
-					
-					String food2 = request.getParameter("food2"+i);
-					String rank2 = request.getParameter("class2");
-					System.out.println(reserve2);
-					stmt = connection.prepareStatement(insertReservationPassenger);
-					stmt.setInt(1, reserve2);
-					stmt.setInt(2,  id);
-					stmt.setInt(3, accountNo);
-					stmt.setString(4, seatno2);
-					stmt.setString(5, rank);
-					stmt.setString(6, food2);
-					error = stmt.executeUpdate();
-					if (error == 0) {
-						request.setAttribute("error", "Error Inserting.");
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerServlet");
-						 dispatcher.forward(request, response);
-						 connection.close();
-						return;
-					}
 				}
 			}
 		}
@@ -310,79 +280,5 @@ public class AuctionServlet extends HttpServlet{
 	    dispatcher.forward(request, response); 
 	}
 	
-public static int addReservationFlight2(HttpServletRequest request, Connection connection,int customer,int employee) {
-		
-		Random rand1 = new Random(System.nanoTime());
-		int reservationNumber = rand1.nextInt(Integer.MAX_VALUE);
-		int flight = Integer.parseInt(request.getParameter("flight2"));
-		int leg1 = Integer.parseInt(request.getParameter("leg11"));
-		int leg2 = Integer.parseInt(request.getParameter("leg22"));
-		String air = request.getParameter("air2");
-		String rank = request.getParameter("class2");
-		double total2 = Double.parseDouble(request.getParameter("total2"));
-		double bookfee2 = Double.parseDouble(request.getParameter("bookfee2"));
-		PreparedStatement finddate;
-		
-		try {
-			finddate = connection.prepareStatement(FINDDATE);
-			finddate.setString(1, air);
-			finddate.setString(2, air);
-			finddate.setInt(3, leg1);
-			finddate.setInt(4, flight);
-			finddate.setInt(5, flight);
-			finddate.setInt(6, leg2);
-			ResultSet date = finddate.executeQuery();
-			Timestamp depdate = new Timestamp(0);
-			Timestamp depdate2 = new Timestamp(0);
-			
-			if(date!=null && date.next()) {
-				depdate = date.getTimestamp("DepTime");	
-				depdate2 = date.getTimestamp("D2");	
-			}
-				PreparedStatement reservation = connection.prepareStatement(insertReservation);
-			reservation.setString(1, air);
-			reservation.setInt(1, reservationNumber);
-			reservation.setDouble(2, bookfee2);
-			reservation.setDouble(3, total2);
-			reservation.setInt(4, employee);
-			reservation.setInt(5, customer);
-			int error = reservation.executeUpdate();
-			if (error == 0) {
-				//handle error by loading error
-			}
-			PreparedStatement updaterating = connection.prepareStatement(UpdateRating);
-			updaterating.setInt(1, customer);
-			error = updaterating.executeUpdate();
-			if (error == 0) {
-				//handle error by loading error
-			}
-			 reservation = connection.prepareStatement(insertIncludes);
-			 reservation.setInt(1, reservationNumber);
-			 reservation.setString(2, air);
-			 reservation.setDouble(3, flight);
-			 reservation.setInt(4, leg1);
-			 reservation.setTimestamp(5, depdate);
-			 error = reservation.executeUpdate();
-			if (error == 0) {
-				//handle error by loading error
-			}
-			if(leg2 != leg1) {
-				 reservation = connection.prepareStatement(insertIncludes);
-				 reservation.setInt(1,  reservationNumber);
-				 reservation.setString(2, air);
-				 reservation.setDouble(3, flight);
-				 reservation.setInt(4, leg2);
-				 reservation.setTimestamp(5, depdate2);
-				 error = reservation.executeUpdate();
-					if (error == 0) {
-						//handle error by loading error
-					}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			request.setAttribute("error", e.getMessage());
-		}
-		return reservationNumber;
-	}
+
 }

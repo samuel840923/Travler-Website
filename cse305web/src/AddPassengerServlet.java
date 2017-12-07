@@ -67,6 +67,7 @@ public class AddPassengerServlet extends HttpServlet{
 				accountNumber = data.getInt("AccountNo");
 			}
 			else {
+				connection.close();
 				request.setAttribute("error", "Invalid reservation number.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
 			    dispatcher.forward(request, response);
@@ -86,6 +87,7 @@ public class AddPassengerServlet extends HttpServlet{
 			stmt.setInt(2, accountNumber);
 			error = stmt.executeUpdate();
 			if (error == 0) {
+				connection.close();
 				request.setAttribute("error", "Unable to add passenger.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
 			    dispatcher.forward(request, response);
@@ -100,6 +102,7 @@ public class AddPassengerServlet extends HttpServlet{
 			stmt.setString(6, meal);
 			error = stmt.executeUpdate();
 			if (error == 0) {
+				connection.close();
 				request.setAttribute("error", "Unable to add passenger.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeAddPassenger.jsp");
 			    dispatcher.forward(request, response);

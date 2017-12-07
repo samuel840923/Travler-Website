@@ -89,6 +89,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 			String[] rank = request.getParameterValues("class");
 			String[] meal = request.getParameterValues("meal");
 			if (firstName.length == 0 || lastName.length == 0) {
+				connection.close();
 				request.setAttribute("error", "No passenger name specified.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 			    dispatcher.forward(request, response);
@@ -103,6 +104,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 				repSSN = data.getInt("SSN");
 			}
 			else {
+				connection.close();
 				request.setAttribute("error", "Session timed out.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 			    dispatcher.forward(request, response);
@@ -116,6 +118,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 			stmt.setInt(5, accountNo);
 			error = stmt.executeUpdate();
 			if (error == 0) {
+				connection.close();
 				request.setAttribute("error", "Unable to place a reservation.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 			    dispatcher.forward(request, response);
@@ -133,6 +136,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 					date = data.getString("DepTime").split(" ")[0];
 				}
 				else {
+					connection.close();
 					request.setAttribute("error", "Invalid Leg Number(s) specified");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 				    dispatcher.forward(request, response);
@@ -146,6 +150,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setString(5, date);
 				error = stmt.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Unable to place a reservation.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 				    dispatcher.forward(request, response);
@@ -169,6 +174,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setInt(2, accountNo);
 				error = stmt.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Unable to reserve seat for passenger.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 				    dispatcher.forward(request, response);
@@ -183,6 +189,7 @@ public class EmployeeReservationServlet extends HttpServlet{
 				stmt.setString(6, meal[i]);
 				error = stmt.executeUpdate();
 				if (error == 0) {
+					connection.close();
 					request.setAttribute("error", "Unable to reserve seat for passenger.");
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeReserve.jsp");
 				    dispatcher.forward(request, response);

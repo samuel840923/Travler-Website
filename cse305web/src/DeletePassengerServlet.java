@@ -74,6 +74,7 @@ public class DeletePassengerServlet extends HttpServlet{
 			if (error == 0) {
 				//handle error by loading error
 				request.setAttribute("error", "Unable to delete passenger.");
+				connection.close();
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
 			    dispatcher.forward(request, response);
 			    return;
@@ -83,6 +84,7 @@ public class DeletePassengerServlet extends HttpServlet{
 			stmt.setInt(2, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
+				connection.close();
 				request.setAttribute("error", "Unable to delete passenger.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
 			    dispatcher.forward(request, response);
@@ -92,6 +94,7 @@ public class DeletePassengerServlet extends HttpServlet{
 			stmt.setInt(1, passengerId);
 			error = stmt.executeUpdate();
 			if (error == 0) {
+				connection.close();
 				request.setAttribute("error", "Unable to delete passenger.");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/EmployeeDeletePassenger.jsp");
 			    dispatcher.forward(request, response);
