@@ -47,10 +47,10 @@ public class FlightSearch extends HttpServlet {
     String nop=request.getParameter("nop");
     String type=request.getParameter("type");
     int types = 0;
-   
+    Connection connection = null;
     try {
     	
-		Connection connection = JDBC.getConnection();
+		connection = JDBC.getConnection();
 		Statement state = connection.createStatement();
 		ResultSet re = null;
 		ResultSet re2 = null;
@@ -143,7 +143,14 @@ public class FlightSearch extends HttpServlet {
 		e.printStackTrace();
 		System.out.println(start);
 	} catch (SQLException e) {
-		e.printStackTrace();
+		request.setAttribute("error", "Error With database.");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/FlightInfo.jsp");
+		 dispatcher.forward(request, response);
+		 try {
+			connection.close();
+		} catch (SQLException e1) {
+		}
+		return;
 	}
     
   
