@@ -300,7 +300,7 @@ public class CustomerServlet extends HttpServlet{
 	    dispatcher.forward(request, response); 
 		
 		}
-		  }
+		  
 	public static void SetCustomer(int AccountNumber) {
 		Connection connection;
 		try {
