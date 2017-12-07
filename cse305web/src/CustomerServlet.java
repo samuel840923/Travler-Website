@@ -194,7 +194,7 @@ public class CustomerServlet extends HttpServlet{
 	        	 }
 	   		}
 		Connection connection;
-		int Account = 102;
+		int Account = Integer.parseInt(account.getValue());
 		SetCustomer(Account);
 		List current_bid = new ArrayList();
 		List bid = new ArrayList();
