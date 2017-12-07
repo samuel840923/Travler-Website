@@ -67,7 +67,7 @@ List sub = (ArrayList)result.get(i);
 			
 				<div class='form-row'>
 					<div class='col-md-6 form-group'>
-						<button class='form-control btn btn-success submit-button' type='button' onclick="location.href = 'FlightInfo.jspl'">Search More Flights</button>
+						<button class='form-control btn btn-success submit-button' type='button' onclick="location.href = 'FlightInfo.jsp'">Search More Flights</button>
 					</div>
 	
             </div>
