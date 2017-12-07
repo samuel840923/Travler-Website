@@ -178,7 +178,7 @@ double bookfee = Double.parseDouble(Book);
               </div>
                  <div class='col-md-6 form-group'>
              
-                <button class='form-control btn btn-info submit-button' type='button' onclick="location.href = 'FlightInfo.html'">Go Back to Search</button>
+                <button class='form-control btn btn-info submit-button' type='button' onclick="location.href = 'FlightInfo.jsp'">Go Back to Search</button>
                
               </div>
   </div>
