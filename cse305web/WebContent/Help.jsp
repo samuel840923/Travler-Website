@@ -36,15 +36,6 @@ div.tab button.active {
     background-color: #ccc;
 }
 
-/* Style the tab content */
-.tabcontent {
-    float: left;
-    padding: 0px 12px;
-    border: 1px solid #ccc;
-    width: 70%;
-    border-left: none;
-    height: 300px;
-}
 </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -59,6 +50,7 @@ div.tab button.active {
   <button class="tablinks" onclick="openCity(event, 'customer')" id="defaultOpen">Customer</button>
   <button class="tablinks" onclick="openCity(event, 'employee')">Employee</button>
   <button class="tablinks" onclick="openCity(event, 'manager')">Manager</button>
+  <button class="tablinks" onclick="openCity(event, 'userGuide')">User Guide</button>
 </div>
  
   <h2>Help Info</h2>
@@ -364,7 +356,22 @@ div.tab button.active {
    
 </div>   
     
-    
+ <div id="userGuide" class="tabcontent">
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse14">View User Guide</a>
+        </h4>
+      </div>
+      <div id="collapse14" class="panel-collapse collapse">
+        <div class="panel-body">
+            <iframe src="https://drive.google.com/file/d/1t9HKIy9iu3-je8wTat2XMiawkgiamm8C/preview" width="960" height="720"></iframe>
+        </div>
+      </div>
+      
+  </div> 
+   
+</div>   
     
 </body>
     
